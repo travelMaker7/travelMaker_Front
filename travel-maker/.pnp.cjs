@@ -30,6 +30,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/react", "npm:18.2.31"],\
             ["@types/react-dom", "npm:18.2.14"],\
+            ["@types/styled-components", "npm:5.1.29"],\
             ["@typescript-eslint/eslint-plugin", "virtual:216449b6f7b6655e5dd1a993bf3320fa66c41fdb7f379c19e000e0c05607cb6c3a709fc0b0ffd7c5e44b5da2f9ef9a0eb0858ab0d4ea404071f379b5254ec40d#npm:6.8.0"],\
             ["@typescript-eslint/parser", "virtual:216449b6f7b6655e5dd1a993bf3320fa66c41fdb7f379c19e000e0c05607cb6c3a709fc0b0ffd7c5e44b5da2f9ef9a0eb0858ab0d4ea404071f379b5254ec40d#npm:6.8.0"],\
             ["@vitejs/plugin-react", "virtual:216449b6f7b6655e5dd1a993bf3320fa66c41fdb7f379c19e000e0c05607cb6c3a709fc0b0ffd7c5e44b5da2f9ef9a0eb0858ab0d4ea404071f379b5254ec40d#npm:4.1.0"],\
@@ -875,6 +876,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/hoist-non-react-statics", [\
+        ["npm:3.3.4", {\
+          "packageLocation": "./.yarn/cache/@types-hoist-non-react-statics-npm-3.3.4-2b56a922a3-dee430941a.zip/node_modules/@types/hoist-non-react-statics/",\
+          "packageDependencies": [\
+            ["@types/hoist-non-react-statics", "npm:3.3.4"],\
+            ["@types/react", "npm:18.2.31"],\
+            ["hoist-non-react-statics", "npm:3.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/json-schema", [\
         ["npm:7.0.14", {\
           "packageLocation": "./.yarn/cache/@types-json-schema-npm-7.0.14-7dad9e71b4-4b3dd99616.zip/node_modules/@types/json-schema/",\
@@ -929,6 +941,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-semver-npm-7.5.4-aa93e70844-120c0189f6.zip/node_modules/@types/semver/",\
           "packageDependencies": [\
             ["@types/semver", "npm:7.5.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/styled-components", [\
+        ["npm:5.1.29", {\
+          "packageLocation": "./.yarn/cache/@types-styled-components-npm-5.1.29-3a471375c7-9447f26056.zip/node_modules/@types/styled-components/",\
+          "packageDependencies": [\
+            ["@types/styled-components", "npm:5.1.29"],\
+            ["@types/hoist-non-react-statics", "npm:3.3.4"],\
+            ["@types/react", "npm:18.2.31"],\
+            ["csstype", "npm:3.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -2248,6 +2272,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["hoist-non-react-statics", [\
+        ["npm:3.3.2", {\
+          "packageLocation": "./.yarn/cache/hoist-non-react-statics-npm-3.3.2-e7b709e6c1-b153827042.zip/node_modules/hoist-non-react-statics/",\
+          "packageDependencies": [\
+            ["hoist-non-react-statics", "npm:3.3.2"],\
+            ["react-is", "npm:16.13.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["http-cache-semantics", [\
         ["npm:4.1.1", {\
           "packageLocation": "./.yarn/cache/http-cache-semantics-npm-4.1.1-1120131375-83ac0bc60b.zip/node_modules/http-cache-semantics/",\
@@ -3065,6 +3099,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["react-is", [\
+        ["npm:16.13.1", {\
+          "packageLocation": "./.yarn/cache/react-is-npm-16.13.1-a9b9382b4f-f7a19ac349.zip/node_modules/react-is/",\
+          "packageDependencies": [\
+            ["react-is", "npm:16.13.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["react-refresh", [\
         ["npm:0.14.0", {\
           "packageLocation": "./.yarn/cache/react-refresh-npm-0.14.0-78ef5eeb73-dc69fa8c99.zip/node_modules/react-refresh/",\
@@ -3472,6 +3515,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["travel-maker", "workspace:."],\
             ["@types/react", "npm:18.2.31"],\
             ["@types/react-dom", "npm:18.2.14"],\
+            ["@types/styled-components", "npm:5.1.29"],\
             ["@typescript-eslint/eslint-plugin", "virtual:216449b6f7b6655e5dd1a993bf3320fa66c41fdb7f379c19e000e0c05607cb6c3a709fc0b0ffd7c5e44b5da2f9ef9a0eb0858ab0d4ea404071f379b5254ec40d#npm:6.8.0"],\
             ["@typescript-eslint/parser", "virtual:216449b6f7b6655e5dd1a993bf3320fa66c41fdb7f379c19e000e0c05607cb6c3a709fc0b0ffd7c5e44b5da2f9ef9a0eb0858ab0d4ea404071f379b5254ec40d#npm:6.8.0"],\
             ["@vitejs/plugin-react", "virtual:216449b6f7b6655e5dd1a993bf3320fa66c41fdb7f379c19e000e0c05607cb6c3a709fc0b0ffd7c5e44b5da2f9ef9a0eb0858ab0d4ea404071f379b5254ec40d#npm:4.1.0"],\
