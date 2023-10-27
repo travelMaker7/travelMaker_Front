@@ -1,0 +1,132 @@
+/* html,body {
+  margin: 0; 
+  padding: 0; 
+  height: 100%; 
+  background-color: white;
+}
+
+#root {
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+  height: 100%; 
+}
+
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; 
+  height: 100%; 
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  height: 28%;
+  width: 110%;
+  border-bottom: 2px solid #83d2ef;
+}
+
+.travel-schedule-button {
+  display: block;
+  margin: 20px auto;
+  padding: 2% 6%;
+  background-color: #3359DE;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.main-message {
+  font-size: 17px;
+  color: blue;
+  font-weight: bold;
+  margin: 3%;
+}
+
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  color: black;
+}
+
+.image-box {
+  margin: -12px;
+  margin-left: 1px;;
+  margin-bottom: 5%;
+  margin-top: 1%;
+}
+
+.Seoul {
+  font-size: 30px;
+  color: #C89E85;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+.Busan {
+  font-size: 30px;
+  color: #5196F1;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+.Jeju {
+  font-size: 30px;
+  color: #84e45b;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+.Chuncheon {
+  font-size: 30px;
+  color: #24924e;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+.Gapyeong {
+  font-size: 30px;
+  color: #2fc4e6;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+.Iksan {
+  font-size: 30px;
+  color: #eb879b;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+.Yeosu {
+  font-size: 30px;
+  color: #65baa3;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+.Haenam {
+  font-size: 30px;
+  color: #4e41c6;
+  font-weight: bold;
+  box-sizing:content-box;
+  margin-top: -17px;
+}
+
+
+.image-box {
+  cursor: pointer;
+} */
