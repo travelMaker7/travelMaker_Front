@@ -1,17 +1,17 @@
 import React from "react";
 import styled, { createGlobalStyle } from 'styled-components'; 
-import TopBar from "./TopBar";
-import SearchBar from "./SearchBar";
-import TravelScheduleButton from "./TravelScheduleButton";
-import ImageBox from "./ImageBox";
-import ex1 from "../assets/images/mainpageimages/ex1.png";
-import ex2 from "../assets/images/mainpageimages/ex2.png";
-import ex3 from "../assets/images/mainpageimages/ex3.png";
-import ex4 from "../assets/images/mainpageimages/ex1.png";
-import ex5 from "../assets/images/mainpageimages/ex4.png";
-import ex6 from "../assets/images/mainpageimages/ex5.png";
-import ex7 from "../assets/images/mainpageimages/ex6.png";
-import ex8 from "../assets/images/mainpageimages/ex7.png";
+import TopBar from "../../components/main/TopBar";
+import SearchBar from "../../components/main/SearchBar";
+import TravelScheduleButton from "../../components/main/TravelScheduleButton";
+import ImageBox from "../../components/main/ImageBox";
+import ex1 from "../../assets/images/mainpageimages/ex1.png";
+import ex2 from "../../assets/images/mainpageimages/ex2.png";
+import ex3 from "../../assets/images/mainpageimages/ex3.png";
+import ex4 from "../../assets/images/mainpageimages/ex1.png";
+import ex5 from "../../assets/images/mainpageimages/ex4.png";
+import ex6 from "../../assets/images/mainpageimages/ex5.png";
+import ex7 from "../../assets/images/mainpageimages/ex6.png";
+import ex8 from "../../assets/images/mainpageimages/ex7.png";
 
 const imagesAndTags = [
   { image: ex1, tag: "Seoul" },

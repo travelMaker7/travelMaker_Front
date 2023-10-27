@@ -14,14 +14,15 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "latest",
+    "axios": "^1.6.0",
     "date-fns": "^2.30.0",
     "react": "^18.2.0",
-    "react-dates": "^21.8.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "styled-components": "^6.1.0"
   },
   "devDependencies": {
+    "@types/babel-core": "^6.25.9",
     "@types/node": "^20.8.8",
     "@types/react": "^18.2.15",
     "@types/react-dates": "^21",

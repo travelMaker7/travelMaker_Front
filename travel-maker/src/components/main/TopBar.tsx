@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import logo from "../assets/images/mainpageimages/logo.png";  // 경로 수정
-import userIcon from "../assets/images/mainpageimages/mypagelogo.png";  // 경로 수정
+import logo from "../../assets/images/mainpageimages/logo.png";  // 경로 수정
+import userIcon from "../../assets/images/mainpageimages/mypagelogo.png";  // 경로 수정
 import styled from 'styled-components';
 
 const TopBarDiv = styled.div`

@@ -1,5 +1,5 @@
-import { DetailMappingKakaoMap } from "@/components/DetailMappingKakaoMap";
-import { DetailMappingInfo } from "@/components/DetailMappingInfo";
+import { DetailMappingKakaoMap } from "@/components/detailmapping/DetailMappingKakaoMap";
+import { DetailMappingInfo } from "@/components/detailmapping/DetailMappingInfo";
 import styled from "styled-components";
 
 const Container = styled.div`

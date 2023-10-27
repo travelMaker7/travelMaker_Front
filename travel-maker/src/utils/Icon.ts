@@ -26,6 +26,18 @@ export const NUBMERICON = styled.div`
   background-color: green;
 `
 
+//지도 모양 아이콘
+export const MAPICON = `<FontAwesomeIcon icon={fa-solid fa-map} style={{color: "#6FADFF",}} />`;
+
+//시계 아이콘
+export const CLOCKICON = `<FontAwesomeIcon icon={fa-solid fa-clock} style={{color: "#6FADFF",}} />`;
+
+//사람 아이콘
+export const PEOPLEICON = `<FontAwesomeIcon icon={fa-solid fa-people-line} style={{color: "#6FADFF",}} />`;
+
+//달력 아이콘
+export const CALENDARICON = `<FontAwesomeIcon icon={fa-solid fa-calendar} style={{color: "#6FADFF",}} />`;
+
 
 
 

@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import React from 'react';
-import MapContainer from "@/components/MapContainer";
-import MyRangeCalendar from "@/components/DatePicker";
+import MapContainer from "@/components/scheduleregistration/MapContainer";
 
 const ScheduleRegistrationPage = () => {
   
@@ -21,7 +20,6 @@ const ScheduleRegistrationPage = () => {
               <ScheduleSubmitBtn>일정 등록</ScheduleSubmitBtn>
             </InputHeaderDiv>
             <DatePickerDiv>
-              <MyRangeCalendar/>
             </DatePickerDiv>
           </FixedDiv>
           <ScrollDiv></ScrollDiv>

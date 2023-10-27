@@ -1,96 +1,96 @@
-import { CalendarIcon, ClockIcon, MapIcon, PeopleIcon } from "@/utils/Icon";
+import { CALENDARICON, CLOCKICON, MAPICON, PEOPLEICON } from "@/utils/Icon";
 import { ScheduleDetail } from "@/utils/Types";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// import axios from "axios";
+import axios from "axios";
 
-const SCHEDULE_DETAIL_MOCK = {
-  status: 201,
-  message: "일정 상세보기 조회 성공",
-  data: {
-    scheduleId: 1,
-    makers: [
-      { destinationY: "37.5797", destinationX: "126.977" },
-      { destinationY: "37.5797", destinationX: "126.977" },
-    ],
-    scheduleName: "서울 맛집 탐방",
-    startDate: "2023-11-21",
-    finishDate: "2023-11-22",
-    tripPlans: [
-      {
-        dateNum: "10월 20일",
-        details: [
-          {
-            tripPlanId: 1,
-            destinationName: "멋지고",
-            wishCnt: 2,
-            wishJoin: false,
-            address: "서울특별시 종로구 사직로 161",
-            arriveTime: "16:00",
-            leaveTime: "18:00",
-          },
-          {
-            tripPlanId: 2,
-            destinationName: "잘생긴",
-            wishCnt: 3,
-            wishJoin: false,
-            address: "서울특별시 종로구 사직로 161",
-            arriveTime: "18:00",
-            leaveTime: "19:00",
-          },
-        ],
-      },
-      {
-        dateNum: "10월 21일",
-        details: [
-          {
-            tripPlanId: 3,
-            destinationName: "수민이",
-            wishCnt: 2,
-            wishJoin: false,
-            address: "서울특별시 종로구 사직로 161",
-            arriveTime: "16:00",
-            leaveTime: "18:00",
-          },
-          {
-            tripPlanId: 4,
-            destinationName: "",
-            wishCnt: 3,
-            wishJoin: false,
-            address: "서울특별시 종로구 사직로 161",
-            arriveTime: "18:00",
-            leaveTime: "19:00",
-          },
-        ],
-      },
-    ],
-    chatUrl: "https://open.kakao.com/o/s5E3AYof",
-  },
-};
+// const SCHEDULE_DETAIL_MOCK = {
+//   status: 201,
+//   message: "일정 상세보기 조회 성공",
+//   data: {
+//     scheduleId: 1,
+//     makers: [
+//       { destinationY: "37.5797", destinationX: "126.977" },
+//       { destinationY: "37.5797", destinationX: "126.977" },
+//     ],
+//     scheduleName: "서울 맛집 탐방",
+//     startDate: "2023-11-21",
+//     finishDate: "2023-11-22",
+//     tripPlans: [
+//       {
+//         dateNum: "10월 20일",
+//         details: [
+//           {
+//             tripPlanId: 1,
+//             destinationName: "멋지고",
+//             wishCnt: 2,
+//             wishJoin: false,
+//             address: "서울특별시 종로구 사직로 161",
+//             arriveTime: "16:00",
+//             leaveTime: "18:00",
+//           },
+//           {
+//             tripPlanId: 2,
+//             destinationName: "잘생긴",
+//             wishCnt: 3,
+//             wishJoin: false,
+//             address: "서울특별시 종로구 사직로 161",
+//             arriveTime: "18:00",
+//             leaveTime: "19:00",
+//           },
+//         ],
+//       },
+//       {
+//         dateNum: "10월 21일",
+//         details: [
+//           {
+//             tripPlanId: 3,
+//             destinationName: "수민이",
+//             wishCnt: 2,
+//             wishJoin: false,
+//             address: "서울특별시 종로구 사직로 161",
+//             arriveTime: "16:00",
+//             leaveTime: "18:00",
+//           },
+//           {
+//             tripPlanId: 4,
+//             destinationName: "",
+//             wishCnt: 3,
+//             wishJoin: false,
+//             address: "서울특별시 종로구 사직로 161",
+//             arriveTime: "18:00",
+//             leaveTime: "19:00",
+//           },
+//         ],
+//       },
+//     ],
+//     chatUrl: "https://open.kakao.com/o/s5E3AYof",
+//   },
+// };
 
 export const DetailMappingInfo: React.FC = () => {
   const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
-  // const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
-  //   null
-  // );
+  const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
+    null
+  );
 
-  // useEffect(() => {
-  //   const fetchScheduleDetail = async () => {
-  //     const scheduleId = 1;
-  //     try {
-  //       const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       console.log(res);
-  //       setScheduleDetail(res.data.data);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchScheduleDetail();
-  // }, []);
+  useEffect(() => {
+    const fetchScheduleDetail = async () => {
+      const scheduleId = 1;
+      try {
+        const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(res);
+        setScheduleDetail(res.data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchScheduleDetail();
+  }, []);
 
   const toggleSideInfo = (tripPlanId: number) => {
     setActiveTripPlanId((prevId) =>
@@ -98,19 +98,19 @@ export const DetailMappingInfo: React.FC = () => {
     );
   };
 
-  // if (!scheduleDetail) {
-  //   return null;
-  // }
+  if (!scheduleDetail) {
+    return null;
+  }
 
-  // const { startDate, finishDate, tripPlans, scheduleName } = scheduleDetail;
-  const { startDate, finishDate, tripPlans, scheduleName } =
-    SCHEDULE_DETAIL_MOCK.data;
+  const { startDate, finishDate, tripPlans, scheduleName } = scheduleDetail;
+  // const { startDate, finishDate, tripPlans, scheduleName } =
+  //   SCHEDULE_DETAIL_MOCK.data;
 
   return (
     <>
       <ScheduleName>{scheduleName}</ScheduleName>
       <DateContainer>
-        <InfoIcon>{CalendarIcon}</InfoIcon>
+        <InfoIcon></InfoIcon>
         <div>
           {startDate} ~ {finishDate}
         </div>
@@ -129,7 +129,7 @@ export const DetailMappingInfo: React.FC = () => {
                   >
                     ▶
                   </ToggleButton>
-                  <InfoIcon>{MapIcon}</InfoIcon>
+                  <InfoIcon></InfoIcon>
                   <InfoText>{detail.destinationName}</InfoText>
                   <InfoData>{plan.dateNum}</InfoData>
                 </InfoItemContainer>
@@ -137,11 +137,11 @@ export const DetailMappingInfo: React.FC = () => {
                   isSideInfoVisible={activeTripPlanId === detail.tripPlanId}
                 >
                   <InfoItemContainer>
-                    <InfoIcon>{ClockIcon}</InfoIcon>
+                    <InfoIcon></InfoIcon>
                     <InfoText>{`${detail.arriveTime} ~ ${detail.leaveTime}`}</InfoText>
                   </InfoItemContainer>
                   <InfoItemContainer>
-                    <InfoIcon>{PeopleIcon}</InfoIcon>
+                    <InfoIcon></InfoIcon>
                     <InfoText>{`동행 인원: ${detail.wishCnt}/4`}</InfoText>
                   </InfoItemContainer>
                   <JoinButton

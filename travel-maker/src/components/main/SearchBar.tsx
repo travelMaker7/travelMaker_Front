@@ -14,7 +14,7 @@
 
 import React from "react";
 import styled from 'styled-components';
-import SearchIconImg from "../assets/images/mainpageimages/SearchIcon.png"; // Changed this line
+import SearchIconImg from "../../assets/images/mainpageimages/SearchIcon.png"; // Changed this line
 
 const SearchContainer = styled.div`
   position: relative;
