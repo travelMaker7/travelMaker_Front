@@ -1,6 +1,8 @@
 import { CalendarIcon, ClockIcon, MapIcon, PeopleIcon } from "@/utils/Icon";
-import React, { useState } from "react";
+import { ScheduleDetail } from "@/utils/Types";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+// import axios from "axios";
 
 const SCHEDULE_DETAIL_MOCK = {
   status: 201,
@@ -66,7 +68,96 @@ const SCHEDULE_DETAIL_MOCK = {
   },
 };
 
-const { startDate, finishDate, tripPlans } = SCHEDULE_DETAIL_MOCK.data;
+export const DetailMappingInfo: React.FC = () => {
+  const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
+  // const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
+  //   null
+  // );
+
+  // useEffect(() => {
+  //   const fetchScheduleDetail = async () => {
+  //     const scheduleId = 1;
+  //     try {
+  //       const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       console.log(res);
+  //       setScheduleDetail(res.data.data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchScheduleDetail();
+  // }, []);
+
+  const toggleSideInfo = (tripPlanId: number) => {
+    setActiveTripPlanId((prevId) =>
+      prevId === tripPlanId ? null : tripPlanId
+    );
+  };
+
+  // if (!scheduleDetail) {
+  //   return null;
+  // }
+
+  // const { startDate, finishDate, tripPlans, scheduleName } = scheduleDetail;
+  const { startDate, finishDate, tripPlans, scheduleName } =
+    SCHEDULE_DETAIL_MOCK.data;
+
+  return (
+    <>
+      <ScheduleName>{scheduleName}</ScheduleName>
+      <DateContainer>
+        <InfoIcon>{CalendarIcon}</InfoIcon>
+        <div>
+          {startDate} ~ {finishDate}
+        </div>
+      </DateContainer>
+      {tripPlans.map((plan) =>
+        plan.details.map(
+          (detail) =>
+            detail.destinationName && (
+              <SideInfoContainer key={detail.tripPlanId}>
+                <InfoItemContainer>
+                  <ToggleButton
+                    className={
+                      activeTripPlanId === detail.tripPlanId ? "on" : ""
+                    }
+                    onClick={() => toggleSideInfo(detail.tripPlanId)}
+                  >
+                    ▶
+                  </ToggleButton>
+                  <InfoIcon>{MapIcon}</InfoIcon>
+                  <InfoText>{detail.destinationName}</InfoText>
+                  <InfoData>{plan.dateNum}</InfoData>
+                </InfoItemContainer>
+                <ContentContainer
+                  isSideInfoVisible={activeTripPlanId === detail.tripPlanId}
+                >
+                  <InfoItemContainer>
+                    <InfoIcon>{ClockIcon}</InfoIcon>
+                    <InfoText>{`${detail.arriveTime} ~ ${detail.leaveTime}`}</InfoText>
+                  </InfoItemContainer>
+                  <InfoItemContainer>
+                    <InfoIcon>{PeopleIcon}</InfoIcon>
+                    <InfoText>{`동행 인원: ${detail.wishCnt}/4`}</InfoText>
+                  </InfoItemContainer>
+                  <JoinButton
+                    isVisible={activeTripPlanId === detail.tripPlanId}
+                  >
+                    동행 신청
+                  </JoinButton>
+                </ContentContainer>
+              </SideInfoContainer>
+            )
+        )
+      )}
+      <MemoBox></MemoBox>
+    </>
+  );
+};
 
 const ScheduleName = styled.h3`
   font-family: Inter;
@@ -193,65 +284,3 @@ const InfoData = styled.div`
   flex: 1;
   text-align: right;
 `;
-
-export const DetailMappingInfo: React.FC = () => {
-  const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
-
-  const toggleSideInfo = (tripPlanId: number) => {
-    setActiveTripPlanId((prevId) =>
-      prevId === tripPlanId ? null : tripPlanId
-    );
-  };
-
-  return (
-    <>
-      <ScheduleName>{SCHEDULE_DETAIL_MOCK.data.scheduleName}</ScheduleName>
-      <DateContainer>
-        <InfoIcon>{CalendarIcon}</InfoIcon>
-        <div>
-          {startDate} ~ {finishDate}
-        </div>
-      </DateContainer>
-      {tripPlans.map((plan) =>
-        plan.details.map(
-          (detail) =>
-            detail.destinationName && (
-              <SideInfoContainer key={detail.tripPlanId}>
-                <InfoItemContainer>
-                  <ToggleButton
-                    className={
-                      activeTripPlanId === detail.tripPlanId ? "on" : ""
-                    }
-                    onClick={() => toggleSideInfo(detail.tripPlanId)}
-                  >
-                    ▶
-                  </ToggleButton>
-                  <InfoIcon>{MapIcon}</InfoIcon>
-                  <InfoText>{detail.destinationName}</InfoText>
-                  <InfoData>{plan.dateNum}</InfoData>
-                </InfoItemContainer>
-                <ContentContainer
-                  isSideInfoVisible={activeTripPlanId === detail.tripPlanId}
-                >
-                  <InfoItemContainer>
-                    <InfoIcon>{ClockIcon}</InfoIcon>
-                    <InfoText>{`${detail.arriveTime} ~ ${detail.leaveTime}`}</InfoText>
-                  </InfoItemContainer>
-                  <InfoItemContainer>
-                    <InfoIcon>{PeopleIcon}</InfoIcon>
-                    <InfoText>{`동행 인원: ${detail.wishCnt}/4`}</InfoText>
-                  </InfoItemContainer>
-                  <JoinButton
-                    isVisible={activeTripPlanId === detail.tripPlanId}
-                  >
-                    동행 신청
-                  </JoinButton>
-                </ContentContainer>
-              </SideInfoContainer>
-            )
-        )
-      )}
-      <MemoBox></MemoBox>
-    </>
-  );
-};
