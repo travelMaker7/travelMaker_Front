@@ -22,3 +22,15 @@ export interface ScheduleDetail {
   tripPlans: TripPlan[];
   chatUrl: string;
 }
+
+export interface Notifications {
+  joinId: number;
+  scheduleName: string;
+  destinationName: string;
+  userName: string;
+}
+
+export interface MarkerData {
+  destinationY: string;
+  destinationX: string;
+}

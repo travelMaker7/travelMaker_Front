@@ -1,8 +1,15 @@
-import { CALENDARICON, CLOCKICON, MAPICON, PEOPLEICON } from "@/utils/Icon";
-import { ScheduleDetail } from "@/utils/Types";
+import { MarkerData, ScheduleDetail } from "@/utils/Types";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import {
+  faMap,
+  faClock,
+  faUsers,
+  faCalendar,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import JoinRequestButton from "./JoinRequestButton";
 
 // const SCHEDULE_DETAIL_MOCK = {
 //   status: 201,
@@ -11,7 +18,8 @@ import axios from "axios";
 //     scheduleId: 1,
 //     makers: [
 //       { destinationY: "37.5797", destinationX: "126.977" },
-//       { destinationY: "37.5797", destinationX: "126.977" },
+//       { destinationY: "37.582441", destinationX: "126.977060" },
+//       { destinationY: "37.579772", destinationX: "126.975890" },
 //     ],
 //     scheduleName: "서울 맛집 탐방",
 //     startDate: "2023-11-21",
@@ -52,15 +60,6 @@ import axios from "axios";
 //             arriveTime: "16:00",
 //             leaveTime: "18:00",
 //           },
-//           {
-//             tripPlanId: 4,
-//             destinationName: "",
-//             wishCnt: 3,
-//             wishJoin: false,
-//             address: "서울특별시 종로구 사직로 161",
-//             arriveTime: "18:00",
-//             leaveTime: "19:00",
-//           },
 //         ],
 //       },
 //     ],
@@ -68,7 +67,11 @@ import axios from "axios";
 //   },
 // };
 
-export const DetailMappingInfo: React.FC = () => {
+interface Props {
+  setMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>;
+}
+
+export const DetailMappingInfo: React.FC<Props> = ({ setMarkers }) => {
   const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
   const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
     null
@@ -84,6 +87,7 @@ export const DetailMappingInfo: React.FC = () => {
           },
         });
         console.log(res);
+        setMarkers(res.data.data.markers);
         setScheduleDetail(res.data.data);
       } catch (e) {
         console.log(e);
@@ -91,6 +95,10 @@ export const DetailMappingInfo: React.FC = () => {
     };
     fetchScheduleDetail();
   }, []);
+
+  // useEffect(() => {
+  //   setMarkers(SCHEDULE_DETAIL_MOCK.data.makers);
+  // }, []);
 
   const toggleSideInfo = (tripPlanId: number) => {
     setActiveTripPlanId((prevId) =>
@@ -110,10 +118,12 @@ export const DetailMappingInfo: React.FC = () => {
     <>
       <ScheduleName>{scheduleName}</ScheduleName>
       <DateContainer>
-        <InfoIcon></InfoIcon>
-        <div>
+        <InfoIcon>
+          <FontAwesomeIcon icon={faCalendar} style={{ color: "#6FADFF" }} />
+        </InfoIcon>
+        <InfoDateText>
           {startDate} ~ {finishDate}
-        </div>
+        </InfoDateText>
       </DateContainer>
       {tripPlans.map((plan) =>
         plan.details.map(
@@ -129,7 +139,12 @@ export const DetailMappingInfo: React.FC = () => {
                   >
                     ▶
                   </ToggleButton>
-                  <InfoIcon></InfoIcon>
+                  <InfoIcon>
+                    <FontAwesomeIcon
+                      icon={faMap}
+                      style={{ color: "#6FADFF" }}
+                    />
+                  </InfoIcon>
                   <InfoText>{detail.destinationName}</InfoText>
                   <InfoData>{plan.dateNum}</InfoData>
                 </InfoItemContainer>
@@ -137,18 +152,28 @@ export const DetailMappingInfo: React.FC = () => {
                   isSideInfoVisible={activeTripPlanId === detail.tripPlanId}
                 >
                   <InfoItemContainer>
-                    <InfoIcon></InfoIcon>
+                    <InfoIcon>
+                      <FontAwesomeIcon
+                        icon={faClock}
+                        style={{ color: "#6FADFF" }}
+                      />
+                    </InfoIcon>
                     <InfoText>{`${detail.arriveTime} ~ ${detail.leaveTime}`}</InfoText>
                   </InfoItemContainer>
                   <InfoItemContainer>
-                    <InfoIcon></InfoIcon>
+                    <InfoIcon>
+                      <FontAwesomeIcon
+                        icon={faUsers}
+                        style={{ color: "#6FADFF" }}
+                      />
+                    </InfoIcon>
                     <InfoText>{`동행 인원: ${detail.wishCnt}/4`}</InfoText>
                   </InfoItemContainer>
-                  <JoinButton
+                  <JoinRequestButton
+                    tripPlanId={detail.tripPlanId}
+                    // destinationName={detail.destinationName}
                     isVisible={activeTripPlanId === detail.tripPlanId}
-                  >
-                    동행 신청
-                  </JoinButton>
+                  />
                 </ContentContainer>
               </SideInfoContainer>
             )
@@ -168,7 +193,7 @@ const ScheduleName = styled.h3`
 
 const DateContainer = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   font-family: Inter;
   font-size: 18px;
@@ -228,7 +253,7 @@ const InfoItemContainer = styled.div`
 const InfoIcon = styled.div`
   width: 16px;
   height: 16px;
-  margin-right: 8px;
+  margin-right: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -241,28 +266,6 @@ const InfoText = styled.p`
   margin-bottom: 10px;
   flex: 1;
   text-align: left;
-`;
-
-const JoinButton = styled.button<{ isVisible: boolean }>`
-  display: ${(props) => (props.isVisible ? "block" : "none")};
-  position: absolute;
-  right: 15px;
-  bottom: 15px;
-  background-color: var(--blue-200, #6fadff);
-  border: none;
-  border-radius: 10px;
-  padding: 5px;
-  color: #fff;
-  font-family: Inter;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #fff;
-    color: var(--blue-200, #6fadff);
-    border: 1px solid #6fadff;
-  }
 `;
 
 const MemoBox = styled.div`
@@ -283,4 +286,10 @@ const InfoData = styled.div`
   color: #757575;
   flex: 1;
   text-align: right;
+`;
+
+const InfoDateText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
