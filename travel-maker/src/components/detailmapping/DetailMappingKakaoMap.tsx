@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { EnhancedMarkerData } from "@/utils/Types";
 
 declare const kakao: any;
 
-interface MarkerData {
-  destinationY: string;
-  destinationX: string;
-}
-
 interface Props {
-  markers: MarkerData[];
+  markers: EnhancedMarkerData[];
+  setActiveTripPlanId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
+export const DetailMappingKakaoMap: React.FC<Props> = ({
+  markers,
+  setActiveTripPlanId,
+}) => {
   useEffect(() => {
     const container = document.getElementById("map");
     if (!container || markers.length === 0) return;
@@ -31,10 +31,27 @@ export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
       );
       bounds.extend(position);
 
-      new kakao.maps.Marker({
+      const createMarker = new kakao.maps.Marker({
         position,
-      }).setMap(map);
+      });
+      kakao.maps.event.addListener(createMarker, "click", () => {
+        setActiveTripPlanId(marker.tripPlanId);
+      });
+
+      createMarker.setMap(map);
     });
+
+    const polyline = new kakao.maps.Polyline({
+      path: markers.map(
+        (marker) =>
+          new kakao.maps.LatLng(marker.destinationY, marker.destinationX)
+      ),
+      strokeWeight: 3,
+      strokeColor: "#3b90ff",
+      strokeOpacity: 0.6,
+      strokeStyle: "solid",
+    });
+    polyline.setMap(map);
 
     map.setBounds(bounds);
   }, [markers]);

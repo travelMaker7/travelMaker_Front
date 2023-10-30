@@ -15,7 +15,7 @@ export interface TripPlan {
 
 export interface ScheduleDetail {
   scheduleId: number;
-  makers: { destinationY: string; destinationX: string }[];
+  markers: { destinationY: string; destinationX: string }[];
   scheduleName: string;
   startDate: string;
   finishDate: string;
@@ -33,4 +33,8 @@ export interface Notifications {
 export interface MarkerData {
   destinationY: string;
   destinationX: string;
+}
+
+export interface EnhancedMarkerData extends MarkerData {
+  tripPlanId: number;
 }

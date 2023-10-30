@@ -2,6 +2,7 @@ import { DetailMappingInfo } from "@/components/detailmapping/DetailMappingInfo"
 import { render, act, waitFor } from "@testing-library/react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
+import { SetStateAction } from "react";
 
 describe("<DetailMappingInfo />", () => {
   it("should render the fetched schedule details and set markers", async () => {
@@ -52,7 +53,17 @@ describe("<DetailMappingInfo />", () => {
     mock.onGet("/api/v1/schedule/detail/1").reply(200, mockResponseData);
 
     await act(async () => {
-      render(<DetailMappingInfo setMarkers={mockSetMarkers} />);
+      render(
+        <DetailMappingInfo
+          setMarkers={mockSetMarkers}
+          activeTripPlanId={null}
+          setActiveTripPlanId={function (
+            value: SetStateAction<number | null>
+          ): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+      );
     });
 
     await waitFor(() => {

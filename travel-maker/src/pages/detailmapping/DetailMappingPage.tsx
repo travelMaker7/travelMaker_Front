@@ -3,24 +3,28 @@ import { DetailMappingInfo } from "@/components/detailmapping/DetailMappingInfo"
 import styled from "styled-components";
 import { HeaderComponent } from "./HeaderComponent";
 import { useState } from "react";
-
-interface MarkerData {
-  destinationY: string;
-  destinationX: string;
-}
+import { MarkerData } from "@/utils/Types";
 
 const DetailMappingPage: React.FC = () => {
   const [markers, setMarkers] = useState<MarkerData[]>([]);
+  const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
 
   return (
     <Container>
       <HeaderComponent />
       <MainContainer>
         <MapContainer>
-          <DetailMappingKakaoMap markers={markers} />
+          <DetailMappingKakaoMap
+            markers={markers}
+            setActiveTripPlanId={setActiveTripPlanId}
+          />
         </MapContainer>
         <SideContainer>
-          <DetailMappingInfo setMarkers={setMarkers} />
+          <DetailMappingInfo
+            setMarkers={setMarkers}
+            activeTripPlanId={activeTripPlanId}
+            setActiveTripPlanId={setActiveTripPlanId}
+          />
         </SideContainer>
       </MainContainer>
     </Container>

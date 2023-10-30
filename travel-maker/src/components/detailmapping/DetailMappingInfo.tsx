@@ -1,4 +1,4 @@
-import { MarkerData, ScheduleDetail } from "@/utils/Types";
+import { MarkerData, ScheduleDetail, TripPlan } from "@/utils/Types";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -11,94 +11,120 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import JoinRequestButton from "./JoinRequestButton";
 
-// const SCHEDULE_DETAIL_MOCK = {
-//   status: 201,
-//   message: "일정 상세보기 조회 성공",
-//   data: {
-//     scheduleId: 1,
-//     makers: [
-//       { destinationY: "37.5797", destinationX: "126.977" },
-//       { destinationY: "37.582441", destinationX: "126.977060" },
-//       { destinationY: "37.579772", destinationX: "126.975890" },
-//     ],
-//     scheduleName: "서울 맛집 탐방",
-//     startDate: "2023-11-21",
-//     finishDate: "2023-11-22",
-//     tripPlans: [
-//       {
-//         dateNum: "10월 20일",
-//         details: [
-//           {
-//             tripPlanId: 1,
-//             destinationName: "멋지고",
-//             wishCnt: 2,
-//             wishJoin: false,
-//             address: "서울특별시 종로구 사직로 161",
-//             arriveTime: "16:00",
-//             leaveTime: "18:00",
-//           },
-//           {
-//             tripPlanId: 2,
-//             destinationName: "잘생긴",
-//             wishCnt: 3,
-//             wishJoin: false,
-//             address: "서울특별시 종로구 사직로 161",
-//             arriveTime: "18:00",
-//             leaveTime: "19:00",
-//           },
-//         ],
-//       },
-//       {
-//         dateNum: "10월 21일",
-//         details: [
-//           {
-//             tripPlanId: 3,
-//             destinationName: "수민이",
-//             wishCnt: 2,
-//             wishJoin: false,
-//             address: "서울특별시 종로구 사직로 161",
-//             arriveTime: "16:00",
-//             leaveTime: "18:00",
-//           },
-//         ],
-//       },
-//     ],
-//     chatUrl: "https://open.kakao.com/o/s5E3AYof",
-//   },
-// };
+const SCHEDULE_DETAIL_MOCK = {
+  status: 201,
+  message: "일정 상세보기 조회 성공",
+  data: {
+    scheduleId: 1,
+    markers: [
+      { destinationY: "37.5797", destinationX: "126.977" },
+      { destinationY: "37.582441", destinationX: "126.977060" },
+      { destinationY: "37.579772", destinationX: "126.975890" },
+    ],
+    scheduleName: "서울 맛집 탐방",
+    startDate: "2023-11-21",
+    finishDate: "2023-11-22",
+    tripPlans: [
+      {
+        dateNum: "10월 20일",
+        details: [
+          {
+            tripPlanId: 1,
+            destinationName: "멋지고",
+            wishCnt: 2,
+            wishJoin: false,
+            address: "서울특별시 종로구 사직로 161",
+            arriveTime: "16:00",
+            leaveTime: "18:00",
+          },
+          {
+            tripPlanId: 2,
+            destinationName: "잘생긴",
+            wishCnt: 3,
+            wishJoin: false,
+            address: "서울특별시 종로구 사직로 161",
+            arriveTime: "18:00",
+            leaveTime: "19:00",
+          },
+        ],
+      },
+      {
+        dateNum: "10월 21일",
+        details: [
+          {
+            tripPlanId: 3,
+            destinationName: "수민이",
+            wishCnt: 2,
+            wishJoin: false,
+            address: "서울특별시 종로구 사직로 161",
+            arriveTime: "16:00",
+            leaveTime: "18:00",
+          },
+        ],
+      },
+    ],
+    chatUrl: "https://open.kakao.com/o/s5E3AYof",
+  },
+};
 
 interface Props {
   setMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>;
+  activeTripPlanId: number | null;
+  setActiveTripPlanId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export const DetailMappingInfo: React.FC<Props> = ({ setMarkers }) => {
-  const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
+export const DetailMappingInfo: React.FC<Props> = ({
+  setMarkers,
+  activeTripPlanId,
+  setActiveTripPlanId,
+}) => {
+  // const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
   const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
     null
   );
 
-  useEffect(() => {
-    const fetchScheduleDetail = async () => {
-      const scheduleId = 1;
-      try {
-        const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log(res);
-        setMarkers(res.data.data.markers);
-        setScheduleDetail(res.data.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchScheduleDetail();
-  }, []);
-
   // useEffect(() => {
-  //   setMarkers(SCHEDULE_DETAIL_MOCK.data.makers);
+  //   const fetchScheduleDetail = async () => {
+  //     const scheduleId = 1;
+  //     try {
+  //       const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       const allDetails = res.data.data.tripPlans.flatMap(
+  //         (plan: TripPlan) => plan.details
+  //       );
+  //       const enhancedMarkers = res.data.data.makers.map(
+  //         (marker: MarkerData, index: number) => ({
+  //           ...marker,
+  //           tripPlanId: allDetails[index]?.tripPlanId,
+  //         })
+  //       );
+
+  //       setMarkers(enhancedMarkers);
+  //       setScheduleDetail(res.data.data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchScheduleDetail();
   // }, []);
+
+  useEffect(() => {
+    const allDetails = SCHEDULE_DETAIL_MOCK.data.tripPlans.flatMap(
+      (plan) => plan.details
+    );
+    const enhancedMarkers = SCHEDULE_DETAIL_MOCK.data.markers.map(
+      (marker, index) => ({
+        ...marker,
+        tripPlanId: allDetails[index].tripPlanId,
+      })
+    );
+
+    setMarkers(enhancedMarkers);
+    setScheduleDetail(SCHEDULE_DETAIL_MOCK.data);
+  }, []);
 
   const toggleSideInfo = (tripPlanId: number) => {
     setActiveTripPlanId((prevId) =>
