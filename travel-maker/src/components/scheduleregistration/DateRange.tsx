@@ -28,9 +28,14 @@ const DateRange: React.FC = () => {
     } else return
   }
 
-  const handleRangeChange = () => {
-    setSelectedRange(selectedRange);
-    calcDayCnt(selectedRange);
+  const handleRangeChange = (dates: [Dayjs | null, Dayjs | null] | null) => {
+    setSelectedRange(dates);
+    calcDayCnt(dates);
+  };
+
+  const disabledDate = (current: Dayjs | null) => {
+    if (current === null) return false;
+    return current && dayjs(current).isBefore(dayjs(), 'day');
   };
 
   return (
@@ -38,7 +43,8 @@ const DateRange: React.FC = () => {
       <RangePicker
         format="YYYY-MM-DD"
         value={selectedRange}
-        onCalendarChange={handleRangeChange}
+        onChange={handleRangeChange}
+        disabledDate={disabledDate}
       />
     </>
   );

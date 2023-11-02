@@ -4,16 +4,10 @@ import MapContainer from "@/components/scheduleregistration/MapContainer";
 import DateRange from "@/components/scheduleregistration/DateRange";
 import { useState } from "react";
 import { Dayjs } from "dayjs";
-import ToggleList from "../../components/scheduleregistration/ToggleList";
+// import ToggleList from "../../components/scheduleregistration/ToggleList";
 
 const ScheduleRegistrationPage = () => {
   
-  
-
-  
-
-  
-
   return (
     <PageContainer>
       <MapContainerBox>
@@ -32,7 +26,7 @@ const ScheduleRegistrationPage = () => {
             <DateRange/>
           </DatePickerDiv>
           <ScrollDiv>
-            <ToggleList/>
+            {/* <ToggleList/> */}
           </ScrollDiv>
         </ScheduleDiv>
         <OpenChattingDiv>
@@ -74,7 +68,6 @@ const InputHeaderDiv = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: center;
   margin-left: 2rem;
 `
 const ScheduleTheme = styled.div`
@@ -89,7 +82,7 @@ const ScheduleTheme = styled.div`
 `
 const ScheduleThemeInput = styled.input`
   border: 1px #ebebeb solid;
-  width: 15rem;
+  width: 16.625rem;
   height: 2.5rem;
   text-indent: 1rem;
   font-size: 1.125rem;
@@ -98,7 +91,7 @@ const ScheduleThemeInput = styled.input`
 `
 
 const ScheduleSubmitBtn = styled.button`
-  width:6rem;
+  width:5.2rem;
   height: 2.5rem;
   background-color: #8CC4F8;
   color: white;
