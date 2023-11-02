@@ -5,15 +5,15 @@ import styled from "styled-components";
 
 interface JoinRequestButtonProps {
   tripPlanId: number;
+  overWish: boolean;
   isVisible: boolean;
 }
 
 const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
   tripPlanId,
+  overWish,
   isVisible,
 }) => {
-  const [joinStatus, setJoinStatus] = useState("동행신청");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleJoinRequest = async () => {
     try {
@@ -25,8 +25,6 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
 
       if (response.status === 200) {
         alert("동행신청이 완료되었습니다.");
-        setJoinStatus("신청완료");
-        setIsButtonDisabled(true);
       } else {
         alert("동행신청에 실패했습니다.");
       }
@@ -40,9 +38,9 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
     <JoinButton
       isVisible={isVisible}
       onClick={handleJoinRequest}
-      disabled={isButtonDisabled}
+      disabled={!overWish}
     >
-      {joinStatus}
+      {overWish ? "동행신청" : "신청불가"}
     </JoinButton>
   );
 };

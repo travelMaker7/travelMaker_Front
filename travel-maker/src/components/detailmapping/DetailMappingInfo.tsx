@@ -36,6 +36,7 @@ const SCHEDULE_DETAIL_MOCK = {
             address: "서울특별시 종로구 사직로 161",
             arriveTime: "16:00",
             leaveTime: "18:00",
+            overWish: true,
           },
           {
             tripPlanId: 2,
@@ -45,6 +46,7 @@ const SCHEDULE_DETAIL_MOCK = {
             address: "서울특별시 종로구 사직로 161",
             arriveTime: "18:00",
             leaveTime: "19:00",
+            overWish: false,
           },
         ],
       },
@@ -59,6 +61,7 @@ const SCHEDULE_DETAIL_MOCK = {
             address: "서울특별시 종로구 사직로 161",
             arriveTime: "16:00",
             leaveTime: "18:00",
+            overWish: true,
           },
         ],
       },
@@ -83,33 +86,33 @@ export const DetailMappingInfo: React.FC<Props> = ({
     null
   );
 
-  // useEffect(() => {
-  //   const fetchScheduleDetail = async () => {
-  //     const scheduleId = 1;
-  //     try {
-  //       const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       const allDetails = res.data.data.tripPlans.flatMap(
-  //         (plan: TripPlan) => plan.details
-  //       );
-  //       const enhancedMarkers = res.data.data.makers.map(
-  //         (marker: MarkerData, index: number) => ({
-  //           ...marker,
-  //           tripPlanId: allDetails[index]?.tripPlanId,
-  //         })
-  //       );
+  useEffect(() => {
+    const fetchScheduleDetail = async () => {
+      const scheduleId = 1;
+      try {
+        const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const allDetails = res.data.data.tripPlans.flatMap(
+          (plan: TripPlan) => plan.details
+        );
+        const enhancedMarkers = res.data.data.makers.map(
+          (marker: MarkerData, index: number) => ({
+            ...marker,
+            tripPlanId: allDetails[index]?.tripPlanId,
+          })
+        );
 
-  //       setMarkers(enhancedMarkers);
-  //       setScheduleDetail(res.data.data);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchScheduleDetail();
-  // }, []);
+        setMarkers(enhancedMarkers);
+        setScheduleDetail(res.data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchScheduleDetail();
+  }, []);
 
   useEffect(() => {
     const allDetails = SCHEDULE_DETAIL_MOCK.data.tripPlans.flatMap(
@@ -136,8 +139,9 @@ export const DetailMappingInfo: React.FC<Props> = ({
     return null;
   }
 
-  const { startDate, finishDate, tripPlans, scheduleName } = scheduleDetail;
-  // const { startDate, finishDate, tripPlans, scheduleName } =
+  const { startDate, finishDate, tripPlans, scheduleName, chatUrl } =
+    scheduleDetail;
+  // const { startDate, finishDate, tripPlans, scheduleName, chatUrl } =
   //   SCHEDULE_DETAIL_MOCK.data;
 
   return (
@@ -197,7 +201,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
                   </InfoItemContainer>
                   <JoinRequestButton
                     tripPlanId={detail.tripPlanId}
-                    // destinationName={detail.destinationName}
+                    overWish={detail.overWish}
                     isVisible={activeTripPlanId === detail.tripPlanId}
                   />
                 </ContentContainer>
@@ -205,7 +209,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
             )
         )
       )}
-      <MemoBox></MemoBox>
+      <MemoBox>{chatUrl}</MemoBox>
     </>
   );
 };
@@ -303,6 +307,10 @@ const MemoBox = styled.div`
   box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
   font-family: Inter;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
 `;
 
 const InfoData = styled.div`

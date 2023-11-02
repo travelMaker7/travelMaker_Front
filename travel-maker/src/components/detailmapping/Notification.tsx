@@ -5,7 +5,7 @@ import AcceptOrDecline from "./AcceptOrDecline";
 import { Notifications } from "@/utils/Types";
 
 const Notification: React.FC = () => {
-  const [notification, setNotification] = useState<Notifications | null>(null);
+  const [notifications, setNotifications] = useState<Notifications[]>([]);
 
   useEffect(() => {
     const polling = setInterval(async () => {
@@ -15,12 +15,8 @@ const Notification: React.FC = () => {
             "Content-Type": "application/json",
           },
         });
-        if (
-          response.data &&
-          response.data.notifications &&
-          response.data.notifications[0].joinId
-        ) {
-          setNotification(response.data.notifications[0]);
+        if (response.data && response.data.notifications) {
+          setNotifications(response.data.notifications);
         }
       } catch (error) {
         console.error(error);
@@ -30,15 +26,19 @@ const Notification: React.FC = () => {
     return () => clearInterval(polling);
   }, []);
 
-  if (!notification) return null;
+  if (!notifications) return null;
 
   return (
     <div>
-      <p>
-        {notification.userName} {notification.scheduleName} -{" "}
-        {notification.destinationName} 동행신청
-      </p>
-      <AcceptOrDecline joinId={notification.joinId} />
+      {notifications.map((notification) => (
+        <div key={notification.joinId}>
+          <p>
+            {notification.userName} {notification.scheduleName} -{" "}
+            {notification.destinationName} 동행신청
+          </p>
+          <AcceptOrDecline joinId={notification.joinId} />
+        </div>
+      ))}
     </div>
   );
 };

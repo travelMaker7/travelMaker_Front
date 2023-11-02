@@ -6,6 +6,7 @@ export interface TripDetail {
   address: string;
   arriveTime: string;
   leaveTime: string;
+  overWish: boolean;
 }
 
 export interface TripPlan {

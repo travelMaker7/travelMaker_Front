@@ -16,7 +16,7 @@ const Header = styled.div`
   align-items: center;
   padding: 20px 20px;
   margin-bottom: 40px;
-  border-bottom: 1px solid #8cc4f8;
+  /* border-bottom: 1px solid #8cc4f8; */
 `;
 
 const Logo = styled.h1`
