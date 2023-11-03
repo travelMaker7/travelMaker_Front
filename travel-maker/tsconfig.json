@@ -9,7 +9,8 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "types": ["babel-core"],
+    "types": ["babel-core", "jest", "@testing-library/jest-dom"],
+    "esModuleInterop": true,
 
     /* Bundler mode */
     "moduleResolution": "Bundler",

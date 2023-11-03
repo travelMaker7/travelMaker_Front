@@ -6,6 +6,7 @@ export interface TripDetail {
   address: string;
   arriveTime: string;
   leaveTime: string;
+  overWish: boolean;
 }
 
 export interface TripPlan {
@@ -15,10 +16,26 @@ export interface TripPlan {
 
 export interface ScheduleDetail {
   scheduleId: number;
-  makers: { destinationY: string; destinationX: string }[];
+  markers: { destinationY: string; destinationX: string }[];
   scheduleName: string;
   startDate: string;
   finishDate: string;
   tripPlans: TripPlan[];
   chatUrl: string;
+}
+
+export interface Notifications {
+  joinId: number;
+  scheduleName: string;
+  destinationName: string;
+  userName: string;
+}
+
+export interface MarkerData {
+  destinationY: string;
+  destinationX: string;
+}
+
+export interface EnhancedMarkerData extends MarkerData {
+  tripPlanId: number;
 }
