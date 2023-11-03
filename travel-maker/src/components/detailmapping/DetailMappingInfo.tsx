@@ -1,4 +1,9 @@
-import { MarkerData, ScheduleDetail, TripPlan } from "@/utils/Types";
+import {
+  MarkerData,
+  ScheduleDetail,
+  TripPlan,
+  EnhancedMarkerData,
+} from "@/utils/Types";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -71,7 +76,7 @@ const SCHEDULE_DETAIL_MOCK = {
 };
 
 interface Props {
-  setMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>;
+  setMarkers: React.Dispatch<React.SetStateAction<EnhancedMarkerData[]>>;
   activeTripPlanId: number | null;
   setActiveTripPlanId: React.Dispatch<React.SetStateAction<number | null>>;
 }
