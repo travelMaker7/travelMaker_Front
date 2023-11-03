@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import logo from "../../assets/images/mainpageimages/logo.png";  // 경로 수정
-import userIcon from "../../assets/images/mainpageimages/mypagelogo.png";  // 경로 수정
+import logo from "../../assets/images/mainpageimages/logo.png";  
+import userIcon from "../../assets/images/mainpageimages/mypagelogo.png";
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const TopBarDiv = styled.div`
   display: flex;
@@ -48,9 +50,38 @@ const MenuItem = styled.div`
 
 const TopBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); 
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLoginLogoutClick = async () => {
+    if (localStorage.getItem('access_token')) {  // 수정된 부분
+      const access_token = localStorage.getItem('access_token');
+
+
+      try {
+        const response = await axios({
+            method: "POST",
+            url: "https://kapi.kakao.com/v1/user/logout",
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            }
+        });
+
+        
+        if(response.status === 200) {
+            localStorage.removeItem('access_token');
+            navigate('/');
+            console.log('로그아웃 처리 완료'); 
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -60,7 +91,9 @@ const TopBar: React.FC = () => {
         <UserIcon src={userIcon} alt="User Icon" onClick={toggleMenu} />
         {isOpen && (
           <Menu>
-            <MenuItem>로그인</MenuItem>
+            <MenuItem onClick={handleLoginLogoutClick}>
+              {localStorage.getItem('access_token') ? '로그아웃' : '로그인'}
+              </MenuItem>
             <MenuItem>회원가입</MenuItem>
             <MenuItem>마이페이지</MenuItem>
           </Menu>

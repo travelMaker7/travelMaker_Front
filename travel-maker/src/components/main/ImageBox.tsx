@@ -1,4 +1,3 @@
-// ImageBox.tsx
 import React from "react";
 import styled from 'styled-components';
 
@@ -7,9 +6,9 @@ interface ImageBoxProps {
   tag: string;
 }
 
-// Define your styles here
+
 const ImageBoxContainer = styled.div`
-  margin: -12px;
+  margin: -10px;
   margin-left: 1px;
   margin-bottom: 5%;
   margin-top: 1%;
@@ -23,6 +22,7 @@ const Tag = styled.div`
   font-weight: bold;
   box-sizing:content-box;
   margin-top: -17px;
+
 
   &.Seoul { color: #C89E85; }
   &.Busan { color: #5196F1; }

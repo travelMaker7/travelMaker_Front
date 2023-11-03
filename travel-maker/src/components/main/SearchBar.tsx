@@ -1,17 +1,3 @@
-// import React from "react";
-// import "./SearchBar.css";
-
-// const SearchBar: React.FC = () => {
-//     return (
-//       <div className="search-bar">
-//         <p>하얀 천과 바람만 있으면.. 어디든 갈 수 있어</p>
-//         <input type="text" placeholder="검색..." />
-//       </div>
-//     );
-//   };
-  
-//   export default SearchBar;
-
 import React from "react";
 import styled from 'styled-components';
 import SearchIconImg from "../../assets/images/mainpageimages/SearchIcon.png"; // Changed this line
@@ -70,7 +56,7 @@ const SearchBar: React.FC = () => {
         <SearchBarDiv>
           <SearchP>하얀 천과 바람만 있으면.. 어디든 갈 수 있어</SearchP>
           <SearchInput type="text" placeholder="검색..." />
-          <SearchIcon src={SearchIconImg} alt="search" /> // Changed this line
+          <SearchIcon src={SearchIconImg} alt="search" />        {/*Changed this line*/}
         </SearchBarDiv>
       </SearchContainer>
     );
