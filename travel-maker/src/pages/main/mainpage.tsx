@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext} from '../../components/contexts/AuthContext';
 import styled, { createGlobalStyle } from 'styled-components'; 
 import TopBar from "../../components/main/TopBar";
 import SearchBar from "../../components/main/SearchBar";
 import TravelScheduleButton from "../../components/main/TravelScheduleButton";
 import ImageBox from "../../components/main/ImageBox";
+
 import ex1 from "../../assets/images/mainpageimages/ex1.png";
 import ex2 from "../../assets/images/mainpageimages/ex2.png";
 import ex3 from "../../assets/images/mainpageimages/ex3.png";
@@ -75,6 +77,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const MainPage: React.FC = () => {
+  const auth = useContext(AuthContext);
+  if (!auth) {
+    throw new Error('MainPage is rendered outside the AuthProvider.');
+  }
+
+
+
   return (
     <>
       <GlobalStyle />
@@ -86,13 +95,19 @@ const MainPage: React.FC = () => {
           </SearchContainer>
         </Header>
         <Main>
-          <TravelScheduleButton />
-          <MainMessage>여행자들이 당신을 기다리고 있어요!</MainMessage>
-          <ImageContainer>
-            {imagesAndTags.map((item, i) => (
-              <ImageBox key={i} image={item.image} tag={item.tag} />
-            ))}
-          </ImageContainer>
+          {/* {isLoggedIn ? ( */}
+            <div>
+              <TravelScheduleButton />
+              <MainMessage>여행자들이 당신을 기다리고 있어요!</MainMessage>
+              <ImageContainer>
+                {imagesAndTags.map((item, i) => (
+                  <ImageBox key={i} image={item.image} tag={item.tag} />
+                ))}
+              </ImageContainer>
+            </div>
+          {/* ) : (
+            <p>로그인이 필요한 서비스입니다.</p>
+          )} */}
         </Main>
       </MainPageContainer>
     </>
