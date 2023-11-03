@@ -7,12 +7,12 @@
     "skipLibCheck": true,
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"]
+      "@/": ["./"]
     },
     "types": ["babel-core", "jest", "@testing-library/jest-dom"],
     "esModuleInterop": true,
 
-    /* Bundler mode */
+    /* Bundler mode*/
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
