@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/login/Login.tsx'; 
 import Callback from '../src/components/callback/CallBack.tsx'; 
 import { AuthProvider } from '../src/components/contexts/AuthContext.tsx'; 
+import LocalCategoryMappingPage from './pages/localcategorymapping/LocalCategoryMappingPage.tsx'
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
         <Route path='/detailmap' element= { <DetailMappingPage/> }/>
         <Route path='/registration' element= { <ScheduleRegistrationPage/> }/>
         <Route path='/login' element= { <Login/> }/> 
-        <Route path='/auth/kakao/callback' element= { <Callback/> }/> 
+        <Route path='/auth/kakao/callback' element= { <Callback/> }/>
+        <Route path='/localcategorymap' element= { <LocalCategoryMappingPage/> }/>
       </Routes>
     </BrowserRouter>
     </AuthProvider>
