@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
 declare global {
   interface Window {
@@ -17,11 +18,23 @@ const RES = {
 	    "destinationX": "126.977", // 경도
 		},
 		{
-			"destinationName": "경희루",
-			"address" : "서울 종로구 사직로 162",
-			"destinationY": "37.5798", // 위도
-	    "destinationX": "126.960", // 경도
-		},{}]
+			"destinationName": "경복궁",
+			"address" : "서울 종로구 사직로 161",
+			"destinationY": "37.5797", // 위도
+	    "destinationX": "126.977", // 경도
+		},
+    {
+			"destinationName": "창덕궁",
+			"address" : "서울 종로구 사직로 163",
+			"destinationY": "37.5796", // 위도
+	    "destinationX": "126.976", // 경도
+		},
+    {
+			"destinationName": "광화문",
+			"address" : "서울 종로구 사직로 163",
+			"destinationY": "37.5795", // 위도
+	    "destinationX": "126.975", // 경도
+		}]
   }
 }
 
@@ -37,9 +50,14 @@ const LocalMap = () => {
         let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
         const {data: {makers}} = RES;
+        console.log("makers", makers);
         const setMakers = new Set(makers);
+        console.log("setMakers", setMakers);
         const arrSetMakers = [...setMakers];
+        console.log("arrSetMakers", arrSetMakers);
         const data: { content: any, LatLng: any, title: any, image: any }[] = [];
+
+        let bounds = new window.kakao.maps.LatLngBounds();
 
         let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 
@@ -51,12 +69,19 @@ const LocalMap = () => {
 
         for(let i=0; i<arrSetMakers.length; i++) {
           data.push({
-            content: `<div>${arrSetMakers[i].destinationName}</div>`,
-            LatLng: new window.kakao.maps.LatLng(arrSetMakers[0].destinationY, arrSetMakers[0].destinationX),
+            content:`
+              <InfoWindowDiv>
+                <div>${arrSetMakers[i].destinationName}</div>
+                <div>${arrSetMakers[i].address}</div>
+              <InfoWindowDiv>
+              `,
+            LatLng: new window.kakao.maps.LatLng(arrSetMakers[i].destinationY, arrSetMakers[i].destinationX),
             title: arrSetMakers[i].destinationName,
             image: markerImage
           })
-        };  
+        };
+        
+        console.log("data", data);
 
         for (let i = 0; i < arrSetMakers.length; i ++) {
           
@@ -67,6 +92,8 @@ const LocalMap = () => {
               title: data[i].title,
               image: markerImage
           });
+          marker.setMap(map);
+          bounds.extend(data[i].LatLng);
       
           // 마커에 표시할 인포윈도우를 생성합니다 
           let infowindow = new window.kakao.maps.InfoWindow({
@@ -79,6 +106,11 @@ const LocalMap = () => {
           window.kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
           window.kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
       }
+
+      function setBounds() {
+        map.setBounds(bounds);
+      };   
+
       
       // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
       function makeOverListener(map: any, marker: any, infowindow: { open: (arg0: any, arg1: any) => void; }) {
@@ -93,12 +125,49 @@ const LocalMap = () => {
               infowindow.close();
           };
       }
+
+      const button = document.getElementById('setBoundsButton');
+    if (button) {
+      button.addEventListener('click', setBounds);
+    }
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      if (button) {
+        button.removeEventListener('click', setBounds);
+      }
+    };
     
-      }, [])
+    }, [])
 
     return (
-        <div id="map" style={{ width: "59.375rem", height: "45rem", overflow: "hidden" }} />
+        <Map id="map" style={{ width: "59.375rem", height: "45rem", overflow: "hidden" }}>
+          <ResetSearchBtn id='setBoundsButton'>범위 재설정</ResetSearchBtn>
+        </Map>
     );
 }
 
 export default LocalMap; 
+
+const Map = styled.div`
+  position: relative;
+`
+
+
+const ResetSearchBtn = styled.button`
+  position: absolute;
+  width: 7.5rem;
+  height: 2.5rem;
+  z-index: 99;
+  left: 1rem;
+  bottom: 2rem;
+  background-color: #8cc3f8;
+  border: none;
+  font-weight: bolder;
+  border-radius: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0.25rem 0.25rem 0 #b6b3b3;
+  color: white;
+  font-size: 1.125rem;
+
+`
