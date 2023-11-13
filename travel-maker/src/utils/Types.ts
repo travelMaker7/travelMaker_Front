@@ -26,9 +26,10 @@ export interface ScheduleDetail {
 
 export interface Notifications {
   joinId: number;
+  joinStatus: string;
   scheduleName: string;
   destinationName: string;
-  userName: string;
+  nickname: string;
 }
 
 export interface MarkerData {
@@ -39,3 +40,29 @@ export interface MarkerData {
 export interface EnhancedMarkerData extends MarkerData {
   tripPlanId: number;
 }
+
+export interface BaseSchedule {
+  scheduleId: string;
+  scheduleName: string;
+  nickname: string;
+}
+
+export interface RegisteredSchedule extends BaseSchedule {
+  scheduleDescription: string;
+}
+
+export interface ParticipatingSchedule extends BaseSchedule {
+  tripPlanId: string;
+  scheduleDate: string;
+  arriveTime: string;
+  leaveTime: string;
+  region: string;
+  destinationName: string;
+  status: string;
+}
+
+export interface ButtonProps {
+  isActive: boolean;
+}
+
+export type Schedule = RegisteredSchedule | ParticipatingSchedule;

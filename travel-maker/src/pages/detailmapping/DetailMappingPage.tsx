@@ -3,7 +3,7 @@ import { DetailMappingInfo } from "@/components/detailmapping/DetailMappingInfo"
 import styled from "styled-components";
 import { HeaderComponent } from "./HeaderComponent";
 import { useState } from "react";
-import { MarkerData, EnhancedMarkerData } from "@/utils/Types";
+import { EnhancedMarkerData } from "@/utils/Types";
 
 const DetailMappingPage: React.FC = () => {
   const [markers, setMarkers] = useState<EnhancedMarkerData[]>([]);
@@ -38,6 +38,7 @@ const Container = styled.div`
   padding: 40px;
   flex-direction: column;
   margin: 0 15vw;
+
 `;
 
 const MainContainer = styled.div`

@@ -8,11 +8,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login.tsx";
 import Callback from "../src/components/callback/CallBack.tsx";
 import { AuthProvider } from "../src/components/contexts/AuthContext.tsx";
+import MyPage from "./pages/mypage/MyPage.tsx";
 import ProfileTestPage from "./components/profile/profilemodal/ProfileTestPage.tsx";
 import MyPageProfileTest from "./components/profile/mypageprofile/MyPageProfileTest.tsx";
 import ProfileTestPage2 from "./components/profile/profilemodal/ProfileTestPage2.tsx";
-import LocalCategoryMappingPage from './pages/localcategorymapping/LocalCategoryMappingPage.tsx'
-
+import LocalCategoryMappingPage from './pages/localcategorymapping/LocalCategoryMappingPage.tsx';
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
           <Route path="/registration" element={<ScheduleRegistrationPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/auth/kakao/callback" element={<Callback />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route
             path="/profiletest"
             element={<ProfileTestPage userId="dbsehddl9161" />}

@@ -20,7 +20,7 @@ const Header = styled.div`
 `;
 
 const Logo = styled.h1`
-  color: var(--blue-200, #8cc4f8);
+  color: var(--blue-200, #83D2EF);
   text-align: center;
   font-family: Inter;
   font-size: 24px;
