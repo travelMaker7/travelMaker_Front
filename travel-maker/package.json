@@ -12,12 +12,15 @@
     "test": "jest --config=jest.config.cjs"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "latest",
     "@mui/icons-material": "^5.14.16",
-    "@mui/material": "^5.2.5",
+    "@mui/material": "^5.14.17",
+    "@mui/styled-engine": "^5.14.17",
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.10.2",
     "axios": "^1.6.0",
