@@ -26,6 +26,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "node_modules/@testing-library/jest-dom/index.d.ts" ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

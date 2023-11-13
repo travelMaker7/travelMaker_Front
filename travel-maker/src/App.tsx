@@ -11,6 +11,8 @@ import { AuthProvider } from "../src/components/contexts/AuthContext.tsx";
 import ProfileTestPage from "./components/profile/profilemodal/ProfileTestPage.tsx";
 import MyPageProfileTest from "./components/profile/mypageprofile/MyPageProfileTest.tsx";
 import ProfileTestPage2 from "./components/profile/profilemodal/ProfileTestPage2.tsx";
+import LocalCategoryMappingPage from './pages/localcategorymapping/LocalCategoryMappingPage.tsx'
+
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
           />
           <Route path="/mypageprofiletest" element={<MyPageProfileTest />} />
           <Route path="/profiletest2" element={<ProfileTestPage2 />} />
+          <Route path='/localcategorymap' element= { <LocalCategoryMappingPage/> }/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
