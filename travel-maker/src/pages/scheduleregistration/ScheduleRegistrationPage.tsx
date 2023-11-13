@@ -1,13 +1,49 @@
 import styled from "styled-components"
 import React from 'react';
-import MapContainer from "@/components/scheduleregistration/MapContainer";
-import DateRange from "@/components/scheduleregistration/DateRange";
-import { useState } from "react";
-import { Dayjs } from "dayjs";
+import MapContainer from '../../components/scheduleregistration/MapContainer'
+import DateRange from "../../components/scheduleregistration/DateRange";
 // import ToggleList from "../../components/scheduleregistration/ToggleList";
+import dayjs, { Dayjs } from 'dayjs';
+import { useState, useEffect } from "react";
+import ToggleList from '../../components/scheduleregistration/ToggleList'
 
 const ScheduleRegistrationPage = () => {
   
+  const [selectedRange, setSelectedRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
+  const [dayCnt, setDayCnt] = useState<number | null>(null);
+
+  const calcDayCnt = (selectedRange: [Dayjs | null, Dayjs | null] | null) => {
+    if (selectedRange !== null && selectedRange[0] !== null && selectedRange[1] !== null) {
+      let startDay = selectedRange[0];
+      let endDay = selectedRange[1];
+      let calcDay = endDay.diff(startDay, 'day') + 1;
+      setDayCnt(calcDay);
+    } else return
+  }
+
+  const handleRangeChange = (selectedRange: [Dayjs | null, Dayjs | null] | null) => {
+    setSelectedRange(selectedRange);
+    calcDayCnt(selectedRange);
+  };
+
+  const disabledDate = (current: Dayjs | null) => {
+    if (current === null) return false;
+  
+    // 현재 날짜보다 이전이면 선택 가능
+    if (dayjs(current).isBefore(dayjs(), 'day')) {
+      return false;
+    }
+  
+    // 현재 날짜로부터 30일 이내이면 선택 가능
+    const maxSelectableDate = dayjs().add(29, 'day');
+    return dayjs(current).isAfter(maxSelectableDate, 'day');
+  };
+
+  useEffect(() => {
+    console.log(selectedRange);
+    console.log(dayCnt);
+  }, [selectedRange, dayCnt]);
+
   return (
     <PageContainer>
       <MapContainerBox>
@@ -23,10 +59,17 @@ const ScheduleRegistrationPage = () => {
             <ScheduleSubmitBtn>일정 등록</ScheduleSubmitBtn>
           </InputHeaderDiv>
           <DatePickerDiv>
-            <DateRange/>
+            <DateRange 
+              selectedRange={selectedRange} 
+              setSelectedRange={setSelectedRange}
+              dayCnt={dayCnt}
+              disabledDate={disabledDate}
+              handleRangeChange={handleRangeChange}
+              calcDayCnt={calcDayCnt}
+            />
           </DatePickerDiv>
           <ScrollDiv>
-            {/* <ToggleList/> */}
+            <ToggleList selectedRange={selectedRange} dayCnt={dayCnt}/>
           </ScrollDiv>
         </ScheduleDiv>
         <OpenChattingDiv>
