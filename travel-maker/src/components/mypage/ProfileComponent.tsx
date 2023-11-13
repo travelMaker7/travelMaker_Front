@@ -90,12 +90,12 @@ const SubTitle = styled.span`
 
 const Details = styled.p`
   font-size: 1em;
-  color: #555; // 글자색은 예시입니다.
-  margin-bottom: 15px; // 세부정보와 소개 사이의 간격
+  color: #555;
+  margin-bottom: 15px;
   line-height: 1.5em;
+  height: 50%;
   text-align: left;
   white-space: pre-line;
-  word-break: break-all;
   max-height: 120px;
   overflow-y: auto;
 `;

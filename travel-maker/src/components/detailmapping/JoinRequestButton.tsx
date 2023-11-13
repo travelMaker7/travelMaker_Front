@@ -1,6 +1,6 @@
 // components/JoinRequestButton.js
 import axios from "axios";
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import styled from "styled-components";
 
 interface JoinRequestButtonProps {
@@ -14,7 +14,6 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
   overWish,
   isVisible,
 }) => {
-
   const handleJoinRequest = async () => {
     try {
       const response = await axios.post("/api/v1/accompany/guest", {
@@ -40,7 +39,7 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
       onClick={handleJoinRequest}
       disabled={!overWish}
     >
-      {overWish ? "동행신청" : "신청불가"}
+      {overWish ? "신청불가" : "동행신청"}
     </JoinButton>
   );
 };

@@ -3,9 +3,9 @@ import ProfileComponent from "@/components/mypage/ProfileComponent";
 import ScheduleTabs from "@/components/mypage/ScheduleTabs";
 import { HeaderComponent } from "@/pages/detailmapping/HeaderComponent";
 import styled from "styled-components";
-// import React from "react";
+import React from "react";
 
-const MyPage = () => {
+const MyPage: React.FC = () => {
   return (
     <Container>
       <HeaderComponent />

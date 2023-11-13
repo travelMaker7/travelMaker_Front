@@ -41,7 +41,7 @@ const SCHEDULE_DETAIL_MOCK = {
             address: "서울특별시 종로구 사직로 161",
             arriveTime: "16:00",
             leaveTime: "18:00",
-            overWish: true,
+            overWish: false,
           },
           {
             tripPlanId: 2,
