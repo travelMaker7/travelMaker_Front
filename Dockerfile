@@ -1,9 +1,9 @@
 # Build stage
 FROM krmp-d2hub-idock.9rum.cc/goorm/node:16
 WORKDIR /usr/src/app
-COPY krampoline/ ./
+COPY travel-maker/ ./
 RUN npm ci
 RUN npm run build
 RUN npm install -g serve
 EXPOSE 5173
-CMD ["serve", "build"]
+CMD ["serve", "-s", "dist", "-l", "5173"]
