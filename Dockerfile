@@ -1,5 +1,5 @@
 # Build stage
-FROM krmp-d2hub-idock.9rum.cc/goorm/node:16
+FROM krmp-d2hub-idock.9rum.cc/goorm/node:18
 WORKDIR /usr/src/app
 COPY travel-maker/ ./
 RUN npm ci
