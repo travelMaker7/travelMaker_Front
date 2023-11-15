@@ -2,7 +2,6 @@ import React from 'react';
 import { DatePicker } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/ko'
-import { useState } from 'react';
 
 const { RangePicker } = DatePicker;
 dayjs.locale('ko');
@@ -16,7 +15,7 @@ interface DateRangeProps {
   disabledDate: (current: Dayjs | null) => boolean;
 }
 
-const DateRange: React.FC<DateRangeProps> = ({ selectedRange, setSelectedRange, handleRangeChange, calcDayCnt, dayCnt, disabledDate }) => {  
+const DateRange: React.FC<DateRangeProps> = ({ selectedRange, handleRangeChange, disabledDate }) => {  
 
   return (
     <>

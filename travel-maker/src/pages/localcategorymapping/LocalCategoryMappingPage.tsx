@@ -1,4 +1,3 @@
-import React from 'react';
 import { HeaderComponent } from '../detailmapping/HeaderComponent';
 import styled from 'styled-components';
 import LocalMap from '../../components/localcategorymapping/LocalMap';
@@ -63,9 +62,7 @@ const RES = {
 }
 
 const LocalCategoryMappingPage = () => {
-  
-  const {data: {address}} = RES;
-  const {data: {destinationName}} = RES;
+
   const {data: {schedules}} = RES;
 
   const pages = Math.ceil(schedules.length / 4);

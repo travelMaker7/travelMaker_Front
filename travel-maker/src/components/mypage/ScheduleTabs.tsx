@@ -2,10 +2,9 @@ import {
   // ButtonProps,
   ParticipatingSchedule,
   RegisteredSchedule,
-  Schedule,
 } from "@/utils/Types";
 import axios from "axios";
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NotificationsList from "./NotificationsList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,11 +1,4 @@
 import { styled } from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMap,
-  faClock,
-  faUsers,
-  faCalendarAlt,
-} from "@fortawesome/free-solid-svg-icons";
 
 // // 토글 화살표
 // export const TOGGLEARROW = `<FontAwesomeIcon icon={faChevronRight} style={{color: "#8cc3f8",}} />`;

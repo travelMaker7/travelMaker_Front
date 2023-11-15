@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
-import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 
 interface DateRangeProps {
@@ -112,32 +109,32 @@ const CountDayDiv = styled.div`
   margin-left: 0.25rem;
 `
 
-const PlaceSearchDiv = styled.div`
-  width: 100%;
-  height: 3rem;
-  border: none;
-`
+// const PlaceSearchDiv = styled.div`
+//   width: 100%;
+//   height: 3rem;
+//   border: none;
+// `
 
-const PlaceSearchTheme = styled.div`
-  width: 5rem;
-  height: 2.5rem;
-  border: none;
-`
+// const PlaceSearchTheme = styled.div`
+//   width: 5rem;
+//   height: 2.5rem;
+//   border: none;
+// `
 
-const PlaceDetailAddress = styled.input`
-  width: 20rem;
-  height: 2.5rem;
-  border: 1px #ebebeb solid; 
-`
+// const PlaceDetailAddress = styled.input`
+//   width: 20rem;
+//   height: 2.5rem;
+//   border: 1px #ebebeb solid; 
+// `
 
-const PlaceSearchButton = styled.button`
-  width: 5rem;
-  height: 2.5rem;
-  background-color: #8CC4F8;
-  color: white;
-  border-radius: 0.875rem;
-  border: none;
-`
+// const PlaceSearchButton = styled.button`
+//   width: 5rem;
+//   height: 2.5rem;
+//   background-color: #8CC4F8;
+//   color: white;
+//   border-radius: 0.875rem;
+//   border: none;
+// `
 
 const DateDiv = styled.div`
   width: 9rem;
@@ -145,45 +142,45 @@ const DateDiv = styled.div`
   font-size: 0.9rem;
 `
 
-const AccompanyPeopleDiv = styled(PlaceSearchDiv)`
-` 
+// const AccompanyPeopleDiv = styled(PlaceSearchDiv)`
+// ` 
 
-const AccompanyPeopleTheme = styled(PlaceSearchTheme)`
-`
+// const AccompanyPeopleTheme = styled(PlaceSearchTheme)`
+// `
 
-const AccompanyPeopleSelect = styled.select`
-  width: 5rem;
-  height: 2.5rem;
-  background-color: #ebebeb;
-  border: none;
-  border-radius: 0.125rem;
-`
+// const AccompanyPeopleSelect = styled.select`
+//   width: 5rem;
+//   height: 2.5rem;
+//   background-color: #ebebeb;
+//   border: none;
+//   border-radius: 0.125rem;
+// `
 
-const PlaceAddDiv = styled(PlaceSearchDiv)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+// const PlaceAddDiv = styled(PlaceSearchDiv)`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `
 
-const PlaceAddButton = styled.button`
-  width: 6rem;
-  height: 3rem;
-  background-color: #8CC4F8;
-  color: white;
-  border-radius: 0.875rem;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const DeleteIconDiv = styled.div`
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 15rem;
-`
+// const PlaceAddButton = styled.button`
+//   width: 6rem;
+//   height: 3rem;
+//   background-color: #8CC4F8;
+//   color: white;
+//   border-radius: 0.875rem;
+//   border: none;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `
+// const DeleteIconDiv = styled.div`
+//   width: 3rem;
+//   height: 3rem;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   margin-left: 15rem;
+// `
 
-const EditIconDiv = styled(DeleteIconDiv)``;
+// const EditIconDiv = styled(DeleteIconDiv)``;
 

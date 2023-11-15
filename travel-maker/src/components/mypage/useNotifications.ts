@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import axios from "axios";
 
 export interface NotificationData {
   joinId: number;

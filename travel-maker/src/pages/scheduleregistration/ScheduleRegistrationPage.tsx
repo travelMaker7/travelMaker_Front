@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import React from 'react';
 import MapContainer from '../../components/scheduleregistration/MapContainer'
 import DateRange from "../../components/scheduleregistration/DateRange";
 // import ToggleList from "../../components/scheduleregistration/ToggleList";
@@ -175,26 +174,26 @@ const ScrollDiv = styled.div`
 }
 `
 
-const PlaceAddBtnDiv = styled.div`
-  width: 100%;
-  height: 5rem;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-` 
+// const PlaceAddBtnDiv = styled.div`
+//   width: 100%;
+//   height: 5rem;
+//   display: flex;
+//   justify-content: right;
+//   align-items: center;
+// ` 
 
-const PlaceAddBtn = styled.button`
-  width:6rem;
-  height: 2.5rem;
-  background-color: #8CC4F8;
-  color: white;
-  border-radius: 0.875rem;
-  cursor: pointer;
-  font-weight: bolder;
-  border: none;
-  font-size: 1rem;
-  margin-right: 1rem;
-`
+// const PlaceAddBtn = styled.button`
+//   width:6rem;
+//   height: 2.5rem;
+//   background-color: #8CC4F8;
+//   color: white;
+//   border-radius: 0.875rem;
+//   cursor: pointer;
+//   font-weight: bolder;
+//   border: none;
+//   font-size: 1rem;
+//   margin-right: 1rem;
+// `
 
 const DescriptionDiv = styled.div`
   width: 31.25rem;
