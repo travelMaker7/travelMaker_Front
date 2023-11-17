@@ -6,8 +6,8 @@ import {
   RegisteredSchedule,
   Schedule,
 } from "@/utils/Types";
-
-// Assume that the RegisteredSchedule and ParticipatingSchedule types are defined elsewhere
+import MyPageScheduleDelete from "./MyPageScheduleDelete";
+import { on } from "events";
 
 export interface ButtonProps {
   isActive: boolean;
@@ -95,10 +95,16 @@ const MyPageSidebar: React.FC = () => {
   const [participatingSchedules, setParticipatingSchedules] = useState<
     ParticipatingSchedule[]
   >(mockParticipatingSchedules);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   const handleMouseEnter = () => setShowDeleteButton(true);
   const handleMouseLeave = () => setShowDeleteButton(false);
+
+  const [selectedScheduleId, setSelectedScheduleId] = useState<string | null>(
+    null
+  );
 
   const getRegisteredSchedules = async () => {
     try {
@@ -139,6 +145,31 @@ const MyPageSidebar: React.FC = () => {
     }
   };
 
+  const deleteSchedule = async (tripPlanId: string) => {
+    try {
+      const response = await axios.delete(
+        `/api/v1/accompany/guest/${tripPlanId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        console.log("일정 삭제 성공");
+        setParticipatingSchedules((prev) =>
+          prev.filter((s) => s.scheduleId !== tripPlanId)
+        );
+      } else {
+        console.log("일정 삭제 실패");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (activeTab === "registered") {
       getRegisteredSchedules();
@@ -146,6 +177,18 @@ const MyPageSidebar: React.FC = () => {
       getParticipatingSchedules(activeTab);
     }
   }, [activeTab]);
+
+  const handleDeleteClick = (tripPlanId: string) => {
+    setSelectedScheduleId(tripPlanId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (selectedScheduleId) {
+      await deleteSchedule(selectedScheduleId);
+      setShowDeleteModal(false);
+    }
+  };
 
   return (
     <PageContainer>
@@ -247,13 +290,13 @@ const MyPageSidebar: React.FC = () => {
                   <StyledP>여행지: {schedule.destinationName}</StyledP>
                   <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
                 </TextContent>
-                {/* {showDeleteButton && (
+                {showDeleteButton && (
                   <DeleteButton
                     onClick={() => handleDeleteClick(schedule.tripPlanId)}
                   >
                     X
                   </DeleteButton>
-                )} */}
+                )}
               </ScheduleCard>
             ))}
 
@@ -270,12 +313,12 @@ const MyPageSidebar: React.FC = () => {
                 <ReviewButton>리뷰하기</ReviewButton>
               </ScheduleCard>
             ))}
-        {/* {showDeleteModal && (
-          <DeleteModal
-            onConfirm={confirmDelete}
+        {showDeleteModal && (
+          <MyPageScheduleDelete
             onCancel={() => setShowDeleteModal(false)}
+            onConfirm={confirmDelete}
           />
-        )} */}
+        )}
       </ContentArea>
     </PageContainer>
   );
@@ -284,7 +327,6 @@ const PageContainer = styled.div`
   display: flex;
   height: 100vh;
   background-color: #ecf0f1; // Light background for the content area
-
 `;
 
 const Sidebar = styled.div`
@@ -317,7 +359,7 @@ const ContentArea = styled.div`
   flex-wrap: wrap;
   align-content: flex-start;
   text-align: center;
-  /* justify-content: center; */
+  justify-content: center;
   margin-top: 20px;
   gap: 20px; // 카드 사이의 간격
   padding: 0 10px;
@@ -391,5 +433,21 @@ const ReviewButton = styled.button`
   cursor: pointer;
   margin-top: 10px;
 `;
+const DeleteButton = styled.button`
+  position: absolute;
+  background-color: transparent;
+  top: 12px;
+  right: 12px;
+  color: #3498db;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 
+  &:hover {
+    color: #fff;
+    background-color: #3498db;
+  }
+`;
 export default MyPageSidebar;
