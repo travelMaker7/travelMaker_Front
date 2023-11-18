@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import {
-  ParticipatingSchedule,
-  RegisteredSchedule,
-  Schedule,
-} from "@/utils/Types";
+import { ParticipatingSchedule, RegisteredSchedule } from "@/utils/Types";
 import MyPageScheduleDelete from "./MyPageScheduleDelete";
-import { on } from "events";
+import NotificationsList from "./NotificationsList";
 
 export interface ButtonProps {
   isActive: boolean;
@@ -217,6 +213,12 @@ const MyPageSidebar: React.FC = () => {
         >
           참여 완료
         </SidebarItem>
+        <SidebarItem
+          onClick={() => setActiveTab("notifications")}
+          isActive={activeTab === "notifications"}
+        >
+          알림
+        </SidebarItem>
       </Sidebar>
       <ContentArea>
         {activeTab === "registered" &&
@@ -313,6 +315,7 @@ const MyPageSidebar: React.FC = () => {
                 <ReviewButton>리뷰하기</ReviewButton>
               </ScheduleCard>
             ))}
+        {activeTab === "notifications" && <NotificationsList />}
         {showDeleteModal && (
           <MyPageScheduleDelete
             onCancel={() => setShowDeleteModal(false)}
@@ -326,25 +329,25 @@ const MyPageSidebar: React.FC = () => {
 const PageContainer = styled.div`
   display: flex;
   height: 100vh;
-  background-color: #ecf0f1; // Light background for the content area
+  background-color: #ecf0f1;
 `;
 
 const Sidebar = styled.div`
-  width: 200px; // Increased width for better appearance
-  background-color: #34495e; // Darker shade for contrast
+  width: 200px;
+  background-color: #34495e;
   padding: 15px;
   box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
-  color: #ecf0f1; // Light text for readability
+  color: #ecf0f1;
 `;
 
 const SidebarItem = styled.div<ButtonProps>`
-  padding: 8px 12px; // Reduced padding
-  margin-bottom: 5px; // Smaller margin for a tighter layout
+  padding: 8px 12px;
+  margin-bottom: 5px;
   background-color: ${(props) => (props.isActive ? "#2c3e50" : "transparent")};
   color: ${(props) => (props.isActive ? "#fff" : "#bdc3c7")};
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem; // Smaller font size if needed
+  font-size: 0.9rem;
   transition: all 0.3s;
 
   &:hover {
@@ -359,9 +362,9 @@ const ContentArea = styled.div`
   flex-wrap: wrap;
   align-content: flex-start;
   text-align: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 20px;
-  gap: 20px; // 카드 사이의 간격
+  gap: 20px;
   padding: 0 10px;
   width: 100%;
 `;
@@ -369,33 +372,33 @@ const ContentArea = styled.div`
 const ScheduleCard = styled.div`
   position: relative;
   display: flex;
-  flex-direction: column; // 자식 요소들을 세로로 쌓음
+  flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
-  width: 10rem; // 가로 크기 고정
+  width: 10rem;
   height: 200px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
 
   &:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); // 호버 시 그림자 효과 변경
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
   @media (max-width: 1024px) {
-    width: 100%; // 모바일 또는 작은 화면에서는 전체 너비를 사용
+    width: 100%;
   }
 `;
 
 const ImageContainer = styled.div`
   width: 100%;
-  height: auto; // Fixed height for images
+  height: auto;
   overflow: hidden;
-  border-radius: 8px; // Optional: if you want rounded corners for images
+  border-radius: 8px;
   img {
     width: 100%;
     height: 100%;
-    object-fit: contain; // Adjust to contain to avoid cropping
+    object-fit: contain;
   }
 `;
 const StyledH3 = styled.h3`
@@ -412,15 +415,15 @@ const StyledP = styled.p`
 `;
 
 const TextContent = styled.div`
-  flex: 1; // Take up the remaining space after ImageContainer
+  flex: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; // Align text to the start
-  justify-content: center; // Distribute space evenly
-  gap: 4px; // Keep a small gap between text elements
-  padding: 0 5px; // Add padding if needed
-  height: 120px; // Fixed height to ensure uniform size across cards
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 5px;
+  height: 120px;
 `;
 
 const ReviewButton = styled.button`
@@ -438,16 +441,16 @@ const DeleteButton = styled.button`
   background-color: transparent;
   top: 12px;
   right: 12px;
-  color: #3498db;
+  color: #34495e;
   font-size: 1rem;
   font-weight: 600;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: transform 0.3s ease;
 
   &:hover {
-    color: #fff;
-    background-color: #3498db;
+    transform: scale(1.2);
   }
 `;
 export default MyPageSidebar;

@@ -11,7 +11,7 @@ const NotificationsList: React.FC = () => {
 
   return (
     <ListContainer>
-      {notifications?.map((notification) => (
+      {notifications?.map((notification: any) => (
         <NotificationContainer key={notification.joinId}>
           <NotificationItem notification={notification} />
         </NotificationContainer>
