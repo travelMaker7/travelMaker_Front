@@ -69,7 +69,7 @@ import JoinRequestButton from "./JoinRequestButton";
 //         ],
 //       },
 //     ],
-//     scheduleDescription: "We'll make it fun enough so you won't get bored.",
+//     scheduleDescription: "즐거운 우리의 여행",
 //     chatUrl: "https://open.kakao.com/o/s5E3AYof",
 //   },
 // };
@@ -132,7 +132,8 @@ export const DetailMappingInfo: React.FC<Props> = ({
     return null;
   }
 
-  const { tripPlans, scheduleName, chatUrl } = scheduleDetail;
+  const { tripPlans, scheduleName, chatUrl, scheduleDescription } =
+    scheduleDetail;
   // const { startDate, finishDate, tripPlans, scheduleName, chatUrl } =
   //   SCHEDULE_DETAIL_MOCK.data;
 
@@ -207,7 +208,8 @@ export const DetailMappingInfo: React.FC<Props> = ({
             ))}
         </DateSection>
       ))}
-      <MemoBox>{chatUrl}</MemoBox>
+      <MemoBox>{scheduleDescription}</MemoBox>
+      <OpenChatBox>{chatUrl}</OpenChatBox>
     </>
   );
 };
@@ -351,4 +353,14 @@ const InfoDateText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const OpenChatBox = styled.div`
+  padding: 15px;
+  margin-top: 20px;
+  font-family: Inter;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
