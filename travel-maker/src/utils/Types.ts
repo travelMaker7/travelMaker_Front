@@ -21,6 +21,7 @@ export interface ScheduleDetail {
   tripPlans: TripPlan[];
   chatUrl: string;
   scheduleDescription?: string;
+  hostId: number;
 }
 
 export interface Notifications {

@@ -1,3 +1,5 @@
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 
@@ -5,7 +7,10 @@ export const HeaderComponent: React.FC = () => {
   return (
     <Header>
       <Logo>travelMaker</Logo>
-      <SearchBox placeholder="어디에서" style={{ fontSize: "14px" }} />
+      <SearchBoxContainer>
+        <SearchBox placeholder="어디에서" style={{ fontSize: "14px" }} />
+        <SearchIcon icon={faSearch} />
+      </SearchBoxContainer>
       <UserIcon />
     </Header>
   );
@@ -14,33 +19,45 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 60px 20px;
+  padding: 20px 0;
   margin-bottom: 40px;
   /* border-bottom: 1px solid #8cc4f8; */
   background-color: #00bfff;
 `;
 
 const Logo = styled.h1`
-  /* color: var(--blue-200, #83D2EF); */
   color: #fff;
   text-align: center;
-  font-family: Inter;
+  font-family: "YourFontName", sans-serif;
   font-size: 24px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   margin: auto;
 `;
+
 const SearchBox = styled.input`
   width: 300px;
   height: 50px;
-  border-radius: 20px;
-  border: 1px solid #e0e0e0;
   padding: 0 20px;
   border-radius: 50px;
   border: 2px solid var(--searchBlue, #8cc4f8);
+  /* border: none; */
   box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
   font-family: Inter;
+`;
+
+const SearchBoxContainer = styled.div`
+  position: relative;
+  width: 320px;
+`;
+
+const SearchIcon = styled(FontAwesomeIcon)`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8cc4f8;
+  cursor: pointer;
 `;
 
 const UserIcon = styled.div`

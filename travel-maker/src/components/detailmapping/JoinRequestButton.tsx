@@ -7,18 +7,20 @@ interface JoinRequestButtonProps {
   tripPlanId: number;
   overWish: boolean;
   isVisible: boolean;
+  setHostId: number | undefined;
 }
 
 const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
   tripPlanId,
   overWish,
   isVisible,
+  setHostId,
 }) => {
   const handleJoinRequest = async () => {
     try {
       const response = await axios.post("/api/v1/accompany/guest", {
         tripPlanId,
-        guestId: 1,
+        hostId: setHostId,
         joinStatus: "승인대기",
       });
 

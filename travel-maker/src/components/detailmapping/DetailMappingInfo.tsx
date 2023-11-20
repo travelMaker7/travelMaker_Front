@@ -22,6 +22,7 @@ import JoinRequestButton from "./JoinRequestButton";
 //       { destinationY: "33.123", destinationX: "126.992" },
 //       { destinationY: "35.133", destinationX: "126.892" },
 //     ],
+//     hostId: 1,
 //     scheduleId: 1,
 //     scheduleName: "Seoul Restaurant Tour",
 //     tripPlans: [
@@ -88,6 +89,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
   const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
     null
   );
+  // const [hostId, setHostId] = useState<number | null>(null);
 
   const fetchScheduleDetail = async () => {
     const scheduleId = 1;
@@ -104,6 +106,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
 
       setMarkers(Markers);
       setScheduleDetail(res.data.data);
+      // setHostId(res.data.data.hostId);
     } catch (e) {
       console.log(e);
     }
@@ -132,7 +135,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
     return null;
   }
 
-  const { tripPlans, scheduleName, chatUrl, scheduleDescription } =
+  const { tripPlans, scheduleName, scheduleDescription, chatUrl, hostId } =
     scheduleDetail;
   // const { startDate, finishDate, tripPlans, scheduleName, chatUrl } =
   //   SCHEDULE_DETAIL_MOCK.data;
@@ -202,6 +205,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
                     tripPlanId={detail.tripPlanId}
                     overWish={detail.overWish}
                     isVisible={true}
+                    setHostId={hostId}
                   />
                 </ContentContainer>
               </SideInfoContainer>
