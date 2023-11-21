@@ -4,93 +4,156 @@ import axios from "axios";
 import { ParticipatingSchedule, RegisteredSchedule } from "@/utils/Types";
 import MyPageScheduleDelete from "./MyPageScheduleDelete";
 import NotificationsList from "./NotificationsList";
+import { Link } from "react-router-dom";
+import KakaoStaticMap from "./\bKakaoStaticMap";
+
+declare const kakao: any;
 
 export interface ButtonProps {
   isActive: boolean;
 }
 
-const mockRegisteredSchedules = [
-  {
-    scheduleId: "1",
-    scheduleName: "서울 여행",
-    scheduleDescription: "서울의 숨은 명소 탐방",
-    nickname: "홍길동",
-    startDate: "2023-11-01",
-    finishDate: "2023-11-03",
-  },
-  {
-    scheduleId: "3",
-    scheduleName: "광주 여행",
-    scheduleDescription: "광주의 숨은 명소 탐방",
-    nickname: "홍길동",
-    startDate: "2023-11-01",
-    finishDate: "2023-11-03",
-  },
-  {
-    scheduleId: "5",
-    scheduleName: "인천 여행",
-    scheduleDescription: "인천의 숨은 명소 탐방",
-    nickname: "홍길동",
-    startDate: "2023-11-01",
-    finishDate: "2023-11-03",
-  },
-  {
-    scheduleId: "6",
-    scheduleName: "남양주 여행",
-    scheduleDescription: "남양주의 숨은 명소 탐방",
-    nickname: "홍길동",
-    startDate: "2023-11-01",
-    finishDate: "2023-11-03",
-  },
-];
+const mockRegisteredSchedules = {
+  schedules: [
+    {
+      scheduleId: "1",
+      scheduleName: "서울 여행",
+      scheduleDescription: "서울의 숨은 명소 탐방",
+      nickname: "홍길동",
+      markers: [
+        {
+          destinationY: "37.5797",
+          destinationX: "126.977",
+        },
+        {
+          destinationY: "37.582441",
+          destinationX: "126.977060",
+        },
+        {
+          destinationY: "37.579772",
+          destinationX: "126.975890",
+        },
+      ],
+    },
+    {
+      scheduleId: "3",
+      scheduleName: "광주 여행",
+      scheduleDescription: "광주의 숨은 명소 탐방",
+      nickname: "홍길동",
+      markers: [
+        {
+          destinationY: "36.5897",
+          destinationX: "126.977",
+        },
+        {
+          destinationY: "37.582441",
+          destinationX: "126.977060",
+        },
+        {
+          destinationY: "37.579772",
+          destinationX: "126.975890",
+        },
+      ],
+    },
+    {
+      scheduleId: "5",
+      scheduleName: "인천 여행",
+      scheduleDescription: "인천의 숨은 명소 탐방",
+      nickname: "홍길동",
+      markers: [
+        {
+          destinationY: "37.5797",
+          destinationX: "126.977",
+        },
+        {
+          destinationY: "37.582441",
+          destinationX: "126.977060",
+        },
+        {
+          destinationY: "37.579772",
+          destinationX: "126.07590",
+        },
+      ],
+    },
+    {
+      scheduleId: "6",
+      scheduleName: "남양주 여행",
+      scheduleDescription: "남양주의 숨은 명소 탐방",
+      nickname: "홍길동",
+      markers: [
+        {
+          destinationY: "37.5797",
+          destinationX: "126.917",
+        },
+        {
+          destinationY: "37.582441",
+          destinationX: "126.97060",
+        },
+        {
+          destinationY: "37.579772",
+          destinationX: "126.975890",
+        },
+      ],
+    },
+  ],
+};
 
-const mockParticipatingSchedules = [
-  {
-    status: "승인대기",
-    scheduleId: "2",
-    scheduleName: "부산 여행",
-    nickname: "user456",
-    tripPlanId: "11",
-    scheduleDate: "2023-08-10",
-    arriveTime: "14:00",
-    leaveTime: "18:00",
-    region: "부산",
-    destinationName: "해운대",
-  },
-  {
-    status: "신청수락",
-    scheduleId: "4",
-    scheduleName: "서울 여행",
-    nickname: "user111",
-    tripPlanId: "21",
-    scheduleDate: "2023-08-14",
-    arriveTime: "00:00",
-    leaveTime: "02:00",
-    region: "서울",
-    destinationName: "남산타워",
-  },
-  {
-    status: "동행완료",
-    scheduleId: "5",
-    scheduleName: "서울 여행",
-    nickname: "user441",
-    tripPlanId: "23",
-    scheduleDate: "2023-08-14",
-    arriveTime: "00:00",
-    leaveTime: "02:00",
-    region: "서울",
-    destinationName: "남산타워",
-  },
-];
+const mockParticipatingSchedules = {
+  schedules: [
+    {
+      status: "승인대기",
+      scheduleId: "2",
+      scheduleName: "부산 여행",
+      nickname: "user456",
+      tripPlanId: "11",
+      scheduleDate: "2023-08-10",
+      arriveTime: "14:00",
+      leaveTime: "18:00",
+      region: "부산",
+      destinationName: "해운대",
+      destinationY: "37.5797",
+      destinationX: "126.977",
+    },
+    {
+      status: "신청수락",
+      scheduleId: "4",
+      scheduleName: "서울 여행",
+      nickname: "user111",
+      tripPlanId: "21",
+      scheduleDate: "2023-08-14",
+      arriveTime: "00:00",
+      leaveTime: "02:00",
+      region: "서울",
+      destinationName: "남산타워",
+      destinationY: "37.582441",
+      destinationX: "126.977060",
+    },
+    {
+      status: "동행완료",
+      scheduleId: "5",
+      scheduleName: "서울 여행",
+      nickname: "user441",
+      tripPlanId: "23",
+      scheduleDate: "2023-08-14",
+      arriveTime: "00:00",
+      leaveTime: "02:00",
+      region: "서울",
+      destinationName: "남산타워",
+      destinationY: "37.579772",
+      destinationX: "126.975890",
+    },
+  ],
+};
 
 const MyPageSidebar: React.FC = () => {
   const [activeTab, setActiveTab] = useState("registered");
   const [registeredSchedules, setRegisteredSchedules] = useState<
     RegisteredSchedule[]
-  >(mockRegisteredSchedules);
+  >(mockRegisteredSchedules.schedules);
+
   const [participatingSchedules, setParticipatingSchedules] = useState<
     ParticipatingSchedule[]
-  >(mockParticipatingSchedules);
+  >(mockParticipatingSchedules.schedules);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
@@ -98,7 +161,7 @@ const MyPageSidebar: React.FC = () => {
   const handleMouseEnter = () => setShowDeleteButton(true);
   const handleMouseLeave = () => setShowDeleteButton(false);
 
-  const [selectedScheduleId, setSelectedScheduleId] = useState<string | null>(
+  const [selectTripPlanId, setSelectedTripPlanId] = useState<string | null>(
     null
   );
 
@@ -155,9 +218,6 @@ const MyPageSidebar: React.FC = () => {
 
       if (response.status === 201) {
         console.log("일정 삭제 성공");
-        setParticipatingSchedules((prev) =>
-          prev.filter((s) => s.scheduleId !== tripPlanId)
-        );
       } else {
         console.log("일정 삭제 실패");
       }
@@ -175,13 +235,13 @@ const MyPageSidebar: React.FC = () => {
   }, [activeTab]);
 
   const handleDeleteClick = (tripPlanId: string) => {
-    setSelectedScheduleId(tripPlanId);
+    setSelectedTripPlanId(tripPlanId);
     setShowDeleteModal(true);
   };
 
   const confirmDelete = async () => {
-    if (selectedScheduleId) {
-      await deleteSchedule(selectedScheduleId);
+    if (selectTripPlanId) {
+      await deleteSchedule(selectTripPlanId);
       setShowDeleteModal(false);
     }
   };
@@ -225,16 +285,15 @@ const MyPageSidebar: React.FC = () => {
           registeredSchedules.map((schedule) => (
             <ScheduleCard key={schedule.scheduleId}>
               <ImageContainer>
-                <img
-                  src="https://source.unsplash.com/random/800x800"
-                  alt="지도 미리보기"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    borderRadius: "8px",
-                  }}
-                />
+                <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                  <KakaoStaticMap
+                    markers={schedule.markers}
+                    width="100%"
+                    height="300px"
+                  />
+                </LinkItem>
               </ImageContainer>
+
               <TextContent>
                 <StyledH3>{schedule.scheduleName}</StyledH3>
                 <StyledP>{schedule.scheduleDescription}</StyledP>
@@ -247,15 +306,18 @@ const MyPageSidebar: React.FC = () => {
             .map((schedule) => (
               <ScheduleCard key={schedule.scheduleId}>
                 <ImageContainer>
-                  <img
-                    src="https://source.unsplash.com/random/100x100"
-                    alt="지도 미리보기"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      borderRadius: "8px",
-                    }}
-                  />
+                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                    <KakaoStaticMap
+                      markers={[
+                        {
+                          destinationY: schedule.destinationY,
+                          destinationX: schedule.destinationX,
+                        },
+                      ]}
+                      width="100%"
+                      height="300px"
+                    />
+                  </LinkItem>
                 </ImageContainer>
 
                 <TextContent>
@@ -276,15 +338,18 @@ const MyPageSidebar: React.FC = () => {
                 onMouseLeave={handleMouseLeave}
               >
                 <ImageContainer>
-                  <img
-                    src="https://source.unsplash.com/random/200x200"
-                    alt="지도 미리보기"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      borderRadius: "8px",
-                    }}
-                  />
+                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                    <KakaoStaticMap
+                      markers={[
+                        {
+                          destinationY: schedule.destinationY,
+                          destinationX: schedule.destinationX,
+                        },
+                      ]}
+                      width="100%"
+                      height="300px"
+                    />
+                  </LinkItem>
                 </ImageContainer>
 
                 <TextContent>
@@ -307,10 +372,25 @@ const MyPageSidebar: React.FC = () => {
             .filter((schedule) => schedule.status === "동행완료")
             .map((schedule) => (
               <ScheduleCard key={schedule.scheduleId}>
+                <ImageContainer>
+                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                    <KakaoStaticMap
+                      markers={[
+                        {
+                          destinationY: schedule.destinationY,
+                          destinationX: schedule.destinationX,
+                        },
+                      ]}
+                      width="100%"
+                      height="300px"
+                    />
+                  </LinkItem>
+                </ImageContainer>
                 <TextContent>
                   <StyledH3>{schedule.scheduleName}</StyledH3>
-                  <StyledP>여행지: {schedule.destinationName}</StyledP>
-                  <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
+                  <StyledP>
+                    {schedule.scheduleDate} : {schedule.destinationName}
+                  </StyledP>
                 </TextContent>
                 <ReviewButton>리뷰하기</ReviewButton>
               </ScheduleCard>
@@ -326,26 +406,30 @@ const MyPageSidebar: React.FC = () => {
     </PageContainer>
   );
 };
+
 const PageContainer = styled.div`
   display: flex;
   height: 100vh;
-  background-color: #ecf0f1;
+  margin-top: 60px;
+  /* background-color: #ecf0f1; */
 `;
 
 const Sidebar = styled.div`
   width: 200px;
-  background-color: #34495e;
-  padding: 15px;
-  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3);
+  /* background-color: #34495e; */
+  padding: 0 15px;
+  /* box-shadow: 3px 0 10px rgba(0, 0, 0, 0.3); */
   color: #ecf0f1;
+  margin-right: 10px;
+  border-right: 2px solid #ddd;
 `;
 
 const SidebarItem = styled.div<ButtonProps>`
   padding: 8px 12px;
   margin-bottom: 5px;
   background-color: ${(props) => (props.isActive ? "#2c3e50" : "transparent")};
-  color: ${(props) => (props.isActive ? "#fff" : "#bdc3c7")};
-  border-radius: 4px;
+  color: ${(props) => (props.isActive ? "#fff" : "#000000")};
+  border-radius: 10px;
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.3s;
@@ -363,7 +447,7 @@ const ContentArea = styled.div`
   align-content: flex-start;
   text-align: center;
   justify-content: flex-start;
-  margin-top: 20px;
+  /* margin-top: 10px; */
   gap: 20px;
   padding: 0 10px;
   width: 100%;
@@ -376,8 +460,8 @@ const ScheduleCard = styled.div`
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
-  width: 10rem;
-  height: 200px;
+  width: 20rem;
+  height: 25rem;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
@@ -395,6 +479,7 @@ const ImageContainer = styled.div`
   height: auto;
   overflow: hidden;
   border-radius: 8px;
+  z-index: 1;
   img {
     width: 100%;
     height: 100%;
@@ -402,16 +487,18 @@ const ImageContainer = styled.div`
   }
 `;
 const StyledH3 = styled.h3`
-  font-size: 1rem;
+  font-size: 16px;
   color: #333;
   margin: 5px;
   font-weight: 500;
+  text-align: center;
 `;
 
 const StyledP = styled.p`
-  font-size: 0.95rem;
-  color: #666;
-  margin: 0;
+  font-size: 16px; // Adjusted to match ModalText
+  color: #333; // Standard text color
+  margin: 0 0 5px 0;
+  text-align: center; // Center align if needed
 `;
 
 const TextContent = styled.div`
@@ -424,23 +511,46 @@ const TextContent = styled.div`
   gap: 4px;
   padding: 0 5px;
   height: 120px;
+  text-align: center;
 `;
 
 const ReviewButton = styled.button`
-  background-color: #3498db;
-  color: white;
+  background-color: #007bff;
+  color: #fff;
   font-size: 1rem;
   padding: 10px 20px;
-  border: none;
+  border: 1px solid #006fe6;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
+  z-index: 1;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #006fe6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    background-color: #0056b3;
+    transform: translateY(1px);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #006fe6;
+  }
+
+  @media (max-width: 1024px) {
+    width: auto;
+  }
 `;
 const DeleteButton = styled.button`
   position: absolute;
   background-color: transparent;
   top: 12px;
   right: 12px;
+  z-index: 100;
   color: #34495e;
   font-size: 1rem;
   font-weight: 600;
@@ -452,5 +562,11 @@ const DeleteButton = styled.button`
   &:hover {
     transform: scale(1.2);
   }
+`;
+
+const LinkItem = styled(Link)`
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
 `;
 export default MyPageSidebar;

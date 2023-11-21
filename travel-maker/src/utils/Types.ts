@@ -47,8 +47,12 @@ export interface BaseSchedule {
   nickname: string;
 }
 
-export interface RegisteredSchedule extends BaseSchedule {
+export interface RegisteredSchedule {
+  scheduleId: string;
+  scheduleName: string;
+  nickname: string;
   scheduleDescription: string;
+  markers: MarkerData[];
 }
 
 export interface ParticipatingSchedule extends BaseSchedule {
@@ -59,10 +63,10 @@ export interface ParticipatingSchedule extends BaseSchedule {
   region: string;
   destinationName: string;
   status: string;
+  destinationY: string;
+  destinationX: string;
 }
 
 export interface ButtonProps {
   isActive: boolean;
 }
-
-export type Schedule = RegisteredSchedule | ParticipatingSchedule;

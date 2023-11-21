@@ -1,6 +1,5 @@
 import MannerTemperatureBar from "@/components/mypage/MannerTemperatureBar";
 import ProfileComponent from "@/components/mypage/ProfileComponent";
-import ScheduleTabs from "@/components/mypage/ScheduleTabs";
 import { HeaderComponent } from "@/pages/detailmapping/HeaderComponent";
 import styled from "styled-components";
 import React from "react";
