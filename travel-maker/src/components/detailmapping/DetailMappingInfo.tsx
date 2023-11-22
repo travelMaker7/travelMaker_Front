@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import JoinRequestButton from "./JoinRequestButton";
+import { useParams } from "react-router-dom";
 
 // const SCHEDULE_DETAIL_MOCK = {
 //   status: 201,
@@ -89,6 +90,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
   const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
     null
   );
+
   // const [hostId, setHostId] = useState<number | null>(null);
 
   const fetchScheduleDetail = async () => {
@@ -103,7 +105,6 @@ export const DetailMappingInfo: React.FC<Props> = ({
       const Markers = res.data.data.makers.map((marker: MarkerData) => ({
         ...marker,
       }));
-
       setMarkers(Markers);
       setScheduleDetail(res.data.data);
       // setHostId(res.data.data.hostId);
@@ -114,7 +115,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
 
   useEffect(() => {
     fetchScheduleDetail();
-  }, []);
+  }, [scheduleId]);
 
   // useEffect(() => {
   //   const Markers = SCHEDULE_DETAIL_MOCK.data.markers.map((marker) => ({

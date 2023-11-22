@@ -1,9 +1,9 @@
 import MannerTemperatureBar from "@/components/mypage/MannerTemperatureBar";
 import ProfileComponent from "@/components/mypage/ProfileComponent";
-import ScheduleTabs from "@/components/mypage/ScheduleTabs";
 import { HeaderComponent } from "@/pages/detailmapping/HeaderComponent";
 import styled from "styled-components";
 import React from "react";
+import MyPageSidebar from "@/components/mypage/MyPageSideBar";
 
 const MyPage: React.FC = () => {
   return (
@@ -12,7 +12,8 @@ const MyPage: React.FC = () => {
       <ProfileComponent />
       <MannerTemperatureBar width="70%" />
 
-      <ScheduleTabs />
+      {/* <ScheduleTabs /> */}
+      <MyPageSidebar />
     </Container>
   );
 };

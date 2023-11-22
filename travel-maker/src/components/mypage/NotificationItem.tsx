@@ -62,7 +62,16 @@ const NotificationWrapper = styled.div`
 
 const NotificationText = styled.p`
   margin: 0;
-  flex-grow: 1; // 텍스트가 더 많은 공간을 차지하도록 함
+  flex-grow: 1;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-left: 4px solid #3498db;
+  background-color: #f8f8f8;
+  border-radius: 5px;
 `;
 
 const ButtonGroup = styled.div`
@@ -115,10 +124,15 @@ const ModalContent = styled.div`
 `;
 
 const ModalText = styled.p`
-  margin-bottom: 20px; // 마진 추가
-  font-size: 16px; // 글꼴 크기 변경
-  text-align: center; // 텍스트 가운데 정렬
-  color: #555;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
 `;
 
 export default NotificationItem;

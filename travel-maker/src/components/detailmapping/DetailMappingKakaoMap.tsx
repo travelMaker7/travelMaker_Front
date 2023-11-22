@@ -30,7 +30,6 @@ export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
       const createMarker = new kakao.maps.Marker({
         position,
       });
-
       createMarker.setMap(map);
     });
 

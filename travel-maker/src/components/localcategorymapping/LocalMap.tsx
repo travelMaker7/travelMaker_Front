@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 declare global {
@@ -171,3 +171,6 @@ const ResetSearchBtn = styled.button`
   font-size: 1.125rem;
 
 `
+
+
+
