@@ -82,7 +82,7 @@ const dummyProfileData = {
   mannerScore: 40.5,
 };
 
-const MyPageProfileTest: React.FC = () => {
+const MyPageProfile: React.FC = () => {
   const [profile, setProfile] = useState<ProfileData>(dummyProfileData);
 
   useEffect(() => {
@@ -114,4 +114,4 @@ const MyPageProfileTest: React.FC = () => {
   );
 };
 
-export default MyPageProfileTest;
+export default MyPageProfile;

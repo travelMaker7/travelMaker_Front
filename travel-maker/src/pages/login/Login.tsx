@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import kakaologin from "../../assets/images/login/kakao_login_large_wide.png"
 import TopBar from "../../components/main/TopBar";
-import bus from "../../assets/images/login/Bus.png"
-
+import bus from "../../assets/images/login/Bus.png";
 
 const LoginContainer = styled.div`
   display: flex;
