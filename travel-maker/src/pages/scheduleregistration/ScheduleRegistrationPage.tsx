@@ -2,10 +2,12 @@ import styled from "styled-components"
 import React from 'react';
 import MapContainer from '../../components/scheduleregistration/MapContainer'
 import DateRange from "../../components/scheduleregistration/DateRange";
-// import ToggleList from "../../components/scheduleregistration/ToggleList";
 import dayjs, { Dayjs } from 'dayjs';
 import { useState, useEffect } from "react";
 import ToggleList from '../../components/scheduleregistration/ToggleList'
+import { HeaderComponent } from "../detailmapping/HeaderComponent";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import axios from "axios";
 
 const ScheduleRegistrationPage = () => {
   
@@ -31,7 +33,7 @@ const ScheduleRegistrationPage = () => {
   
     // 현재 날짜보다 이전이면 선택 가능
     if (dayjs(current).isBefore(dayjs(), 'day')) {
-      return false;
+      return true;
     }
   
     // 현재 날짜로부터 30일 이내이면 선택 가능
@@ -44,44 +46,56 @@ const ScheduleRegistrationPage = () => {
     console.log(dayCnt);
   }, [selectedRange, dayCnt]);
 
+  const handleSubmit = () => {
+    axios.post('http://121.178.106.179:8080/api/v1/schedule', null,{})
+  .then((res) => {
+    console.log(res);
+    console.log("제출 성공");
+  }).catch((error) => {
+    console.error("제출 실패");
+  })
+  }
+
   return (
-    <PageContainer>
-      <MapContainerBox>
-        <MapContainer/>
-      </MapContainerBox>
-      <InputContainer>
-        <ScheduleDiv>
-          <InputHeaderDiv>
-            <ScheduleTheme>일정 제목</ScheduleTheme>
-            <ScheduleThemeInput
-              placeholder="15자 이내로 입력해주세요."
+    <>
+      <HeaderComponent/>
+      <PageContainer>
+        <MapContainerBox>
+          <MapContainer/>
+        </MapContainerBox>
+        <InputContainer>
+          <ScheduleDiv>
+            <InputHeaderDiv>
+              <ScheduleTheme>일정 제목</ScheduleTheme>
+              <ScheduleThemeInput
+                placeholder="15자 이내로 입력해주세요."
+              />
+              <ScheduleSubmitBtn onClick={handleSubmit}>일정 등록</ScheduleSubmitBtn>
+            </InputHeaderDiv>
+            <DatePickerDiv>
+              <CalendarMonthIcon style={{marginLeft: '5rem', color: 'white', marginRight: '0.8rem'}}/>
+              <DateRange 
+                selectedRange={selectedRange} 
+                setSelectedRange={setSelectedRange}
+                dayCnt={dayCnt}
+                disabledDate={disabledDate}
+                handleRangeChange={handleRangeChange}
+                calcDayCnt={calcDayCnt}
+              />
+            </DatePickerDiv>
+            <ScrollDiv>
+              <ToggleList selectedRange={selectedRange} dayCnt={dayCnt} />
+            </ScrollDiv>
+          </ScheduleDiv>
+          <DescriptionDiv>
+            <DescriptionTheme>소개글</DescriptionTheme>
+            <DescriptionTextera
+              placeholder="간단한 일정 소개를 부탁드려요!!"
             />
-            <ScheduleSubmitBtn>일정 등록</ScheduleSubmitBtn>
-          </InputHeaderDiv>
-          <DatePickerDiv>
-            <DateRange 
-              selectedRange={selectedRange} 
-              setSelectedRange={setSelectedRange}
-              dayCnt={dayCnt}
-              disabledDate={disabledDate}
-              handleRangeChange={handleRangeChange}
-              calcDayCnt={calcDayCnt}
-            />
-          </DatePickerDiv>
-          <ScrollDiv>
-            <ToggleList selectedRange={selectedRange} dayCnt={dayCnt}/>
-          </ScrollDiv>
-        </ScheduleDiv>
-        <OpenChattingDiv>
-          <OpenChattingTheme>오픈 카톡 URL</OpenChattingTheme>
-          <OpenChattingInput/>
-        </OpenChattingDiv>
-        <DescriptionDiv>
-          <DescriptionTheme>소개글</DescriptionTheme>
-          <DescriptionTextera/>
-        </DescriptionDiv>
-      </InputContainer>
-    </PageContainer>
+          </DescriptionDiv>
+        </InputContainer>
+      </PageContainer>
+    </>
   );
 };
 
@@ -90,8 +104,9 @@ export default ScheduleRegistrationPage;
 const PageContainer = styled.div`
   width: 62.5rem;
   height:43.75rem;
-  margin: auto;
   display: flex;
+  margin: auto;
+  border-radius: 0.125rem;
 `
 
 const MapContainerBox = styled.div`
@@ -111,7 +126,7 @@ const InputHeaderDiv = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  margin-left: 2rem;
+  background-color: #74b9ff;
 `
 const ScheduleTheme = styled.div`
   width: 6rem;
@@ -120,17 +135,17 @@ const ScheduleTheme = styled.div`
   font-weight: bolder;
   color: black;
   line-height: 2.5rem;
-  font-size: 1.25rem;
-  
+  font-size: 1.125rem;
+  color: white;
+  margin-left: 1rem;
 `
 const ScheduleThemeInput = styled.input`
-  border: 1px #ebebeb solid;
+  border: none;
   width: 16.625rem;
-  height: 2.5rem;
+  height: 2rem;
   text-indent: 1rem;
   font-size: 1.125rem;
-  border-radius: 0.625rem;
-  margin-left: 1.5rem;
+  border-radius: 0.375rem;
 `
 
 const ScheduleSubmitBtn = styled.button`
@@ -143,7 +158,7 @@ const ScheduleSubmitBtn = styled.button`
   font-weight: bolder;
   border: none;
   font-size: 1rem;
-  margin-left: 2.25rem;
+  margin-left: 1rem;
 `
 
 const DatePickerDiv = styled.div`
@@ -151,8 +166,7 @@ const DatePickerDiv = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-left: 2rem;
+  background-color: #74b9ff ;
 `
 const ScheduleDiv = styled.div`
   width: 100%;
@@ -161,12 +175,12 @@ const ScheduleDiv = styled.div`
 
 const ScrollDiv = styled.div`
   width: 31.25rem;
-  height: 18.75rem;
+  height: 22.75rem;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 2rem;
+  padding-top: 0.875rem;
   /* -ms-overflow-style: none; 인터넷 익스플로러 
   scrollbar-width: none; 파이어폭스 */
 
@@ -175,69 +189,36 @@ const ScrollDiv = styled.div`
 }
 `
 
-const PlaceAddBtnDiv = styled.div`
-  width: 100%;
-  height: 5rem;
-  display: flex;
-  justify-content: right;
-  align-items: center;
-` 
-
-const PlaceAddBtn = styled.button`
-  width:6rem;
-  height: 2.5rem;
-  background-color: #8CC4F8;
-  color: white;
-  border-radius: 0.875rem;
-  cursor: pointer;
-  font-weight: bolder;
-  border: none;
-  font-size: 1rem;
-  margin-right: 1rem;
-`
-
 const DescriptionDiv = styled.div`
-  width: 31.25rem;
-  height: 6rem;
-  margin-left: 2rem;
-`
-
-const OpenChattingDiv = styled(InputHeaderDiv)``
-
-const OpenChattingTheme = styled.div`
-  width: 7rem;
-  height: 2rem;
-  text-align: center;
-  font-weight: bolder;
-  color: black;
-  line-height: 2rem;
-  font-size: 1rem;
-`
-
-const OpenChattingInput = styled.input`
-  border: 1px #ebebeb solid;
-  width: 18rem;
-  height: 1.5rem;
-  text-indent: 0.5rem;
-  font-size: 1.125rem;
-  border-radius: 0.625rem;
-  margin-left: 0.5rem;
+  width: 100%;
+  height: 11rem;
+  margin-top: 4rem;
 `
 
 const DescriptionTheme = styled.div`
-  width: 4rem;
+  width: 100%;
   height: 2rem;
   text-align: center;
   font-weight: bolder;
-  color: black;
+  color: white;
   line-height: 2rem;
   font-size: 1rem;
+  background-color: #8CC4F8;
 `
 
 const DescriptionTextera = styled.textarea`
-  width: 30rem;
-  height: 8rem;
-  overflow-y: scroll;
+  width: 100%;
+  height: 9rem;
   text-indent: 0.5rem;
   border: 0.0625rem #ebebeb solid;
+  box-sizing: border-box;
+  
+  &::placeholder {
+    text-align: center;
+    line-height: 9rem;
+  }
+
+  &::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
 `

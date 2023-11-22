@@ -1,3 +1,4 @@
+import zIndex from '@mui/material/styles/zIndex';
 import React, { useEffect } from 'react';
 
 declare global {
@@ -20,7 +21,7 @@ const MapContainer = () => {
       }, [])
 
     return (
-        <div id="map" style={{ width: "31.25rem", height: "43.75rem", overflow: "hidden" }} />
+        <div id="map" style={{ width: "31.25rem", height: "43.75rem", overflow: "hidden", zIndex: '99' }} />
     );
 }
 
