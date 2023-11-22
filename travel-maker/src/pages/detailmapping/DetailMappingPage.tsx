@@ -1,7 +1,7 @@
 import { DetailMappingKakaoMap } from "@/components/detailmapping/DetailMappingKakaoMap";
 import { DetailMappingInfo } from "@/components/detailmapping/DetailMappingInfo";
 import styled from "styled-components";
-// import { HeaderComponent } from "./HeaderComponent";
+import { HeaderComponent } from "./HeaderComponent";
 import { useState } from "react";
 import { MarkerData } from "@/utils/Types";
 

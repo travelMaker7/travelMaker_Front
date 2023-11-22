@@ -93,6 +93,8 @@ export const DetailMappingInfo: React.FC<Props> = ({
 
   // const [hostId, setHostId] = useState<number | null>(null);
 
+  const { scheduleId } = useParams<{ scheduleId: string }>();
+
   const fetchScheduleDetail = async () => {
     const scheduleId = 1;
     try {
