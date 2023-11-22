@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import { AuthContext} from '../../components/contexts/AuthContext';
 import styled, { createGlobalStyle } from 'styled-components'; 
 import TopBar from "../../components/main/TopBar";
-import SearchBar from "../../components/main/SearchBar";
+// import SearchBar from "../../components/main/SearchBar";
 import TravelScheduleButton from "../../components/main/TravelScheduleButton";
 import ImageBox from "../../components/main/ImageBox";
+import FilterSearch from "../../components/search/FilterSearch";
 
 import ex1 from "../../assets/images/mainpageimages/ex1.png";
 import ex2 from "../../assets/images/mainpageimages/ex2.png";
@@ -91,7 +92,7 @@ const MainPage: React.FC = () => {
         <Header>
           <TopBar />
           <SearchContainer>
-            <SearchBar />
+            <FilterSearch />
           </SearchContainer>
         </Header>
         <Main>
