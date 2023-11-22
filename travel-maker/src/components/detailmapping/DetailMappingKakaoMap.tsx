@@ -34,6 +34,7 @@ export const DetailMappingKakaoMap: React.FC<Props> = ({
       const createMarker = new kakao.maps.Marker({
         position,
       });
+      
       kakao.maps.event.addListener(createMarker, "click", () => {
         setActiveTripPlanId(marker.tripPlanId);
       });

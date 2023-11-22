@@ -1,3 +1,4 @@
+
 import {
   MarkerData,
   ScheduleDetail,
@@ -15,6 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import JoinRequestButton from "./JoinRequestButton";
+import { useParams } from "react-router-dom";
 
 const SCHEDULE_DETAIL_MOCK = {
   status: 201,
@@ -90,10 +92,11 @@ export const DetailMappingInfo: React.FC<Props> = ({
   const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
     null
   );
+  const { scheduleId } = useParams();
 
   useEffect(() => {
     const fetchScheduleDetail = async () => {
-      const scheduleId = 1;
+      // const scheduleId = 1;
       try {
         const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
           headers: {
@@ -117,7 +120,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
       }
     };
     fetchScheduleDetail();
-  }, []);
+  }, [scheduleId]);
 
   useEffect(() => {
     const allDetails = SCHEDULE_DETAIL_MOCK.data.tripPlans.flatMap(

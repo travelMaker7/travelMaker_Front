@@ -17,8 +17,8 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
   const handleJoinRequest = async () => {
     try {
       const response = await axios.post("/api/v1/accompany/guest", {
+        hostId: 1,
         tripPlanId,
-        guestId: 1,
         joinStatus: "승인대기",
       });
 
