@@ -10,18 +10,18 @@ export interface TripDetail {
 }
 
 export interface TripPlan {
-  dateNum: string;
-  details: TripDetail[];
+  scheduledDate: string;
+  tripPlanDetails: TripDetail[];
 }
 
 export interface ScheduleDetail {
   scheduleId: number;
   markers: { destinationY: string; destinationX: string }[];
   scheduleName: string;
-  startDate: string;
-  finishDate: string;
   tripPlans: TripPlan[];
   chatUrl: string;
+  scheduleDescription?: string;
+  hostId: number;
 }
 
 export interface Notifications {
@@ -35,10 +35,6 @@ export interface Notifications {
 export interface MarkerData {
   destinationY: string;
   destinationX: string;
-}
-
-export interface EnhancedMarkerData extends MarkerData {
-  tripPlanId: number;
 }
 
 export interface BaseSchedule {

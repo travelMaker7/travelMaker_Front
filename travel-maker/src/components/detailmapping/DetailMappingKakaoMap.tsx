@@ -1,18 +1,14 @@
+import { MarkerData } from "@/utils/Types";
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { EnhancedMarkerData } from "@/utils/Types";
 
 declare const kakao: any;
 
 interface Props {
-  markers: EnhancedMarkerData[];
-  setActiveTripPlanId: React.Dispatch<React.SetStateAction<number | null>>;
+  markers: MarkerData[];
 }
 
-export const DetailMappingKakaoMap: React.FC<Props> = ({
-  markers,
-  setActiveTripPlanId,
-}) => {
+export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
   useEffect(() => {
     const container = document.getElementById("map");
     if (!container || markers.length === 0) return;
@@ -34,11 +30,6 @@ export const DetailMappingKakaoMap: React.FC<Props> = ({
       const createMarker = new kakao.maps.Marker({
         position,
       });
-      
-      kakao.maps.event.addListener(createMarker, "click", () => {
-        setActiveTripPlanId(marker.tripPlanId);
-      });
-
       createMarker.setMap(map);
     });
 
