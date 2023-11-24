@@ -26,7 +26,7 @@ const KakaoStaticMap: React.FC<KakaoStaticMapProps> = ({
           markers[0].destinationY,
           markers[0].destinationX
         ),
-        level: 3, // Initial zoom level
+        level: 3,
       };
 
       const map = new window.kakao.maps.Map(mapContainer.current, mapOption);

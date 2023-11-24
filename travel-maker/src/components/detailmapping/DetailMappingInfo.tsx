@@ -96,7 +96,6 @@ export const DetailMappingInfo: React.FC<Props> = ({
   const { scheduleId } = useParams<{ scheduleId: string }>();
 
   const fetchScheduleDetail = async () => {
-    const scheduleId = 1;
     try {
       const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
         headers: {
@@ -109,7 +108,6 @@ export const DetailMappingInfo: React.FC<Props> = ({
       }));
       setMarkers(Markers);
       setScheduleDetail(res.data.data);
-      // setHostId(res.data.data.hostId);
     } catch (e) {
       console.log(e);
     }

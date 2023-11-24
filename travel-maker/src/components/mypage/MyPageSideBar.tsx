@@ -5,7 +5,7 @@ import { ParticipatingSchedule, RegisteredSchedule } from "@/utils/Types";
 import MyPageScheduleDelete from "./MyPageScheduleDelete";
 import NotificationsList from "./NotificationsList";
 import { Link } from "react-router-dom";
-import KakaoStaticMap from "./\bKakaoStaticMap";
+import KakaoStaticMap from "./KakaoStaticMap";
 
 declare const kakao: any;
 
@@ -222,7 +222,7 @@ const MyPageSidebar: React.FC = () => {
         console.log("일정 삭제 실패");
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -410,7 +410,8 @@ const MyPageSidebar: React.FC = () => {
 const PageContainer = styled.div`
   display: flex;
   height: 100vh;
-  margin-top: 60px;
+  padding: 40px;
+  /* margin-top: 60px; */
   /* background-color: #ecf0f1; */
 `;
 
@@ -431,7 +432,7 @@ const SidebarItem = styled.div<ButtonProps>`
   color: ${(props) => (props.isActive ? "#fff" : "#000000")};
   border-radius: 10px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   transition: all 0.3s;
 
   &:hover {
