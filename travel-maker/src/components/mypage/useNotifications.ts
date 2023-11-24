@@ -10,6 +10,16 @@ export interface NotificationData {
 }
 
 export const useNotifications = () => {
+  return useQuery<NotificationData[], Error>("notifications", async () => {
+    const { data } = await axios.get("/api/v1/accompany", {
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("token"),
+      },
+    });
+    return data.notifications;
+  });
+
   // const mockNotifications: NotificationData[] = [
   //   {
   //     joinId: 1,
@@ -33,11 +43,6 @@ export const useNotifications = () => {
   //     joinStatus: "신청대기",
   //   },
   // ];
-
-  return useQuery<NotificationData[], Error>("notifications", async () => {
-    const { data } = await axios.get("/api/v1/accompany");
-    return data.notifications;
-  });
 
   // return useQuery<NotificationData[], Error>("notifications", async () => {
   //   // Simulate an async operation, like fetching data

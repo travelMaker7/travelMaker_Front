@@ -27,7 +27,7 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin: 20px;
+  margin: 5rem;
   border-radius: 10px; // 둥근 모서리
 
   @media (max-width: 1024px) {
