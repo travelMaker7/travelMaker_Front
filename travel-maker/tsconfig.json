@@ -35,5 +35,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "node_modules/@testing-library/jest-dom/index.d.ts", "custom.d.ts" ],
+//   "include": ["src", "node_modules/@testing-library/jest-dom/index.d.ts", "node_modules/@types" ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

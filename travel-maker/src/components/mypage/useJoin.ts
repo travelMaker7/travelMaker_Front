@@ -14,6 +14,7 @@ export const useJoin = () => {
       axios.post("/api/v1/notification", updateStatusRequest, {
         headers: {
           "Content-Type": "application/json",
+          token: localStorage.getItem("token"),
         },
       }),
     {

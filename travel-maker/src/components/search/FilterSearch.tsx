@@ -29,13 +29,15 @@ const SearchBarContainer = styled.div<{ isExpanded: boolean }>`
 type ExpandedSearchFieldsContainerProps = {
     isExpanded: boolean;
   };
+
 // 확장된 검색 필드 컨테이너
 const ExpandedSearchFieldsContainer = styled.div<ExpandedSearchFieldsContainerProps>`
   justify-content: space-between;
   display: flex;
   align-items: center;
   padding: 10px;
-  background: ${props => props.isExpanded ? '#F0F0F0' : '#FFFFFF'}; // 확장 후 회색, 확장 전 흰색
+  background: ${(props) =>
+    props.isExpanded ? "#F0F0F0" : "#FFFFFF"}; // 확장 후 회색, 확장 전 흰색
   border-radius: 32px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
@@ -45,15 +47,19 @@ const Field = styled.div<{ isActive?: boolean }>`
   padding: 10px 15px;
   margin: 0 5px;
   cursor: pointer;
-  background: ${props => props.isActive ? '#FFFFFF' : 'transparent'}; // 활성화 시 흰색 배경
+  background: ${(props) =>
+    props.isActive ? "#FFFFFF" : "transparent"}; // 활성화 시 흰색 배경
   border-radius: 32px;
-  /* border: 1px solid ${props => props.isActive ? '#FF385C' : '#DDDDDD'}; // 비활성화 상태일 때 회색 테두리
-  color: ${props => props.isActive ? '#333333' : '#BBBBBB'}; // 비활성화 상태일 때 회색 텍스트 */
+  /* border: 1px solid ${(props) =>
+    props.isActive ? "#FF385C" : "#DDDDDD"}; // 비활성화 상태일 때 회색 테두리
+  color: ${(props) =>
+    props.isActive
+      ? "#333333"
+      : "#BBBBBB"}; // 비활성화 상태일 때 회색 텍스트 */
   transition: all 0.3s ease;
   &:hover {
     background: ${props => props.isActive ? '#FFFFFF' : '#F6F6F6'}; // 비활성화 상태일 때에도 hover 효과
   }
-
 `;
 const Modal = styled.div`
   display: flex;
@@ -78,7 +84,7 @@ const ModalOption = styled.div`
 `;
 const SearchButton = styled.button`
   padding: 10px 20px;
-  background-color: #6FADFF;
+  background-color: #6fadff;
   color: white;
   border: none;
   border-radius: 32px;
@@ -88,7 +94,7 @@ interface DateModalProps {
     show: boolean;
   }
 const DateModal = styled.div<DateModalProps>`
-  display: ${props => props.show ? 'flex' : 'none'};
+  display: ${(props) => (props.show ? "flex" : "none")};
   flex-direction: column;
   position: absolute;
   top: 106%;
@@ -99,7 +105,7 @@ const DateModal = styled.div<DateModalProps>`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 20;
   padding: 20px;
-  width: 50%;  // DateModal의 너비 조정
+  width: 50%; // DateModal의 너비 조정
 `;
 const DatePickerInput = styled.input`
   width: 98%;
@@ -139,49 +145,49 @@ const Label = styled.label`
   font-weight: bold;
 `;
 const DateFieldContainer = styled.div`
-  width: 80%;  // 너비를 80%로 조정
-  margin: 0 auto;  // 가운데 정렬
+  width: 80%; // 너비를 80%로 조정
+  margin: 0 auto; // 가운데 정렬
 `;
 const FilterSearch: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeField, setActiveField] = useState<string | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState('지역'); // 초기값 '지역'으로 설정
-  const [selectedGender, setSelectedGender] = useState('성별');
-  const [selectedAge, setSelectedAge] = useState('나이');
+  const [selectedRegion, setSelectedRegion] = useState("지역"); // 초기값 '지역'으로 설정
+  const [selectedGender, setSelectedGender] = useState("성별");
+  const [selectedAge, setSelectedAge] = useState("나이");
   // const [selectedDate, setSelectedDate] = useState('날짜');
   const [minGuests, setMinGuests] = useState<number | null>(null);
   const [maxGuests, setMaxGuests] = useState<number | null>(null);
-  const [selectedGuests, setSelectedGuests] = useState('인원');
+  const [selectedGuests, setSelectedGuests] = useState("인원");
   const containerRef = useRef<HTMLDivElement>(null);
   const [targetStartDate, setTargetStartDate] = useState('');
   const [targetFinishDate, setTargetFinishDate] = useState('');
   // const [startDate, setStartDate] = useState('');
   // const [endDate, setEndDate] = useState('');
   const [minEndDate, setMinEndDate] = useState('');
-
-
+  
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsExpanded(false);
         setActiveField(null);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
 
   useEffect(() => {
     if (minGuests !== null && maxGuests !== null) {
       setSelectedGuests(`${minGuests}~${maxGuests}명`);
     } else {
-      setSelectedGuests('인원');
+      setSelectedGuests("인원");
     }
   }, [minGuests, maxGuests]);
-
 
   // 최소 인원 입력 변경 처리
   const handleMinGuestsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,27 +210,26 @@ const FilterSearch: React.FC = () => {
     }
   };
 
-
   const handleSearch = async () => {
     const searchData = {
       targetStartDate: formatDate(targetStartDate),
       targetFinishDate: formatDate(targetFinishDate),
       ageRange: selectedAge,
-      gender: selectedGender === '남자' ? 'male' : 'female',
+      gender: selectedGender === "남자" ? "male" : "female",
       minPerson: minGuests ?? undefined,
       maxPerson: maxGuests ?? undefined,
-      region: selectedRegion
+      region: selectedRegion,
     };
     try {
-      const response = await axios.get('/api/v1/trip/search', {
+      const response = await axios.get("/api/v1/trip/search", {
         params: searchData,
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
       console.log(response.data);
     } catch (error) {
-      console.error('Error making the request:', error);
+      console.error("Error making the request:", error);
     }
   };
   // 'YYYY-MM-DD' 형식으로 날짜를 변환하는 함수
@@ -250,7 +255,7 @@ useEffect(() => {
       day = '0' + day;
   return [year, month, day].join('-');
 }
-    /* try {
+ 
       const response = await axios.get('/api/v1/trip/search', {
         params: searchData,
         headers: {
@@ -286,45 +291,78 @@ console.error('Error making the request:', error);
   return (
     <HeaderContainer ref={containerRef}>
       <SearchBarContainer isExpanded={isExpanded}>
-      <ExpandedSearchFieldsContainer isExpanded={isExpanded} onClick={() => setIsExpanded(true)}>
-        {!isExpanded ? (
-          // Initial search fields here
-          <>
-            <Field>어디든지</Field>
-            <Field>언제든지</Field>
-            <Field>누구와?</Field>
-            {/* <SearchButton onClick={() => setIsExpanded(false)}>검색</SearchButton> */}
-            <SearchButton onClick={handleSearch}>검색</SearchButton>
-          </>
-        ) : (
-          // Expanded search fields here
-        <>
-            <Field isActive={activeField === 'location'} onClick={() => setActiveField('location')}>
-            {selectedRegion}
-            </Field>
-            <Field isActive={activeField === 'gender'} onClick={() => setActiveField('gender')}>
-            {selectedGender}
-            </Field>
-            <Field isActive={activeField === 'age'} onClick={() => setActiveField('age')}>
-            {selectedAge}
-            </Field>
-            <Field isActive={activeField === 'dates'} onClick={() => setActiveField('dates')}>
-            {targetStartDate && targetFinishDate ? `${targetStartDate} - ${targetFinishDate}` : '날짜 선택'}
-            </Field>
-            <Field isActive={activeField === 'guests'} onClick={() => setActiveField('guests')}>
-            {selectedGuests}
-            </Field>
-            {/* <SearchButton onClick={() => setIsExpanded(false)}>검색</SearchButton> */}
-            <SearchButton onClick={handleSearch}>검색</SearchButton>
+        <ExpandedSearchFieldsContainer
+          isExpanded={isExpanded}
+          onClick={() => setIsExpanded(true)}
+        >
+          {!isExpanded ? (
+            // Initial search fields here
+            <>
+              <Field>어디든지</Field>
+              <Field>언제든지</Field>
+              <Field>누구와?</Field>
+              {/* <SearchButton onClick={() => setIsExpanded(false)}>검색</SearchButton> */}
+              <SearchButton onClick={handleSearch}>검색</SearchButton>
             </>
-        )}
-            </ExpandedSearchFieldsContainer>
-        {activeField === 'location' && (
+          ) : (
+            // Expanded search fields here
+            <>
+              <Field
+                isActive={activeField === "location"}
+                onClick={() => setActiveField("location")}
+              >
+                {selectedRegion}
+              </Field>
+              <Field
+                isActive={activeField === "gender"}
+                onClick={() => setActiveField("gender")}
+              >
+                {selectedGender}
+              </Field>
+              <Field
+                isActive={activeField === "age"}
+                onClick={() => setActiveField("age")}
+              >
+                {selectedAge}
+              </Field>
+              <Field
+                isActive={activeField === "dates"}
+                onClick={() => setActiveField("dates")}
+              >
+                {targetStartDate && targetFinishDate
+                  ? `${targetStartDate} - ${targetFinishDate}`
+                  : "날짜 선택"}
+              </Field>
+              <Field
+                isActive={activeField === "guests"}
+                onClick={() => setActiveField("guests")}
+              >
+                {selectedGuests}
+              </Field>
+              {/* <SearchButton onClick={() => setIsExpanded(false)}>검색</SearchButton> */}
+              <SearchButton onClick={handleSearch}>검색</SearchButton>
+            </>
+          )}
+        </ExpandedSearchFieldsContainer>
+        {activeField === "location" && (
           <Modal>
-            {['서울', '경기도', '경상도', '강원도', '충청도', '전라도', '제주도', '인천'].map((region) => (
-              <ModalOption key={region} onClick={() => {
-                setSelectedRegion(region); // 지역 선택 시 상태 업데이트
-                setActiveField(null)}}>
+            {[
+              "서울",
+              "경기도",
+              "경상도",
+              "강원도",
+              "충청도",
+              "전라도",
+              "제주도",
+              "인천",
+            ].map((region) => (
+              <ModalOption
+                key={region}
+                onClick={() => {
+                  setSelectedRegion(region); // 지역 선택 시 상태 업데이트
+                  setActiveField(null);
+                }}
+              >
                 {region}
               </ModalOption>
             ))}

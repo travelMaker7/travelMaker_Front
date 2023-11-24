@@ -2,21 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ClearIcon from '@mui/icons-material/Clear';
+import {PlacesProps, SchedulesProps} from '../../pages/scheduleregistration/ScheduleRegistrationPage';
 
 interface ModalControlProps {
   closeSearchModal: () => void;
-  placeStates: PlaceProps[],
-  setPlaceStates: React.Dispatch<React.SetStateAction<PlaceProps[]>>;
-  placeToggleStates: boolean[],
-  setPlaceToggleStates: React.Dispatch<React.SetStateAction<boolean[]>>;
-}
-
-interface PlaceProps {
-  destinationName: string;
-  address: string;
-  destinationX: string;
-  destinationY: string;
-  region: string;
+  autoSchedules: SchedulesProps[];
+  setAutoSchedules: React.Dispatch<React.SetStateAction<SchedulesProps[]>>;
+  selectedDayIndex: number | null;
 }
 
 interface KeywordAddressInfo {
@@ -31,7 +23,7 @@ interface KeywordAddressInfo {
 }
 
 interface AddressInfo {
-  address_name: string | null,
+  address_name: string,
   x: string;
   y: string;
   building_name: string;
@@ -40,13 +32,12 @@ interface AddressInfo {
   region_3depth_name: string;
 }
 
-const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, placeStates, setPlaceStates, placeToggleStates, setPlaceToggleStates}) => {
+const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, autoSchedules, setAutoSchedules, selectedDayIndex}) => {
 
   const [keywordAddressInfos, setKeywordAddressInfos] = useState<KeywordAddressInfo[]>([]);
   const [addressInfos, setAddressInfos] = useState<AddressInfo[]>([]); 
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchOption, setSearchOption] = useState<string>('address');
-
 
   const { VITE_REST_API_KEY } = import.meta.env;
 
@@ -92,9 +83,9 @@ const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, placeS
             address_name: doc.address_name,
             x: doc.x,
             y: doc.y,
-            region_1depth_name:doc.road_address.region_1depth_name,
-            region_2depth_name:doc.road_address.region_2depth_name,
-            region_3depth_name:doc.road_address.region_3depth_name,
+            region_1depth_name: doc.road_address.region_1depth_name,
+            region_2depth_name: doc.road_address.region_2depth_name,
+            region_3depth_name: doc.road_address.region_3depth_name,
           }));
           setAddressInfos(newAddressInfos);
         }
@@ -115,44 +106,133 @@ const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, placeS
     setSearchOption(e.target.value);
   };
 
-  const chooseKeywordAddress = (selectedKeywordAddress: KeywordAddressInfo) => {
-    const newPlace = {
+  const handleRegionSector = (place: PlacesProps) => {
+    switch (place.region) {
+      case "광주":
+        place.region = "전라";
+        break;
+      case "제주특별자치도":
+        place.region = "제주";
+        break;
+      case "부산":
+        place.region = "경상";
+        break;
+      case "울산":
+        place.region = "경상";
+        break;
+      case "대구":
+        place.region = "경상";
+        break;
+      case "세종특별자치시":
+        place.region = "충청";
+        break;
+      case "대전":
+        place.region = "충청";
+        break;
+      case "전남":
+        place.region = "전라";
+        break;
+      case "전북":
+        place.region = "전라";
+        break;
+      case "경북":
+        place.region = "경상";
+        break;
+      case "경남":
+        place.region = "경상";
+        break;
+      case "충남":
+        place.region = "충청";
+        break;  
+      case "충북":
+        place.region = "충청";
+        break;
+      case "강원특별자치도":
+        place.region = "강원";
+        break;      
+      default:
+        console.log("예외 케이스 발생 확인 바람");      
+    }
+  };
+
+  const chooseKeywordAddress = (selectedKeywordAddress: KeywordAddressInfo, scheduleKey: number | null) => {
+    const newPlace: PlacesProps = {
       destinationName: selectedKeywordAddress.place_name || "",
       address: selectedKeywordAddress.address_name || "",
       destinationX: selectedKeywordAddress.x,
       destinationY: selectedKeywordAddress.y,
       region: selectedKeywordAddress.region_1depth_name,
+      placeStates: false,
+      wishCnt: null,
+      wishJoin: false,
+      arriveTime: null,
+      leaveTime: null,
     };
+
+    handleRegionSector(newPlace);
+    console.log('newPlace: ', newPlace);
+    setAutoSchedules((prev) => {
+      const updatedAutoSchedules = prev.map((schedule) => {
+        if (schedule.day === scheduleKey) {
+          const isDuplicate = schedule.places.some(
+            (place) => place.destinationX === newPlace.destinationX && place.destinationY === newPlace.destinationY
+          );
   
-    const isDuplicate = placeStates.some(
-      (place) => place.destinationX === newPlace.destinationX && place.destinationY === newPlace.destinationY
-    );
-  
-    if (!isDuplicate) {
-      setPlaceStates((prev) => [...prev, newPlace]);
-    }
-  
+          if (!isDuplicate) {
+            return {
+              ...schedule,
+              places: [...schedule.places, newPlace],
+            };
+          }
+        }
+        console.log('schedule: ', schedule);
+        return schedule;
+      });
+      console.log('updatedAutoSchedules: ', updatedAutoSchedules);
+      return updatedAutoSchedules;
+    });
+    console.log('autoSchedules :', autoSchedules);
     closeSearchModal();
   };
 
-  const chooseAddress = (selectedAddress: AddressInfo) => {
-    const newPlace = {
+  const chooseAddress = (selectedAddress: AddressInfo, scheduleKey: number | null) => {
+    const newPlace: PlacesProps = {
       destinationName: selectedAddress.building_name || "",
       address: selectedAddress.address_name || "",
       destinationX: selectedAddress.x,
       destinationY: selectedAddress.y,
       region: selectedAddress.region_1depth_name,
+      placeStates: false,
+      wishCnt: null,
+      wishJoin: false,
+      arriveTime: null,
+      leaveTime: null,
     };
+
+    handleRegionSector(newPlace);
+    console.log('newPlace: ', newPlace);
+    
+    setAutoSchedules((prev) => {
+      const updatedAutoSchedules = prev.map((schedule) => {
+        if (schedule.day === scheduleKey) {
+          const isDuplicate = schedule.places.some(
+            (place) => place.destinationX === newPlace.destinationX && place.destinationY === newPlace.destinationY
+          );
   
-    const isDuplicate = placeStates.some(
-      (place) => place.destinationX === newPlace.destinationX && place.destinationY === newPlace.destinationY
-    );
-  
-    if (!isDuplicate) {
-      setPlaceStates((prev) => [...prev, newPlace]);
-      setPlaceToggleStates((prev: boolean[]) => [...prev, false])
-    }
-  
+          if (!isDuplicate) {
+            return {
+              ...schedule,
+              places: [...schedule.places, newPlace],
+            };
+          }
+        }
+        console.log('schedule: ', schedule);
+        return schedule;
+      });
+      console.log('updatedAutoSchedules: ', updatedAutoSchedules);
+      return updatedAutoSchedules;
+    });
+    console.log('autoSchedules :', autoSchedules);
     closeSearchModal();
   };
 
@@ -198,7 +278,7 @@ const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, placeS
             {
               searchOption === 'keyword' ? (
                 keywordAddressInfos && keywordAddressInfos.map((address) => (
-                  <AddressListDiv key={address.id} onClick={() => chooseKeywordAddress(address)}>
+                  <AddressListDiv key={address.id} onClick={() => chooseKeywordAddress(address, selectedDayIndex)}>
                     <DestinationDiv>
                       장소명 : {address.place_name ? address.place_name : <DestinationInput/>}
                     </DestinationDiv>
@@ -208,9 +288,9 @@ const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, placeS
                 ))
               ) : (
                 addressInfos && addressInfos.map((address) => (
-                  <AddressListDiv key={address.address_name} onClick={() => chooseAddress(address)}>
+                  <AddressListDiv key={address.address_name} onClick={() => chooseAddress(address, selectedDayIndex)}>
                     <DestinationDiv>
-                      장소명 : {address.building_name ? address.building_name : "없음"}
+                      장소명 : {address.building_name !== "" ? address.building_name : "없음"}
                     </DestinationDiv>
                     <AddressDiv>행정동 주소 : {address.address_name}</AddressDiv>
                     <RoadAddressDiv>도로명 주소 : {address.address_name}</RoadAddressDiv>
