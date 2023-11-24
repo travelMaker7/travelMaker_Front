@@ -95,7 +95,7 @@ export const HeaderComponent: React.FC = () => {
 
   const handleLoginLogoutClick = () => {
     if (isLoggedIn) {
-      handleLogout(navigate); // navigate를 인자로 전달
+      handleLogout();
     } else {
       navigate('/login'); // 로그인 페이지로 이동
     }
@@ -170,9 +170,7 @@ const SearchBox = styled.input`
   box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
   font-family: Inter;
 `;
-const SearchBoxContainer = styled.div`
-  position: relative;
-`;
+
 const SearchIcon = styled(FontAwesomeIcon)`
   position: absolute;
   right: 10px;
