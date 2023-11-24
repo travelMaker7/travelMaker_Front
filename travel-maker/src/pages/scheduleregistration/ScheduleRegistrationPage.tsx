@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 import React, { SetStateAction } from 'react';
 import MapContainer from '../../components/scheduleregistration/MapContainer'
 import DateRange from "../../components/scheduleregistration/DateRange";
@@ -8,6 +8,7 @@ import ToggleList from '../../components/scheduleregistration/ToggleList'
 import { HeaderComponent } from "../detailmapping/HeaderComponent";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import axios from "axios";
+import { clearScreenDown } from "readline";
 
 interface EntireData {
   scheduleName: string;
@@ -177,7 +178,14 @@ const ScheduleRegistrationPage = () => {
       chatUrl: chatUrl,
     };
 
-    axios.post('https://sosak.store/api/v1/schedule', entireData)
+    console.log("entireData1: ", entireData);
+
+    axios.post('https://sosak.store/api/v1/schedule', entireData, {
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("access_token")}`,
+        "Content-type": "application/json"
+      },
+    })
       .then((response) => {
         console.log(response.data);
         console.log("전송 성공");

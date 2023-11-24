@@ -97,13 +97,14 @@ export const DetailMappingInfo: React.FC<Props> = ({
 
   const fetchScheduleDetail = async () => {
     try {
-      const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
+      const res = await axios.get(`https://sosak.store/api/v1/schedule/detail/${scheduleId}`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const Markers = res.data.data.makers.map((marker: MarkerData) => ({
+      console.log("response.data: ", res);
+      const Markers = res.data.data.markers.map((marker: MarkerData[]) => ({
         ...marker,
       }));
       setMarkers(Markers);
