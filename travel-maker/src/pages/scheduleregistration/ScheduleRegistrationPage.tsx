@@ -156,16 +156,6 @@ const ScheduleRegistrationPage = () => {
     console.log(dayCnt);
   }, [selectedRange, dayCnt]);
 
-  // const handleSubmit = () => {
-  //   axios.post('http://121.178.106.179:8080/api/v1/schedule', null,{})
-  // .then((res) => {
-  //   console.log(res);
-  //   console.log("제출 성공");
-  // }).catch((error) => {
-  //   console.error("제출 실패");
-  // })
-  // }
-
   const handleEntireDataSubmit = () => {
     const entireData: EntireData = {
       scheduleName: scheduleName,

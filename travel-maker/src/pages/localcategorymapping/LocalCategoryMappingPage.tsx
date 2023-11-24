@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-// import { HeaderComponent } from '../detailmapping/HeaderComponent';
+import { HeaderComponent } from '../detailmapping/HeaderComponent';
 import styled from 'styled-components';
 import LocalMap from '../../components/localcategorymapping/LocalMap';
 import InfoIcon from '@mui/icons-material/Info';
@@ -64,10 +64,10 @@ const RES = {
 }
 
 const LocalCategoryMappingPage = () => {
-  
-  // const {data: {address}} = RES;
-  // const {data: {destinationName}} = RES;
-  const {data: {schedules}} = RES
+
+  const {data: {schedules}} = RES;
+
+
   const pages = Math.ceil(schedules.length / 4);
   const [searchResults, setSearchResults] = useState<Schedule[]>([]);
 

@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
-import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -373,7 +370,7 @@ const DestinationNameDiv = styled.div`
   border: 1px brown solid;
   line-height: 2rem;
 `
-
+        
 const PlaceNumberDiv = styled.div`
   width: 2rem;
   height: 2rem;
@@ -424,8 +421,6 @@ const ArriveInput = styled.input`
 `
 
 const LeaveInput = styled(ArriveInput)``
-
-
 
 const PlaceAddDiv = styled(PlaceSearchDiv)`
   display: flex;
