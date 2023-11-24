@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 // API 기본 URL을 설정합니다.
-// const API_BASE_URL = 'http://121.178.106.179:8080';
 
 const VITE_API_URL = "https://sosak.store";
 
@@ -17,8 +16,6 @@ const LoginHandeler: React.FC = () => {
 
   useEffect(() => {
     const kakaoLogin = async () => {
-      console.log("code: ", code);
-      
       if (!code) {
         console.error('인증 코드가 없습니다.');
         navigate('/login');
@@ -52,11 +49,9 @@ const LoginHandeler: React.FC = () => {
       // 상태 코드와 응답 데이터를 콘솔에 출력합니다.
       console.log("HTTP 상태 코드:", response.status);
       console.log(response.data);
-      localStorage.setItem('access_token', response.data.data.accessToken);
 
-      // localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('access_token', response.data.accessToken);
       navigate('/');
-      alert("로그인 성공했습니다.");
     } catch (error) {
       console.error('로그인 에러', error);
       window.alert('로그인에 실패했습니다.');

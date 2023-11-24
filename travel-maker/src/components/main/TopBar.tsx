@@ -112,6 +112,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../components/contexts/AuthContext';
 
+
 const TopBarDiv = styled.div`
   display: flex;
   justify-content: space-between; 
@@ -160,6 +161,11 @@ const TopBar: React.FC = () => {
   const navigate = useNavigate();
   const { isLoggedIn, setIsLoggedIn } = useAuth(); // AuthContext 사용
 
+  const navigateToMyPage = () => {
+    navigate('/mypage'); // 마이페이지 경로로 이동
+  };
+
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -196,7 +202,7 @@ const TopBar: React.FC = () => {
               {isLoggedIn ? '로그아웃' : '로그인'}
               </MenuItem>
             <MenuItem>회원가입</MenuItem>
-            <MenuItem>마이페이지</MenuItem>
+            <MenuItem onClick={navigateToMyPage}>마이페이지</MenuItem>
           </Menu>
         )}
       </Profile>
