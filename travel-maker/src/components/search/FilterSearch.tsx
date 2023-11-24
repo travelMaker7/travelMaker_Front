@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import styled, { css } from "styled-components";
-import axios from "axios";
+import React, { useState, useRef, useEffect } from 'react';
+import styled, { css } from 'styled-components';
+import axios from 'axios';
 // API 기본 URL 설정
 // const API_BASE_URL = 'http://121.178.106.179:8080';
 // 헤더 컨테이너
@@ -9,7 +9,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   background-color: transparent;
   position: relative; // For absolute positioning of child elements
-  width: 30rem;
+  width: 50rem;
 `;
 // 검색창 컨테이너
 const SearchBarContainer = styled.div<{ isExpanded: boolean }>`
@@ -17,21 +17,19 @@ const SearchBarContainer = styled.div<{ isExpanded: boolean }>`
   justify-content: center;
   align-items: center;
   position: relative;
-  width: ${(props) =>
-    props.isExpanded ? "100%" : "100%"}; // 확장될 때와 아닐 때의 너비
+  width: ${props => props.isExpanded ? '100%' : '100%'}; // 확장될 때와 아닐 때의 너비
   transition: width 0.3s ease;
-  ${(props) =>
-    props.isExpanded &&
-    css`
-      position: absolute;
-      /* top: 60px; */
-      /* left: 50%; */
-      /* transform: translateX(-50%); */
-    `}
+  ${props => props.isExpanded && css`
+    position: absolute;
+    /* top: 60px; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+  `}
 `;
 type ExpandedSearchFieldsContainerProps = {
-  isExpanded: boolean;
-};
+    isExpanded: boolean;
+  };
+
 // 확장된 검색 필드 컨테이너
 const ExpandedSearchFieldsContainer = styled.div<ExpandedSearchFieldsContainerProps>`
   justify-content: space-between;
@@ -59,12 +57,9 @@ const Field = styled.div<{ isActive?: boolean }>`
       ? "#333333"
       : "#BBBBBB"}; // 비활성화 상태일 때 회색 텍스트 */
   transition: all 0.3s ease;
-  /* &:hover {
-    background: ${(props) =>
-    props.isActive
-      ? "#FFFFFF"
-      : "#F6F6F6"}; // 비활성화 상태일 때에도 hover 효과
-  } */
+  &:hover {
+    background: ${props => props.isActive ? '#FFFFFF' : '#F6F6F6'}; // 비활성화 상태일 때에도 hover 효과
+  }
 `;
 const Modal = styled.div`
   display: flex;
@@ -84,7 +79,7 @@ const Modal = styled.div`
 const ModalOption = styled.div`
   padding: 10px;
   &:hover {
-    background-color: #f7f7f7;
+    background-color: #F7F7F7;
   }
 `;
 const SearchButton = styled.button`
@@ -96,8 +91,8 @@ const SearchButton = styled.button`
   cursor: pointer;
 `;
 interface DateModalProps {
-  show: boolean;
-}
+    show: boolean;
+  }
 const DateModal = styled.div<DateModalProps>`
   display: ${(props) => (props.show ? "flex" : "none")};
   flex-direction: column;
@@ -120,10 +115,10 @@ const DatePickerInput = styled.input`
   margin: 10px;
 `;
 interface GuestModalProps {
-  show: boolean;
-}
-const GuestModal = styled.div<GuestModalProps>`
-  display: ${(props) => (props.show ? "flex" : "none")};
+    show: boolean;
+  }
+  const GuestModal = styled.div<GuestModalProps>`
+  display: ${props => props.show ? 'flex' : 'none'};
   flex-direction: column;
   position: absolute;
   top: 106%;
@@ -164,8 +159,12 @@ const FilterSearch: React.FC = () => {
   const [maxGuests, setMaxGuests] = useState<number | null>(null);
   const [selectedGuests, setSelectedGuests] = useState("인원");
   const containerRef = useRef<HTMLDivElement>(null);
-  const [targetStartDate, setTargetStartDate] = useState("");
-  const [targetFinishDate, setTargetFinishDate] = useState("");
+  const [targetStartDate, setTargetStartDate] = useState('');
+  const [targetFinishDate, setTargetFinishDate] = useState('');
+  // const [startDate, setStartDate] = useState('');
+  // const [endDate, setEndDate] = useState('');
+  const [minEndDate, setMinEndDate] = useState('');
+  
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -176,11 +175,12 @@ const FilterSearch: React.FC = () => {
         setActiveField(null);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   useEffect(() => {
     if (minGuests !== null && maxGuests !== null) {
       setSelectedGuests(`${minGuests}~${maxGuests}명`);
@@ -188,6 +188,28 @@ const FilterSearch: React.FC = () => {
       setSelectedGuests("인원");
     }
   }, [minGuests, maxGuests]);
+
+  // 최소 인원 입력 변경 처리
+  const handleMinGuestsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value ? parseInt(e.target.value, 10) : null;
+    if (newValue === null || newValue >= 0) {
+      setMinGuests(newValue);
+      if (maxGuests !== null && newValue !== null && newValue > maxGuests) {
+        // 최대 인원보다 더 큰 최소 인원이 입력된 경우
+        // 최대 인원을 비웁니다.
+        setMaxGuests(null);
+      }
+    }
+  };
+
+  // 최대 인원 입력 변경 처리
+  const handleMaxGuestsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value ? parseInt(e.target.value, 10) : null;
+    if (newValue === null || (minGuests === null || newValue >= minGuests)) {
+      setMaxGuests(newValue);
+    }
+  };
+
   const handleSearch = async () => {
     const searchData = {
       targetStartDate: formatDate(targetStartDate),
@@ -211,17 +233,29 @@ const FilterSearch: React.FC = () => {
     }
   };
   // 'YYYY-MM-DD' 형식으로 날짜를 변환하는 함수
+
+// 시작 날짜가 설정되면, 종료 날짜의 최소값을 업데이트합니다.
+useEffect(() => {
+  setMinEndDate(targetStartDate); // 종료 날짜의 최소값을 시작 날짜로 설정
+  if (targetFinishDate && targetFinishDate < targetStartDate) {
+    setTargetFinishDate(''); // 종료 날짜가 시작 날짜보다 이전이면 리셋
+  }
+}, [targetStartDate, targetFinishDate]);
+
+
   const formatDate = (date: string | undefined): string | undefined => {
-    if (!date) return undefined;
-    const d = new Date(date);
-    let month = "" + (d.getMonth() + 1);
-    let day = "" + d.getDate();
-    const year = d.getFullYear();
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-    return [year, month, day].join("-");
-  };
-  /* try {
+  if (!date) return undefined;
+  const d = new Date(date);
+  let month = '' + (d.getMonth() + 1);
+  let day = '' + d.getDate();
+  const year = d.getFullYear();
+  if (month.length < 2)
+      month = '0' + month;
+  if (day.length < 2)
+      day = '0' + day;
+  return [year, month, day].join('-');
+}
+ 
       const response = await axios.get('/api/v1/trip/search', {
         params: searchData,
         headers: {
@@ -334,77 +368,49 @@ console.error('Error making the request:', error);
             ))}
           </Modal>
         )}
-        {activeField === "gender" && (
-          <Modal>
-            {["남자", "여자"].map((gender) => (
-              <ModalOption
-                key={gender}
-                onClick={() => {
+        {activeField === 'gender' && (
+            <Modal>
+              {['남자', '여자'].map((gender) => (
+                <ModalOption key={gender} onClick={() => {
                   setSelectedGender(gender);
-                  setActiveField(null);
-                }}
-              >
-                {gender}
-              </ModalOption>
-            ))}
-          </Modal>
-        )}
-        {activeField === "age" && (
-          <Modal>
-            {["10~19", "20~29", "30~39", "40~49", "50~59"].map((ageRange) => (
-              <ModalOption
-                key={ageRange}
-                onClick={() => {
+                  setActiveField(null)}}>
+                  {gender}
+                </ModalOption>
+              ))}
+            </Modal>
+          )}
+          {activeField === 'age' && (
+            <Modal>
+              {['10~19', '20~29', '30~39', '40~49', '50~59'].map((ageRange) => (
+                <ModalOption key={ageRange} onClick={() => {
                   setSelectedAge(ageRange);
-                  setActiveField(null);
-                }}
-              >
-                {ageRange}
-              </ModalOption>
-            ))}
-          </Modal>
-        )}
-        {activeField === "dates" && (
-          <DateModal show={activeField === "dates"}>
-            <DateFieldContainer>
-              <Label htmlFor="startDate">시작 날짜</Label>
-              <DatePickerInput
-                type="date"
-                id="startDate"
-                value={targetStartDate}
-                onChange={(e) => setTargetStartDate(e.target.value)}
-              />
-            </DateFieldContainer>
-            <DateFieldContainer>
-              <Label htmlFor="finishDate">종료 날짜</Label>
-              <DatePickerInput
-                type="date"
-                id="finishDate"
-                value={targetFinishDate}
-                onChange={(e) => setTargetFinishDate(e.target.value)}
-              />
-            </DateFieldContainer>
+                  setActiveField(null)}}>
+                  {ageRange}
+                </ModalOption>
+              ))}
+            </Modal>
+          )}
+        {activeField === 'dates' && (
+          <DateModal show={activeField === 'dates'}>
+              <DateFieldContainer>
+                <Label htmlFor="startDate">시작 날짜</Label>
+                <DatePickerInput type="date" id="startDate" value={targetStartDate} onChange={(e) => setTargetStartDate(e.target.value)} />
+              </DateFieldContainer>
+              <DateFieldContainer>
+                <Label htmlFor="finishDate">종료 날짜</Label>
+                <DatePickerInput type="date" id="finishDate"  min={minEndDate} value={targetFinishDate} onChange={(e) => setTargetFinishDate(e.target.value)} />
+              </DateFieldContainer>
           </DateModal>
         )}
-        {activeField === "guests" && (
-          <GuestModal show={activeField === "guests"}>
+        {activeField === 'guests' && (
+          <GuestModal show={activeField === 'guests'}>
             <div>
               <Label htmlFor="minGuests">최소 인원</Label>
-              <GuestInput
-                type="number"
-                id="minGuests"
-                value={minGuests ?? ""}
-                onChange={(e) => setMinGuests(parseInt(e.target.value) || 1)}
-              />
+              <GuestInput type="number" id="minGuests" value={minGuests ?? ''} onChange={handleMinGuestsChange} />
             </div>
             <div>
               <Label htmlFor="maxGuests">최대 인원</Label>
-              <GuestInput
-                type="number"
-                id="maxGuests"
-                value={maxGuests ?? ""}
-                onChange={(e) => setMaxGuests(parseInt(e.target.value) || 1)}
-              />
+              <GuestInput type="number" id="maxGuests" value={maxGuests ?? ''}  onChange={handleMaxGuestsChange} />
             </div>
           </GuestModal>
         )}
