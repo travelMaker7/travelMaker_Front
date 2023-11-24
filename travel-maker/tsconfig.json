@@ -9,7 +9,15 @@
     "paths": {
       "@/*": ["*"]
     },
-    "types": ["babel-core", "jest", "@testing-library/jest-dom", "vite/client"],
+    "types":[
+      "babel-core", 
+      "jest", 
+      "@testing-library/jest-dom",
+      "node",
+      "react",
+      "react-dom",
+      "vite-plugin-svgr/client"
+    ],
     "esModuleInterop": true,
 
     /* Bundler mode*/
@@ -26,6 +34,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "node_modules/@testing-library/jest-dom/index.d.ts", "node_modules/@types" ],
+  "include": ["src", "node_modules/@testing-library/jest-dom/index.d.ts", "custom.d.ts" ],
+//   "include": ["src", "node_modules/@testing-library/jest-dom/index.d.ts", "node_modules/@types" ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

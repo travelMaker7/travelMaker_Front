@@ -1,3 +1,4 @@
+import  { useState } from 'react';
 import { HeaderComponent } from '../detailmapping/HeaderComponent';
 import styled from 'styled-components';
 import LocalMap from '../../components/localcategorymapping/LocalMap';
@@ -7,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
+import Header from '../../components/search/Header'; // FilterSearch 컴포넌트 임포트
 
 const RES = {
 	"status": 201,
@@ -65,12 +67,32 @@ const LocalCategoryMappingPage = () => {
 
   const {data: {schedules}} = RES;
 
+
   const pages = Math.ceil(schedules.length / 4);
+  const [searchResults, setSearchResults] = useState<Schedule[]>([]);
+
+
+  interface Schedule {
+    scheduleId: number;
+    nickname: string;
+    scheduleDate: string;
+    arriveTime: string;
+    leaveTime: string;
+  }
+  
+  interface SearchData {
+    schedules: Schedule[];
+  }
+  
+  const handleSearchResults = (data: SearchData) => {
+    setSearchResults(data.schedules);
+  };
   
   return (
     
     <>
-      <HeaderComponent/>
+      <Header onSearch={handleSearchResults} />
+      {/* <HeaderComponent/> */}
       <MainContainer>
         <MapContainer>
           <LocalMap/>
@@ -119,6 +141,7 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 2rem;
+  /* height:80% */
 `
 
 const MapContainer = styled.div`

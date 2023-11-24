@@ -10,18 +10,13 @@ export interface NotificationData {
 }
 
 export const useNotifications = () => {
-
   return useQuery<NotificationData[], Error>("notifications", async () => {
-    const { data } = await axios.get("/api/v1/accompany");
+    const { data } = await axios.get("/api/v1/accompany", {
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("token"),
+      },
+    });
     return data.notifications;
   });
-
-  // return useQuery<NotificationData[], Error>("notifications", async () => {
-  //   // Simulate an async operation, like fetching data
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       resolve(mockNotifications);
-  //     }, 500); // Delay to simulate network request
-  //   });
-  // });
 };

@@ -171,3 +171,6 @@ const ResetSearchBtn = styled.button`
   font-size: 1.125rem;
 
 `
+
+
+
