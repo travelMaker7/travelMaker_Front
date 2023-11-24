@@ -13,6 +13,8 @@ import ProfileTestPage from "./components/profile/profilemodal/ProfileTestPage.t
 // import MyPageProfileTest from "./components/profile/mypageprofile/MyPageProfileTest.tsx";
 import ProfileTestPage2 from "./components/profile/profilemodal/ProfileTestPage2.tsx";
 import LocalCategoryMappingPage from "./pages/localcategorymapping/LocalCategoryMappingPage.tsx";
+import LoginHandeler from "./pages/login/\bLoginHandeler.tsx";
+// import MyPageProfile from "./components/profile/mypageprofile/MyPageProfile.tsx";
 
 function App() {
   return (
@@ -27,18 +29,17 @@ function App() {
           />
           <Route path="/registration" element={<ScheduleRegistrationPage />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/auth/kakao/callback" element={<Callback />} /> */}
+          <Route path="/auth/kakao/callback" element={<LoginHandeler />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route
-            path="/profiletest"
-            element={<ProfileTestPage userId="dbsehddl9161" />}
-          />
+          <Route path="/profiletest" element={<ProfileTestPage />} />
           {/* <Route path="/mypageprofiletest" element={<MyPageProfileTest />} /> */}
           <Route path="/profiletest2" element={<ProfileTestPage2 />} />
           <Route
             path="/localcategorymap"
             element={<LocalCategoryMappingPage />}
           />
+          {/* <Route path="/mypageprofile" element={<MyPageProfile />}
+          /> */}
         </Routes>
       </BrowserRouter>
     </AuthProvider>
