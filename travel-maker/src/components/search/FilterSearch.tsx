@@ -253,41 +253,9 @@ useEffect(() => {
       month = '0' + month;
   if (day.length < 2)
       day = '0' + day;
-  return [year, month, day].join('-');
-}
- 
-      const response = await axios.get('/api/v1/trip/search', {
-        params: searchData,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      // 여기에서 결과를 처리합니다. 예: 결과를 상태에 저장하거나 화면에 표시
-      console.log(response.data); // 응답 데이터 로그
-    } catch (error) {
-      console.error('Error making the request:', error);
-    }
-  }; 기본로직*/
-  /* try {
-      const response = await axios.get(`${API_BASE_URL}/api/v1/trip/search`, {
-        params: searchData,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-     // 여기에서 상태 코드 확인
-    console.log("HTTP 상태 코드:", response.status);
-// 상태 코드에 따른 다른 행동을 취할 수 있습니다.
-if (response.status === 200) {
-  console.log("요청 성공 (200 OK):", response.data);
-} else if (response.status === 201) {
-  console.log("요청 성공 (201 Created):", response.data);
-}
-} catch (error) {
-console.error('Error making the request:', error);
-}
-};
-배포 테스트용 */
+    return [year, month, day].join('-');
+  }
+
   return (
     <HeaderContainer ref={containerRef}>
       <SearchBarContainer isExpanded={isExpanded}>
@@ -418,4 +386,5 @@ console.error('Error making the request:', error);
     </HeaderContainer>
   );
 };
+
 export default FilterSearch;

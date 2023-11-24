@@ -1,7 +1,5 @@
 // import MannerTemperatureBar from "@/components/mypage/MannerTemperatureBar";
 // import ProfileComponent from "@/components/mypage/ProfileComponent";
-
-import ProfileComponent from "@/components/mypage/ProfileComponent";
 import MannerTemperatureBar from "@/components/mypage/MannerTemperatureBar";
 
 import { HeaderComponent } from "@/pages/detailmapping/HeaderComponent";
