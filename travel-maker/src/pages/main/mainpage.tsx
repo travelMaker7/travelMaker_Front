@@ -68,7 +68,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     height: 100%;
     background-color: white; */
-  }
 
   #root {
     padding: 2rem;

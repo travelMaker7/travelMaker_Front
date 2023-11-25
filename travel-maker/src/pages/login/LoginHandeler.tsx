@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const VITE_API_URL = "https://sosak.store";
 
 interface KakaoResponse {
+  data: any;
   accessToken: string;
 }
 

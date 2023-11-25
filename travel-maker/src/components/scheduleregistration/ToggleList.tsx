@@ -6,7 +6,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
-import { SchedulesProps, PlacesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+import { SchedulesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 
 interface DatesProps {
   selectedRange: [Dayjs | null, Dayjs | null] | null;
@@ -108,29 +108,6 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
   const handleAccompanyCnt = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const inputValue = e.target.value;
     setAccompanyCnt(parseInt(inputValue, 10));
-  };
-
-  const addPlaceToSchedule = (selectedPlace: PlacesProps, scheduleKey: number | null) => {
-    setAutoSchedules((prev) => {
-      const updatedAutoSchedules = prev.map((schedule) => {
-        if (schedule.day === scheduleKey) {
-          const isDuplicate = schedule.places.some(
-            (place) => place.destinationX === selectedPlace.destinationX && place.destinationY === selectedPlace.destinationY
-          );
-
-          if (!isDuplicate) {
-            return {
-              ...schedule,
-              places: [...schedule.places, selectedPlace],
-            };
-          }
-        }
-        return schedule;
-      });
-
-      return updatedAutoSchedules;
-    });
-    closeSearchModal();
   };
 
   return (
@@ -314,12 +291,6 @@ const CountDayDiv = styled.div`
   font-weight: bolder;
 `
 
-const PlaceSearchDiv = styled.div`
-  width: 100%;
-  height: 3rem;
-  border: none;
-`
-
 const DateDiv = styled.div`
   width: 9rem;
   color: #d5d1d1;
@@ -370,12 +341,6 @@ const DestinationNameDiv = styled.div`
   border: 1px brown solid;
   line-height: 2rem;
 `
-        
-const PlaceNumberDiv = styled.div`
-  width: 2rem;
-  height: 2rem;
-  border-radius: 100%;
-`
 
 const PlaceAddressDiv = styled.div`
   width: 100%;
@@ -422,32 +387,6 @@ const ArriveInput = styled.input`
 
 const LeaveInput = styled(ArriveInput)``
 
-const PlaceAddDiv = styled(PlaceSearchDiv)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const PlaceAddButton = styled.button`
-  width: 6rem;
-  height: 3rem;
-  background-color: #8CC4F8;
-  color: white;
-  border-radius: 0.875rem;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const DeleteIconDiv = styled.div`
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 15rem;
-`
-
 const PlaceToggleButton = styled.button`
   border: none;
   width: 2.5rem;
@@ -455,8 +394,6 @@ const PlaceToggleButton = styled.button`
   background-color: transparent;
   margin-left: 6rem;
 `
-
-const EditIconDiv = styled(DeleteIconDiv)``;
 
 const RadioDiv = styled.div`
   width: 12rem;
