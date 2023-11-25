@@ -173,7 +173,7 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
                     />
                   </PlaceToggleButton>
                 </PlaceToggleList>
-                <PlaceDetailDiv isopen={place.placeStates}>
+                {place.placeStates && <PlaceDetailDiv isopen={place.placeStates}>
                   <PlaceAddressDiv>상세 주소 : {autoSchedules[index].places[placeIndex].address}</PlaceAddressDiv>
                   <WishJoinDiv>
                     <AccompanyChoiceDiv>동행 여부</AccompanyChoiceDiv>
@@ -224,7 +224,7 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
                     <TravelTimeThemeDiv>여행 시간</TravelTimeThemeDiv>
                       <ArriveInput type='time' value={arriveTimeValue || ''} onChange={handleArriveChange}/>~<LeaveInput type='time' value={leaveTimeValue || ''} onChange={handleLeaveChange}/>
                   </TravelTimeDiv>
-                </PlaceDetailDiv>
+                </PlaceDetailDiv>}
               </PlaceToggleContainer>
             ))}
           </DayDetailDiv> 
