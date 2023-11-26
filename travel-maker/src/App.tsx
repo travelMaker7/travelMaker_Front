@@ -14,7 +14,6 @@ import ProfileTestPage2 from "./components/profile/profilemodal/ProfileTestPage2
 import LocalCategoryMappingPage from './pages/localcategorymapping/LocalCategoryMappingPage.tsx';
 import ChatRoomButton from '@/components/chat/chatRoomButton';
 import Chat from "./pages/chat/chat.tsx"
-import LocalCategoryMappingPage from "./pages/localcategorymapping/LocalCategoryMappingPage.tsx";
 import LoginHandeler from "./pages/login/LoginHandeler.tsx";
 
 function App() {
@@ -40,7 +39,7 @@ function App() {
           {/* <Route path="/mypageprofiletest" element={<MyPageProfileTest />} /> */}
           <Route path="/profiletest2" element={<ProfileTestPage2 />} />
           <Route
-            path="localc/ategorymap"
+            path="/localcategorymap"
             element={<LocalCategoryMappingPage />}
           />
           {/* <Route path="/mypageprofile" element={<MyPageProfile />}
