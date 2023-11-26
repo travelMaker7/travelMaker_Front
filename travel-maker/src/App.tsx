@@ -14,7 +14,6 @@ import ProfileTestPage2 from "./components/profile/profilemodal/ProfileTestPage2
 import LocalCategoryMappingPage from './pages/localcategorymapping/LocalCategoryMappingPage.tsx';
 import ChatRoomButton from '@/components/chat/chatRoomButton';
 import Chat from "./pages/chat/chat.tsx"
-import LocalCategoryMappingPage from "./pages/localcategorymapping/LocalCategoryMappingPage.tsx";
 import LoginHandeler from "./pages/login/LoginHandeler.tsx";
 
 function App() {
