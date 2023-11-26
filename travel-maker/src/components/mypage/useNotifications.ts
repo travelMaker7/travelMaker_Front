@@ -14,9 +14,10 @@ export const useNotifications = () => {
     const { data } = await axios.get("https://sosak.store/api/v1/accompany", {
       headers: {
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
       },
     });
+    console.log(data);
     return data.notifications;
   });
 };

@@ -17,7 +17,7 @@ export const useJoin = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       ),

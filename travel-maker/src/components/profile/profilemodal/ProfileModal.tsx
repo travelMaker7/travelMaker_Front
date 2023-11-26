@@ -161,6 +161,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
     }
     // 1:1 채팅방 생성 api 요청 & 입장
     axios
+
       .post(`https://sosak.store/api/v1/chat/room`,{},
       {
         headers: {
@@ -176,7 +177,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
         setIsRoomCreated(true);
         console.log('redis : ',redisRoomId)
         console.log('chat : ',chatRoomId)
+
         const enterRoomUri = `https://sosak.store/api/v1/chat/room/${redisRoomId}?chatRoomId=${chatRoomId}`
+
         return axios.get(enterRoomUri, {
           headers: {
             "Authorization" : `Bearer ${localStorage.getItem("access_token")}`,

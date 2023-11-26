@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Button } from "@mui/base/Button";
 import styled from 'styled-components';
-import axios from 'axios';
+
 interface ChatRoomControlProps {
   handleCreateAndEnterRoom: () => void;
 }

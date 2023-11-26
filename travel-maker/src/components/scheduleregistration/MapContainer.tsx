@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 
