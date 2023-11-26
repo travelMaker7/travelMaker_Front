@@ -167,12 +167,15 @@ const MyPageSidebar: React.FC = () => {
 
   const getRegisteredSchedules = async () => {
     try {
-      const response = await axios.get("/api/v1/mypage/schedules/registered", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
+      const response = await axios.get(
+        "https://sosak.store/api/v1/mypage/schedules/registered",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
       if (response.status === 201) {
         setRegisteredSchedules(response.data.data.schedules);
       } else {
@@ -186,7 +189,7 @@ const MyPageSidebar: React.FC = () => {
   const getParticipatingSchedules = async (status: string) => {
     try {
       const response = await axios.get(
-        `/api/v1/mypage/schedules/participating?status=${status}`,
+        `https://sosak.store/api/v1/mypage/schedules/participating?status=${status}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -207,7 +210,7 @@ const MyPageSidebar: React.FC = () => {
   const deleteSchedule = async (tripPlanId: string) => {
     try {
       const response = await axios.delete(
-        `/api/v1/accompany/guest/${tripPlanId}`,
+        `https://sosak.store/api/v1/accompany/guest/${tripPlanId}`,
         {
           headers: {
             "Content-Type": "application/json",

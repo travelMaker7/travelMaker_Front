@@ -11,10 +11,10 @@ export interface NotificationData {
 
 export const useNotifications = () => {
   return useQuery<NotificationData[], Error>("notifications", async () => {
-    const { data } = await axios.get("/api/v1/accompany", {
+    const { data } = await axios.get("https://sosak.store/api/v1/accompany", {
       headers: {
         "Content-Type": "application/json",
-        token: localStorage.getItem("token"),
+        Authorization: localStorage.getItem("token"),
       },
     });
     return data.notifications;

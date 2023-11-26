@@ -18,7 +18,7 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
   const handleJoinRequest = async () => {
     try {
       const response = await axios.post(
-        "/api/v1/accompany/guest",
+        "https://sosak.store/api/v1/accompany/guest",
         {
           tripPlanId,
           hostId: setHostId,
@@ -27,7 +27,7 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
         {
           headers: {
             "Content-Type": "application/json",
-            token: localStorage.getItem("token"),
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
