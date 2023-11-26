@@ -14,4 +14,9 @@ export default defineConfig({
   define: {
     global: {},
   },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080'
+    }
+  }
 });
