@@ -11,12 +11,16 @@ export const useJoin = () => {
 
   return useMutation(
     (updateStatusRequest: UpdateStatusRequest) =>
-      axios.post("/api/v1/notification", updateStatusRequest, {
-        headers: {
-          "Content-Type": "application/json",
-          token: localStorage.getItem("token"),
-        },
-      }),
+      axios.post(
+        "https://sosak.store/api/v1/notification",
+        updateStatusRequest,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      ),
     {
       onSuccess: () => {
         queryClient.invalidateQueries("notifications");

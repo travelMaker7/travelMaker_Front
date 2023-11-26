@@ -91,8 +91,8 @@ const LocalCategoryMappingPage = () => {
   return (
     
     <>
-      <Header onSearch={handleSearchResults} />
-      {/* <HeaderComponent/> */}
+      {/* <Header onSearch={handleSearchResults} /> */}
+      <HeaderComponent/>
       <MainContainer>
         <MapContainer>
           <LocalMap/>

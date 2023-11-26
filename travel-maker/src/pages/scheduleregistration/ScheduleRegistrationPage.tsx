@@ -56,14 +56,13 @@ export interface SchedulesProps {
 export interface DataControlProps {
   accompanyOption: string;
   setAccompanyOption: React.Dispatch<SetStateAction<string>>;
-  arriveTimeValue: string | null;
-  setArriveTimeValue: React.Dispatch<SetStateAction<string | null>>;
-  leaveTimeValue: string | null;
-  setLeaveTimeValue: React.Dispatch<SetStateAction<string | null>>;
   accompanyCnt: number;
   setAccompanyCnt: React.Dispatch<SetStateAction<number>>;
   autoSchedules: SchedulesProps[];
   setAutoSchedules: React.Dispatch<SetStateAction<SchedulesProps[]>>;
+  selectedTimeRange: [Dayjs | null, Dayjs | null] | null;
+  setSelectedTimeRange: React.Dispatch<React.SetStateAction<[Dayjs | null, Dayjs | null] | null>>;
+  handleTimeRangeChange: (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => void;
 }
 
 
@@ -77,9 +76,10 @@ const ScheduleRegistrationPage = () => {
   const [chatUrl, setChatUrl] = useState<string>("");
   const [autoSchedules, setAutoSchedules] = useState<SchedulesProps[]>([]);
   const [accompanyOption, setAccompanyOption] = useState<string>("true");
-  const [arriveTimeValue, setArriveTimeValue] = useState<string | null>(null);
-  const [leaveTimeValue, setLeaveTimeValue] = useState<string | null>(null);
   const [accompanyCnt, setAccompanyCnt] = useState<number>(0);
+  const [selectedTimeRange, setSelectedTimeRange] = useState<[Dayjs | null, Dayjs | null] | null>([null, null]);
+  const [arriveTime, setArriveTime] = useState<string | null>(null);
+  const [leaveTime, setLeaveTime] = useState<string | null>(null);
 
   const handleChatUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -169,6 +169,18 @@ const ScheduleRegistrationPage = () => {
       });
   };
 
+  const handleTimeRangeChange = (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => {
+    console.log('Selected Time Range: ', dateString);
+    if(value !== null) {
+      console.log([value[0]?.format('HH:mm'), value[1]?.format('HH:mm')]);
+    }
+    setSelectedTimeRange(value);
+    if(value !== null && value[0] !== null && value[1] !== null) {
+      setArriveTime(value[0].format('HH:mm'));
+      setLeaveTime(value[1].format('HH:mm'));
+    }
+  };
+
   return (
     <>
       <HeaderComponent/>
@@ -202,16 +214,15 @@ const ScheduleRegistrationPage = () => {
               <ToggleList 
                 selectedRange={selectedRange} 
                 dayCnt={dayCnt}
-                arriveTimeValue={arriveTimeValue}
-                setArriveTimeValue={setArriveTimeValue}
-                setLeaveTimeValue={setLeaveTimeValue}
-                leaveTimeValue={leaveTimeValue}
                 accompanyCnt={accompanyCnt}
                 accompanyOption={accompanyOption}
                 setAccompanyCnt={setAccompanyCnt}
                 setAccompanyOption={setAccompanyOption}
                 autoSchedules={autoSchedules}
-                setAutoSchedules={setAutoSchedules} 
+                setAutoSchedules={setAutoSchedules}
+                selectedTimeRange={selectedTimeRange}
+                setSelectedTimeRange={setSelectedTimeRange}
+                handleTimeRangeChange={handleTimeRangeChange}
               />
             </ScrollDiv>
           </ScheduleDiv>
@@ -364,7 +375,7 @@ const ChatUrlDiv = styled.div`
   align-items: center;
 `
 const ChatUrlThemDiv = styled.div`
-  width: 9.5rem;
+  width: 9rem;
   height: 1.5rem;
   font-weight: bolder;
   line-height: 1.5rem;

@@ -6,6 +6,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
+import { SchedulesProps, PlacesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+import TimeRange from './TimeRange';
 import { SchedulesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 
 interface DatesProps {
@@ -22,10 +24,9 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
   setAccompanyOption, 
   autoSchedules, 
   setAutoSchedules,
-  arriveTimeValue,
-  setArriveTimeValue,
-  leaveTimeValue,
-  setLeaveTimeValue, 
+  setSelectedTimeRange,
+  selectedTimeRange,
+  handleTimeRangeChange,
 }) => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -95,15 +96,7 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
     setAccompanyOption(e.target.value);
   };
 
-  const handleArriveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const currentArriveTime = e.target.value;
-    setArriveTimeValue(currentArriveTime);
-  };
-
-  const handleLeaveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLeaveTimeValue(e.target.value.toString());
-  };
+  
 
   const handleAccompanyCnt = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const inputValue = e.target.value;
@@ -143,17 +136,17 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
             {autoSchedules[index].places.map((place, placeIndex) => (
               <PlaceToggleContainer isopen={place.placeStates} key={`${place.destinationX}-${place.destinationY}`}>
                 <PlaceToggleList>
-                  <DestinationNameDiv>{place.destinationName}</DestinationNameDiv>
+                  <DestinationNameSpan>{place.destinationName}</DestinationNameSpan>
                   <PlaceToggleButton onClick={() => placeToggleHandler(index, placeIndex)}>
                     <ArrowForwardIosIcon
                       style={{ color: '#8cc3f8', marginBottom: '0.125rem', transform: place.placeStates ? 'rotate(90deg)' : 'rotate(0)', cursor: 'pointer' }}
                     />
                   </PlaceToggleButton>
                 </PlaceToggleList>
-                <PlaceDetailDiv isopen={place.placeStates}>
+                {place.placeStates && <PlaceDetailDiv isopen={place.placeStates}>
                   <PlaceAddressDiv>상세 주소 : {autoSchedules[index].places[placeIndex].address}</PlaceAddressDiv>
                   <WishJoinDiv>
-                    <AccompanyChoiceDiv>동행 여부</AccompanyChoiceDiv>
+                    <AccompanyChoiceSpan>동행 여부</AccompanyChoiceSpan>
                     <RadioDiv>
                       <RadioField>
                         <ChoiceLabel>
@@ -180,9 +173,9 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
                     </RadioDiv>
                   </WishJoinDiv>
                   <WishCntDiv>
-                    <AccompanyPeopleCntDiv>
-                      동행인원
-                    </AccompanyPeopleCntDiv>
+                    <AccompanyPeopleCntSpan>
+                      동행 인원
+                    </AccompanyPeopleCntSpan>
                     <AccompanyPeopleSelect value={accompanyCnt} onChange={handleAccompanyCnt}>
                       <option>0</option>
                       <option>1</option>
@@ -198,10 +191,10 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
                     </AccompanyPeopleSelect>
                   </WishCntDiv>
                   <TravelTimeDiv>
-                    <TravelTimeThemeDiv>여행 시간</TravelTimeThemeDiv>
-                      <ArriveInput type='time' value={arriveTimeValue || ''} onChange={handleArriveChange}/>~<LeaveInput type='time' value={leaveTimeValue || ''} onChange={handleLeaveChange}/>
+                    <TravelTimeThemeSpan>여행 시간</TravelTimeThemeSpan>
+                    <TimeRange selectedTimeRange={selectedTimeRange} setSelectedTimeRange={setSelectedTimeRange} handleTimeRangeChange={handleTimeRangeChange}/>
                   </TravelTimeDiv>
-                </PlaceDetailDiv>
+                </PlaceDetailDiv>}
               </PlaceToggleContainer>
             ))}
           </DayDetailDiv> 
@@ -233,7 +226,6 @@ const DayToggleList = styled.div`
   height: 3.75rem;
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
   border-radius: 0.25rem;
   box-sizing: border-box;
 `;
@@ -299,9 +291,8 @@ const DateDiv = styled.div`
 
 const DayDetailDiv = styled.div<{isopen: boolean}>`
   width: ${(props) => props.isopen ? '25.75rem' : '0'};
-  height: ${(props) => props.isopen ? '18rem' : '0'};
+  /* height: ${(props) => props.isopen ? '15rem' : '0'}; */
   margin-left: 7.875rem;
-  background-color: aliceblue;
   overflow-y: scroll;
   transition: height 1s linear;
   display: flex;
@@ -317,29 +308,38 @@ const PlaceToggleList = styled.div`
   width: 100%;
   height: 3rem;
   display: flex;
+  align-items: center;
+  position: relative;
 `;
 
 const PlaceToggleContainer = styled.div<{isopen: boolean}>`
   width: 24.75rem;
-  height: ${(props) => props.isopen ? '15rem' : '0'};
+  /* height: ${(props) => props.isopen ? '12rem' : '0'}; */
   display: flex;
   flex-direction: column; 
 `
 
 const PlaceDetailDiv = styled.div<{isopen: boolean}>`
   width: ${(props) => props.isopen ? '24.75rem' : '0'};
-  height: ${(props) => props.isopen ? '15rem' : '0'};
+  /* height: ${(props) => props.isopen ? '12rem' : '0'}; */
   transition: height 1s ease;
   display: flex;
   flex-direction: column;
   border: none;
+  background-color: aliceblue;
+  padding: 1rem 0;
 `;
 
-const DestinationNameDiv = styled.div`
-  width: 15rem;
+const DestinationNameSpan = styled.span`
   height: 2rem;
-  border: 1px brown solid;
+  border: none;
   line-height: 2rem;
+`
+        
+const PlaceNumberDiv = styled.div`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
 `
 
 const PlaceAddressDiv = styled.div`
@@ -347,16 +347,22 @@ const PlaceAddressDiv = styled.div`
   height: 2rem;
   line-height: 2rem;
   display: flex;
-  justify-content: baseline;
-  margin-left: 1rem;
+  align-items: center;
+  font-weight: bolder;
+  margin-left: 0.6rem;
+`
+
+const WishCntDiv = styled.div`
+  width: 100%;
+  height: 2rem;
+  line-height: 2rem;
+  display: flex;
   align-items: center;
 `
 
-const WishCntDiv = styled(PlaceAddressDiv)``
+const TravelTimeDiv = styled(WishCntDiv)``
 
-const TravelTimeDiv = styled(PlaceAddressDiv)``
-
-const WishJoinDiv = styled(PlaceAddressDiv)``
+const WishJoinDiv = styled(WishCntDiv)``
  
 const AccompanyPeopleSelect = styled.select`
   width: 5rem;
@@ -367,14 +373,15 @@ const AccompanyPeopleSelect = styled.select`
   margin-left: 1rem;
 `
 
-const AccompanyPeopleCntDiv = styled.div`
+const AccompanyPeopleCntSpan = styled.div`
   width: 5rem;
   height: 1.25rem;
+  line-height: 1.25rem;
 `
 
-const AccompanyChoiceDiv = styled(AccompanyPeopleCntDiv)``
+const AccompanyChoiceSpan = styled(AccompanyPeopleCntSpan)``
 
-const TravelTimeThemeDiv = styled(AccompanyPeopleCntDiv)``
+const TravelTimeThemeSpan = styled(AccompanyPeopleCntSpan)``
 
 const ArriveInput = styled.input`
   width: 6rem;
@@ -392,7 +399,8 @@ const PlaceToggleButton = styled.button`
   width: 2.5rem;
   height: 2.5rem;
   background-color: transparent;
-  margin-left: 6rem;
+  position: absolute;
+  right: 1rem;
 `
 
 const RadioDiv = styled.div`
@@ -400,7 +408,6 @@ const RadioDiv = styled.div`
   height: 1.5rem;
   display: flex;
   align-items: center;
-  padding-top: 0.5rem;
 `
 
 const RadioField = styled.fieldset`
@@ -419,5 +426,6 @@ const KeywordInput = styled(AddressInput)`
   margin-left: 1rem;
 `
 
-const ChoiceLabel = styled.label``
+const ChoiceLabel = styled.label`
+`
 

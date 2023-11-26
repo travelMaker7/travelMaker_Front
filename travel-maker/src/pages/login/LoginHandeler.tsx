@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// API 기본 URL을 설정합니다.
 
 const VITE_API_URL = "https://sosak.store";
 
@@ -47,7 +46,7 @@ const LoginHandeler: React.FC = () => {
         },
       });
 
-      // 상태 코드와 응답 데이터를 콘솔에 출력합니다.
+      
       console.log("HTTP 상태 코드:", response.status);
       console.log(response.data);
 
