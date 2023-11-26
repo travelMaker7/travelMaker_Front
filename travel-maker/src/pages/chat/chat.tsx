@@ -67,6 +67,7 @@ const Chat:React.FC = () => {
   const createClient = () => {
     const newClient = new Client({
       brokerURL: 'ws://localhost:8080/ws-stomp', // 웹소켓 서버로 직접 접속
+      // brokerURL: 'wss://sosak.store/ws-stomp', // 웹소켓 서버로 직접 접속
       connectHeaders:{Authorization : `Bearer ${token}`}
     });
     client.current = newClient;
@@ -77,6 +78,7 @@ const Chat:React.FC = () => {
     client.current!.onConnect = (frame) => {
       client.current?.subscribe(
         `/sub/chat/room/${redisRoomId}`,
+        // `https://sosak.store/sub/chat/room/${redisRoomId}`,
         (res) => {
           console.log('구독 후 응답 : ',res.body)
           const recv = JSON.parse(res.body);
@@ -151,6 +153,7 @@ const Chat:React.FC = () => {
     if(client.current && client.current.connected){
       client.current.publish({
         destination: "/pub/chat/message",
+        // destination: "https://sosak.store/pub/chat/message",
         body: JSON.stringify({
           messageType:"TALK",
           redisRoomId: redisRoomId,
@@ -169,7 +172,7 @@ const Chat:React.FC = () => {
   const getChatMessages = async () => {
     console.log('채팅내역 가져오기 시작!')
     try{
-      const response = await axios.get(`/api/v1/chat/room/${redisRoomId}/messages?chatRoomId=${chatRoomId}`,
+      const response = await axios.get(`https://sosak.store/api/v1/chat/room/${redisRoomId}/messages?chatRoomId=${chatRoomId}`,
       // const response = await axios.get(`/api/v1/chat/room/97b561cf-2e00-45cd-a62a-6a506c883273/messages?chatRoomId=22&page=1&size=50`,
       {
         headers: {

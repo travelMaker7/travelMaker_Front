@@ -6,7 +6,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
-import { SchedulesProps, PlacesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 import TimeRange from './TimeRange';
 import { SchedulesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 

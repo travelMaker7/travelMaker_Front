@@ -172,10 +172,11 @@ const MyPageSidebar: React.FC = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
+      console.log("등록 일정 조회 : ", response.data.data)
       if (response.status === 201) {
         setRegisteredSchedules(response.data.data.schedules);
       } else {
@@ -193,7 +194,7 @@ const MyPageSidebar: React.FC = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
@@ -214,7 +215,7 @@ const MyPageSidebar: React.FC = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
@@ -231,6 +232,7 @@ const MyPageSidebar: React.FC = () => {
 
   useEffect(() => {
     if (activeTab === "registered") {
+      console.log("등록한 일정 조회")
       getRegisteredSchedules();
     } else {
       getParticipatingSchedules(activeTab);

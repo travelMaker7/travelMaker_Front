@@ -154,13 +154,8 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import FilterSearch from "@/components/search/\bFilterSearch";
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-// import axios from 'axios';
-import axios from 'axios';
-=======
-import {handleLogout}  from '../login/logoutFunction'
 
->>>>>>> d25585dd196de8ae3f18413378c1f4602d29513b
+import {handleLogout}  from '../login/logoutFunction'
 
 export const HeaderComponent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
