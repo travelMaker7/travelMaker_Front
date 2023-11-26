@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import ChatRoomButton from '@/components/chat/chatRoomButton';
 
 
 export interface ProfileData {
@@ -11,14 +15,12 @@ export interface ProfileData {
   userDescription?: string;
 }
   
-  interface ProfileModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    profileData: ProfileData;
-  }
+interface ProfileModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  profileData: ProfileData;
+}
   
-
-
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -132,8 +134,64 @@ const IntroductionHeader = styled.h3`
   margin: 0;
 `;
 
+const OneToOneChattingBtn = styled.div`
+  width: 8rem;
+  height: 3rem;
+  border: none;
+  font-weight: bolder;
+  background-color: #74B9FF;
+  color: white;
+  margin: auto;
+  border-radius: 1rem;
+`
+
 
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileData }) => {
+  
+  const [isRoomCreated, setIsRoomCreated] = useState(false);
+  const [redisRoomId, setRedisRoomId] = useState();
+  const [chatRoomId, setChatRoomId] = useState();
+
+  const navigate = useNavigate();
+
+  const handleCreateAndEnterRoom = () => {
+    console.log('토큰정보 :', localStorage.getItem("access_token"))
+    if(isRoomCreated){
+      console.log("chat room is already created")
+    }
+    // 1:1 채팅방 생성 api 요청 & 입장
+    axios
+      .post(`/api/v1/chat/room`,{},
+      {
+        headers: {
+          "Authorization" : `Bearer ${localStorage.getItem("access_token")}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+
+        const {chatRoomId, redisRoomId} = response.data.data;
+        setChatRoomId(chatRoomId);
+        setRedisRoomId(redisRoomId);
+        setIsRoomCreated(true);
+        console.log('redis : ',redisRoomId)
+        console.log('chat : ',chatRoomId)
+        const enterRoomUri = `/api/v1/chat/room/${redisRoomId}?chatRoomId=${chatRoomId}`
+        return axios.get(enterRoomUri, {
+          headers: {
+            "Authorization" : `Bearer ${localStorage.getItem("access_token")}`,
+            "Content-Type": "application/json",
+          },
+        }).then(response => {
+          console.log("Entered the chat room success", JSON.stringify(response.data.data))
+          navigate(`/chat/room/${redisRoomId}?chatRoomId=${chatRoomId}`)
+        });
+      })
+      .catch(error => {
+        console.log("error creating room ", error);
+      });
+  }
+
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
@@ -154,6 +212,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
           <IntroductionHeader>{profileData.nickname}님 소개</IntroductionHeader>
           <IntroductionContentBox>{profileData.userDescription}</IntroductionContentBox>
         </IntroductionContainer>
+        <OneToOneChattingBtn>
+          <ChatRoomButton handleCreateAndEnterRoom={handleCreateAndEnterRoom}/>
+        </OneToOneChattingBtn>
       </ModalContainer>
     </ModalOverlay>,
     document.body

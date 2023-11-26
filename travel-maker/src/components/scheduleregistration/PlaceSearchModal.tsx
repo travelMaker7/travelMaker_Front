@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import ClearIcon from '@mui/icons-material/Clear';
 import {PlacesProps, SchedulesProps} from '../../pages/scheduleregistration/ScheduleRegistrationPage';
+import { XYDataProps } from '../../pages/scheduleregistration/ScheduleRegistrationPage';
 
 interface ModalControlProps {
   closeSearchModal: () => void;
@@ -32,12 +33,13 @@ interface AddressInfo {
   region_3depth_name: string;
 }
 
-const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, autoSchedules, setAutoSchedules, selectedDayIndex}) => {
+const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearchModal, autoSchedules, setAutoSchedules, selectedDayIndex, xyData, setXyData}) => {
 
   const [keywordAddressInfos, setKeywordAddressInfos] = useState<KeywordAddressInfo[]>([]);
   const [addressInfos, setAddressInfos] = useState<AddressInfo[]>([]); 
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchOption, setSearchOption] = useState<string>('address');
+  
 
   const { VITE_REST_API_KEY } = import.meta.env;
 
@@ -171,6 +173,8 @@ const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, autoSc
 
     handleRegionSector(newPlace);
     console.log('newPlace: ', newPlace);
+    setXyData((prev) => [...prev, [selectedKeywordAddress.x, selectedKeywordAddress.y]]);
+    console.log(xyData);
     setAutoSchedules((prev) => {
       const updatedAutoSchedules = prev.map((schedule) => {
         if (schedule.day === scheduleKey) {
@@ -211,7 +215,8 @@ const PlaceSearchModal: React.FC<ModalControlProps> = ({closeSearchModal, autoSc
 
     handleRegionSector(newPlace);
     console.log('newPlace: ', newPlace);
-    
+    setXyData((prev) => [...prev, [selectedAddress.x, selectedAddress.y]]);
+    console.log(xyData);
     setAutoSchedules((prev) => {
       const updatedAutoSchedules = prev.map((schedule) => {
         if (schedule.day === scheduleKey) {

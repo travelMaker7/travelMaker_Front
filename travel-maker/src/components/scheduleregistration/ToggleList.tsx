@@ -8,13 +8,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
 import { SchedulesProps, PlacesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 import TimeRange from './TimeRange';
+import { XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 
 interface DatesProps {
   selectedRange: [Dayjs | null, Dayjs | null] | null;
   dayCnt: number | null;
 }
 
-const ToggleList: React.FC<DatesProps & DataControlProps> = ({ 
+const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({ 
   selectedRange, 
   dayCnt, 
   accompanyCnt, 
@@ -26,6 +27,8 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
   setSelectedTimeRange,
   selectedTimeRange,
   handleTimeRangeChange,
+  xyData,
+  setXyData,
 }) => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -100,29 +103,6 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
   const handleAccompanyCnt = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const inputValue = e.target.value;
     setAccompanyCnt(parseInt(inputValue, 10));
-  };
-
-  const addPlaceToSchedule = (selectedPlace: PlacesProps, scheduleKey: number | null) => {
-    setAutoSchedules((prev) => {
-      const updatedAutoSchedules = prev.map((schedule) => {
-        if (schedule.day === scheduleKey) {
-          const isDuplicate = schedule.places.some(
-            (place) => place.destinationX === selectedPlace.destinationX && place.destinationY === selectedPlace.destinationY
-          );
-
-          if (!isDuplicate) {
-            return {
-              ...schedule,
-              places: [...schedule.places, selectedPlace],
-            };
-          }
-        }
-        return schedule;
-      });
-
-      return updatedAutoSchedules;
-    });
-    closeSearchModal();
   };
 
   return (
@@ -227,7 +207,9 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
         closeSearchModal={closeSearchModal}  
         autoSchedules={autoSchedules}
         setAutoSchedules={setAutoSchedules}
-        selectedDayIndex={selectedDayIndex} 
+        selectedDayIndex={selectedDayIndex}
+        xyData={xyData}
+        setXyData={setXyData}
       />}
     </>
   );
