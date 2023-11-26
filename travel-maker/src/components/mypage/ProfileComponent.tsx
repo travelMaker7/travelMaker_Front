@@ -1,13 +1,27 @@
 import React from "react";
 import styled from "styled-components";
+import MannerTemperatureBar from "./MannerTemperatureBar";
+
 
 const ProfileComponent: React.FC = () => {
+  const mannerBarWidth = "70%"; // 예시 너비
+  const MannerTemperatureBarStyled = styled(MannerTemperatureBar)`
+  margin-top: 20px; // 여백 추가
+`;
+const MannerBarWrapper = styled.div`
+  margin-top: -10px; // 여백 추가
+  width: 100%; // 컨테이너의 너비를 설정
+`;
+
   return (
     <ProfileWrapper>
       <ProfileImageSection>
         <ProfileImage src="profile-photo-url.jpg" alt="" />
         <Name>닉네임</Name>
         <SubTitle>청춘을 만끽</SubTitle>
+        <MannerBarWrapper>
+        <MannerTemperatureBarStyled width={mannerBarWidth} />
+        </MannerBarWrapper>
       </ProfileImageSection>
       <ProfileDetails>
         <Name>닉네임 소개</Name>
@@ -27,7 +41,7 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  margin: 20px;
+  margin: 5rem;
   border-radius: 10px; // 둥근 모서리
 
   @media (max-width: 1024px) {
@@ -36,7 +50,7 @@ const ProfileWrapper = styled.div`
   }
 `;
 const ProfileImageSection = styled.div`
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -46,6 +60,7 @@ const ProfileImageSection = styled.div`
   height: 150px; // 정사각형의 세로 길이를 설정합니다. 가로와 같게 하여 정사각형을 만듭니다.
   background: #fff;
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.15);
+  
 
   @media (max-width: 1024px) {
     width: 100%;

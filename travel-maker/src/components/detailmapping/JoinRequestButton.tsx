@@ -1,4 +1,3 @@
-// components/JoinRequestButton.js
 import axios from "axios";
 // import React, { useState } from "react";
 import styled from "styled-components";
@@ -7,20 +6,31 @@ interface JoinRequestButtonProps {
   tripPlanId: number;
   overWish: boolean;
   isVisible: boolean;
+  setHostId: number | undefined;
 }
 
 const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
   tripPlanId,
   overWish,
   isVisible,
+  setHostId,
 }) => {
   const handleJoinRequest = async () => {
     try {
-      const response = await axios.post("/api/v1/accompany/guest", {
-        tripPlanId,
-        guestId: 1,
-        joinStatus: "승인대기",
-      });
+      const response = await axios.post(
+        "/api/v1/accompany/guest",
+        {
+          tripPlanId,
+          hostId: setHostId,
+          joinStatus: "승인대기",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
 
       if (response.status === 200) {
         alert("동행신청이 완료되었습니다.");

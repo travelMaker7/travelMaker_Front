@@ -1,9 +1,4 @@
-import {
-  MarkerData,
-  ScheduleDetail,
-  TripPlan,
-  EnhancedMarkerData,
-} from "@/utils/Types";
+import { MarkerData, ScheduleDetail } from "@/utils/Types";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -12,131 +7,129 @@ import {
   faClock,
   faUsers,
   faCalendar,
+  faAngleDown,
+  faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import JoinRequestButton from "./JoinRequestButton";
+import { useParams } from "react-router-dom";
 
-const SCHEDULE_DETAIL_MOCK = {
-  status: 201,
-  message: "일정 상세보기 조회 성공",
-  data: {
-    scheduleId: 1,
-    markers: [
-      { destinationY: "37.5797", destinationX: "126.977" },
-      { destinationY: "37.582441", destinationX: "126.977060" },
-      { destinationY: "37.579772", destinationX: "126.975890" },
-    ],
-    scheduleName: "서울 맛집 탐방",
-    startDate: "2023-11-21",
-    finishDate: "2023-11-22",
-    tripPlans: [
-      {
-        dateNum: "10월 20일",
-        details: [
-          {
-            tripPlanId: 1,
-            destinationName: "멋지고",
-            wishCnt: 2,
-            wishJoin: false,
-            address: "서울특별시 종로구 사직로 161",
-            arriveTime: "16:00",
-            leaveTime: "18:00",
-            overWish: false,
-          },
-          {
-            tripPlanId: 2,
-            destinationName: "잘생긴",
-            wishCnt: 3,
-            wishJoin: false,
-            address: "서울특별시 종로구 사직로 161",
-            arriveTime: "18:00",
-            leaveTime: "19:00",
-            overWish: false,
-          },
-        ],
-      },
-      {
-        dateNum: "10월 21일",
-        details: [
-          {
-            tripPlanId: 3,
-            destinationName: "수민이",
-            wishCnt: 2,
-            wishJoin: false,
-            address: "서울특별시 종로구 사직로 161",
-            arriveTime: "16:00",
-            leaveTime: "18:00",
-            overWish: true,
-          },
-        ],
-      },
-    ],
-    chatUrl: "https://open.kakao.com/o/s5E3AYof",
-  },
-};
+// const SCHEDULE_DETAIL_MOCK = {
+//   status: 201,
+//   message: "Successfully viewed schedule details",
+//   data: {
+//     markers: [
+//       { destinationY: "34.132", destinationX: "128.537" },
+//       { destinationY: "33.123", destinationX: "126.992" },
+//       { destinationY: "35.133", destinationX: "126.892" },
+//     ],
+//     hostId: 1,
+//     scheduleId: 1,
+//     scheduleName: "Seoul Restaurant Tour",
+//     tripPlans: [
+//       {
+//         scheduledDate: "10월 20일",
+//         tripPlanDetails: [
+//           {
+//             tripPlanId: 1,
+//             destinationName: "경복궁",
+//             overWish: false,
+//             joinCnt: 5,
+//             wishCnt: 6,
+//             wishJoin: true,
+//             address: "161 Sajik-ro, Jongno-gu, Seoul",
+//             arriveTime: "16:00",
+//             leaveTime: "18:00",
+//           },
+//           {
+//             tripPlanId: 2,
+//             destinationName: "경복궁2",
+//             overWish: true,
+//             joinCnt: 5,
+//             wishCnt: 5,
+//             wishJoin: true,
+//             address: "161 Sajik-ro, Jongno-gu, Seoul",
+//             arriveTime: "18:00",
+//             leaveTime: "19:00",
+//           },
+//         ],
+//       },
+//       {
+//         scheduledDate: "10월 21일",
+//         tripPlanDetails: [
+//           {
+//             tripPlanId: 3,
+//             destinationName: "경복궁3",
+//             overWish: false,
+//             joinCnt: 5,
+//             wishCnt: 6,
+//             wishJoin: true,
+//             address: "161 Sajik-ro, Jongno-gu, Seoul",
+//             arriveTime: "16:00",
+//             leaveTime: "18:00",
+//           },
+//         ],
+//       },
+//     ],
+//     scheduleDescription: "즐거운 우리의 여행",
+//     chatUrl: "https://open.kakao.com/o/s5E3AYof",
+//   },
+// };
 
 interface Props {
-  setMarkers: React.Dispatch<React.SetStateAction<EnhancedMarkerData[]>>;
-  activeTripPlanId: number | null;
-  setActiveTripPlanId: React.Dispatch<React.SetStateAction<number | null>>;
+  setMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>;
+  activeScheduledDate: string | null;
+  setActiveScheduledDate: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const DetailMappingInfo: React.FC<Props> = ({
   setMarkers,
-  activeTripPlanId,
-  setActiveTripPlanId,
+  activeScheduledDate,
+  setActiveScheduledDate,
 }) => {
-  // const [activeTripPlanId, setActiveTripPlanId] = useState<number | null>(null);
   const [scheduleDetail, setScheduleDetail] = useState<ScheduleDetail | null>(
     null
   );
 
-  useEffect(() => {
-    const fetchScheduleDetail = async () => {
-      const scheduleId = 1;
-      try {
-        const res = await axios.get(`/api/v1/schedule/detail/${scheduleId}`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const allDetails = res.data.data.tripPlans.flatMap(
-          (plan: TripPlan) => plan.details
-        );
-        const enhancedMarkers = res.data.data.makers.map(
-          (marker: MarkerData, index: number) => ({
-            ...marker,
-            tripPlanId: allDetails[index]?.tripPlanId,
-          })
-        );
+  // const [hostId, setHostId] = useState<number | null>(null);
 
-        setMarkers(enhancedMarkers);
-        setScheduleDetail(res.data.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchScheduleDetail();
-  }, []);
+  const { scheduleId } = useParams<{ scheduleId: string }>();
 
-  useEffect(() => {
-    const allDetails = SCHEDULE_DETAIL_MOCK.data.tripPlans.flatMap(
-      (plan) => plan.details
-    );
-    const enhancedMarkers = SCHEDULE_DETAIL_MOCK.data.markers.map(
-      (marker, index) => ({
+  const fetchScheduleDetail = async () => {
+    try {
+      const res = await axios.get(`https://sosak.store/api/v1/schedule/detail/${scheduleId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("response.data: ", res);
+      const Markers = res.data.data.markers.map((marker: MarkerData[]) => ({
         ...marker,
-        tripPlanId: allDetails[index].tripPlanId,
-      })
-    );
+      }));
+      setMarkers(Markers);
+      setScheduleDetail(res.data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-    setMarkers(enhancedMarkers);
-    setScheduleDetail(SCHEDULE_DETAIL_MOCK.data);
-  }, []);
+  useEffect(() => {
+    fetchScheduleDetail();
+  }, [scheduleId]);
 
-  const toggleSideInfo = (tripPlanId: number) => {
-    setActiveTripPlanId((prevId) =>
-      prevId === tripPlanId ? null : tripPlanId
+  // useEffect(() => {
+  //   const Markers = SCHEDULE_DETAIL_MOCK.data.markers.map((marker) => ({
+  //     ...marker,
+  //   }));
+
+  //   setMarkers(Markers);
+  //   setScheduleDetail(SCHEDULE_DETAIL_MOCK.data);
+  // }, []);
+
+  const toggleSideInfo = (scheduledDate: string) => {
+    setActiveScheduledDate((prevDate) =>
+      prevDate === scheduledDate ? null : scheduledDate
     );
   };
 
@@ -144,7 +137,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
     return null;
   }
 
-  const { startDate, finishDate, tripPlans, scheduleName, chatUrl } =
+  const { tripPlans, scheduleName, scheduleDescription, chatUrl, hostId } =
     scheduleDetail;
   // const { startDate, finishDate, tripPlans, scheduleName, chatUrl } =
   //   SCHEDULE_DETAIL_MOCK.data;
@@ -157,23 +150,32 @@ export const DetailMappingInfo: React.FC<Props> = ({
           <FontAwesomeIcon icon={faCalendar} style={{ color: "#6FADFF" }} />
         </InfoIcon>
         <InfoDateText>
-          {startDate} ~ {finishDate}
+          {tripPlans[0].scheduledDate} ~{" "}
+          {tripPlans[tripPlans.length - 1].scheduledDate}
         </InfoDateText>
       </DateContainer>
-      {tripPlans.map((plan) =>
-        plan.details.map(
-          (detail) =>
-            detail.destinationName && (
+      {tripPlans.map((plan) => (
+        <DateSection key={plan.scheduledDate}>
+          <DateToggleContainer>
+            <DateText>{plan.scheduledDate}</DateText>
+            <ToggleButton
+              className={activeScheduledDate === plan.scheduledDate ? "on" : ""}
+              onClick={() => toggleSideInfo(plan.scheduledDate)}
+            >
+              <FontAwesomeIcon
+                icon={
+                  activeScheduledDate === plan.scheduledDate
+                    ? faAngleUp
+                    : faAngleDown
+                }
+              />
+            </ToggleButton>
+          </DateToggleContainer>
+
+          {activeScheduledDate === plan.scheduledDate &&
+            plan.tripPlanDetails.map((detail) => (
               <SideInfoContainer key={detail.tripPlanId}>
                 <InfoItemContainer>
-                  <ToggleButton
-                    className={
-                      activeTripPlanId === detail.tripPlanId ? "on" : ""
-                    }
-                    onClick={() => toggleSideInfo(detail.tripPlanId)}
-                  >
-                    ▶
-                  </ToggleButton>
                   <InfoIcon>
                     <FontAwesomeIcon
                       icon={faMap}
@@ -181,11 +183,8 @@ export const DetailMappingInfo: React.FC<Props> = ({
                     />
                   </InfoIcon>
                   <InfoText>{detail.destinationName}</InfoText>
-                  <InfoData>{plan.dateNum}</InfoData>
                 </InfoItemContainer>
-                <ContentContainer
-                  isSideInfoVisible={activeTripPlanId === detail.tripPlanId}
-                >
+                <ContentContainer isSideInfoVisible={true}>
                   <InfoItemContainer>
                     <InfoIcon>
                       <FontAwesomeIcon
@@ -207,14 +206,16 @@ export const DetailMappingInfo: React.FC<Props> = ({
                   <JoinRequestButton
                     tripPlanId={detail.tripPlanId}
                     overWish={detail.overWish}
-                    isVisible={activeTripPlanId === detail.tripPlanId}
+                    isVisible={true}
+                    setHostId={hostId}
                   />
                 </ContentContainer>
               </SideInfoContainer>
-            )
-        )
-      )}
-      <MemoBox>{chatUrl}</MemoBox>
+            ))}
+        </DateSection>
+      ))}
+      <MemoBox>{scheduleDescription}</MemoBox>
+      <OpenChatBox>{chatUrl}</OpenChatBox>
     </>
   );
 };
@@ -224,6 +225,16 @@ const ScheduleName = styled.h3`
   font-size: 20px;
   font-weight: 400;
   line-height: normal;
+  background-color: #00bfff; // 원하는 배경색으로 설정
+  color: #fff; // 원하는 글자색으로 설정
+  height: 40px;
+  display: flex;
+  align-items: center; // 수직 가운데 정렬
+  justify-content: center; // 수평 가운데 정렬
+  padding: 0 10px;
+  margin: 0 0 20px 0;
+  /* border-radius: 10px; */
+  box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
 `;
 
 const DateContainer = styled.div`
@@ -234,17 +245,8 @@ const DateContainer = styled.div`
   font-size: 18px;
   margin-bottom: 15px;
   padding: 10px 0;
-`;
-
-const SideInfoContainer = styled.div`
   background-color: #fff;
-  border-radius: 10px;
-  padding: 5px;
-  margin-bottom: 20px;
-  position: relative;
-  border: 1px solid #e0e0e0;
-  overflow: hidden;
-  box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
+  /* box-shadow: 2px 2px 2px 2px rgba(122, 122, 130, 0.25); */
 `;
 
 const ContentContainer = styled.div<{ isSideInfoVisible: boolean }>`
@@ -253,30 +255,65 @@ const ContentContainer = styled.div<{ isSideInfoVisible: boolean }>`
   overflow: hidden;
 `;
 
+// const SideInfoContainer = styled.div`
+//   background-color: #fff;
+//   border-radius: 10px;
+//   padding: 5px;
+//   margin-bottom: 20px;
+//   position: relative;
+//   border: 1px solid #e0e0e0;
+//   overflow: hidden;
+//   box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
+// `;
+
 const ToggleButton = styled.button`
-  width: 25px;
-  height: 25px;
-  background-color: #fff;
-  border-radius: 50%;
-  color: #6fadff;
+  background: none;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
   display: flex;
-  justify-content: center;
   align-items: center;
-  position: absolute;
-  right: 10px;
-  top: auto;
 
   &:hover {
-    color: #3359de;
-    border: 1px solid #6fadff;
-    transform: scale(1.1);
+    color: #6fadff;
   }
+
   &.on {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
   }
+`;
+
+const SideInfoContainer = styled.div`
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 30px;
+  position: relative;
+  background-color: #00bfff21;
+  /* border: 1px solid #0c0808; */
+  overflow: hidden;
+  box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
+`;
+
+const DateSection = styled.div`
+  margin-bottom: 20px;
+`;
+
+const DateToggleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #fff;
+  /* border-radius: 10px; */
+  margin-bottom: 10px;
+  border-left: 2px solid #00bfff;
+  /* box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25); */
+`;
+
+const DateText = styled.span`
+  font-family: Inter;
+  font-size: 16px;
+  color: #333;
 `;
 
 const InfoItemContainer = styled.div`
@@ -318,17 +355,18 @@ const MemoBox = styled.div`
   font-size: 16px;
 `;
 
-const InfoData = styled.div`
-  font-family: Inter;
-  font-size: 12px;
-  margin-right: 20px;
-  color: #757575;
-  flex: 1;
-  text-align: right;
-`;
-
 const InfoDateText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const OpenChatBox = styled.div`
+  padding: 15px;
+  margin-top: 20px;
+  font-family: Inter;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProfileModal, { ProfileData } from "./ProfileModal";
 
+
 interface UserProfileModalProps {
   userId: string;
   isOpen: boolean;

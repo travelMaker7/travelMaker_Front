@@ -1,3 +1,4 @@
+import zIndex from '@mui/material/styles/zIndex';
 import React, { useEffect } from 'react';
 
 declare global {
@@ -16,11 +17,12 @@ const MapContainer = () => {
         };
     
         let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    
+        
+        map.setLevel(4);
       }, [])
 
     return (
-        <div id="map" style={{ width: "31.25rem", height: "43.75rem", overflow: "hidden" }} />
+        <div id="map" style={{ width: "31.25rem", height: "43.75rem", overflow: "hidden", zIndex: '99' }} />
     );
 }
 

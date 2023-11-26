@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { AuthContext} from '../../components/contexts/AuthContext';
 import styled, { createGlobalStyle } from 'styled-components'; 
-import TopBar from "../../components/main/TopBar";
-import SearchBar from "../../components/main/SearchBar";
+// import TopBar from "../../components/main/TopBar";
+// import SearchBar from "../../components/main/SearchBar";
 import TravelScheduleButton from "../../components/main/TravelScheduleButton";
 import ImageBox from "../../components/main/ImageBox";
+// import FilterSearch from "../../components/search/FilterSearch";
 
 import ex1 from "../../assets/images/mainpageimages/ex1.png";
 import ex2 from "../../assets/images/mainpageimages/ex2.png";
@@ -14,6 +15,7 @@ import ex5 from "../../assets/images/mainpageimages/ex4.png";
 import ex6 from "../../assets/images/mainpageimages/ex5.png";
 import ex7 from "../../assets/images/mainpageimages/ex6.png";
 import ex8 from "../../assets/images/mainpageimages/ex7.png";
+import { HeaderComponent } from "@/pages/detailmapping/HeaderComponent";
 
 const imagesAndTags = [
   { image: ex1, tag: "Seoul" },
@@ -35,14 +37,14 @@ const MainPageContainer = styled.div`
   width: 100%;
 `;
 
-const Header = styled.header`
-  text-align: center;
-  height: 28%;
-  width: 110%;
-  border-bottom: 2px solid #83d2ef;
-`;
+// const Header = styled.header`
+//   text-align: center;
+//   height: 28%;
+//   width: 110%;
+//   border-bottom: 2px solid #83d2ef;
+// `;
 
-const SearchContainer = styled.div``;
+// const SearchContainer = styled.div``;
 
 const Main = styled.main``;
 
@@ -61,11 +63,11 @@ const ImageContainer = styled.div`
 `;
 
 const GlobalStyle = createGlobalStyle`
-  html, body {
+  /* html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: white;
+    background-color: white; */
   }
 
   #root {
@@ -87,13 +89,15 @@ const MainPage: React.FC = () => {
   return (
     <>
       <GlobalStyle />
+      <HeaderComponent />
       <MainPageContainer>
-        <Header>
+        
+        {/* <Header>
           <TopBar />
           <SearchContainer>
-            <SearchBar />
+            <FilterSearch />
           </SearchContainer>
-        </Header>
+        </Header> */}
         <Main>
           {/* {isLoggedIn ? ( */}
             <div>
