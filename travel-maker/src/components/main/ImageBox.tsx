@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface ImageBoxProps {
   image: string;
   tag: string;
+  onClick: (tag: string) => void; // 클릭 이벤트 처리 함수
 }
 
 
@@ -25,18 +26,28 @@ const Tag = styled.div`
 
 
   &.Seoul { color: #C89E85; }
-  &.Busan { color: #5196F1; }
+  &.Gyeonggido { color: #5196F1; }
   &.Jeju { color: #84e45b; }
-  &.Chuncheon { color: #24924e; }
-  &.Gapyeong { color: #2fc4e6; }
-  &.Iksan { color: #eb879b; }
-  &.Yeosu { color: #65baa3; }
-  &.Haenam { color: #4e41c6; }
+  &.Chungcheongdo { color: #24924e; }
+  &.Gangwondo { color: #2fc4e6; }
+  &.Incheon { color: #eb879b; }
+  &.Gyeongsangdo { color: #65baa3; }
+  &.Jeollado { color: #4e41c6; }
 `;
 
-const ImageBox: React.FC<ImageBoxProps> = ({ image, tag }) => {
+// const ImageBox: React.FC<ImageBoxProps> = ({ image, tag }) => {
+//   return (
+//     <ImageBoxContainer>
+//       <Image src={image} alt={tag} />
+//       <Tag className={tag}>{tag}</Tag>
+//     </ImageBoxContainer>
+//   );
+// };
+
+
+const ImageBox: React.FC<ImageBoxProps> = ({ image, tag, onClick }) => {
   return (
-    <ImageBoxContainer>
+    <ImageBoxContainer onClick={() => onClick(tag)}>
       <Image src={image} alt={tag} />
       <Tag className={tag}>{tag}</Tag>
     </ImageBoxContainer>
