@@ -6,14 +6,14 @@ interface JoinRequestButtonProps {
   tripPlanId: number;
   overWish: boolean;
   isVisible: boolean;
-  setHostId: number | undefined;
+  hostId: number | undefined;
 }
 
 const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
   tripPlanId,
   overWish,
   isVisible,
-  setHostId,
+  hostId,
 }) => {
   const handleJoinRequest = async () => {
     try {
@@ -21,7 +21,7 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
         "https://sosak.store/api/v1/accompany/guest",
         {
           tripPlanId,
-          hostId: setHostId,
+          hostId: hostId,
           joinStatus: "승인대기",
         },
         {
@@ -32,13 +32,16 @@ const JoinRequestButton: React.FC<JoinRequestButtonProps> = ({
         }
       );
 
+      console.log("response.data : ", response.data);
+      console.log("response.data : ", tripPlanId);
+
       if (response.status === 200) {
         alert("동행신청이 완료되었습니다.");
       } else {
         alert("동행신청에 실패했습니다.");
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
       alert("동행신청 중 오류가 발생했습니다.");
     }
   };

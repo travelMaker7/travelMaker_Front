@@ -11,70 +11,7 @@ import {
   faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import JoinRequestButton from "./JoinRequestButton";
 import { useParams } from "react-router-dom";
-
-// const SCHEDULE_DETAIL_MOCK = {
-//   status: 201,
-//   message: "Successfully viewed schedule details",
-//   data: {
-//     markers: [
-//       { destinationY: "34.132", destinationX: "128.537" },
-//       { destinationY: "33.123", destinationX: "126.992" },
-//       { destinationY: "35.133", destinationX: "126.892" },
-//     ],
-//     hostId: 1,
-//     scheduleId: 1,
-//     scheduleName: "Seoul Restaurant Tour",
-//     tripPlans: [
-//       {
-//         scheduledDate: "10월 20일",
-//         tripPlanDetails: [
-//           {
-//             tripPlanId: 1,
-//             destinationName: "경복궁",
-//             overWish: false,
-//             joinCnt: 5,
-//             wishCnt: 6,
-//             wishJoin: true,
-//             address: "161 Sajik-ro, Jongno-gu, Seoul",
-//             arriveTime: "16:00",
-//             leaveTime: "18:00",
-//           },
-//           {
-//             tripPlanId: 2,
-//             destinationName: "경복궁2",
-//             overWish: true,
-//             joinCnt: 5,
-//             wishCnt: 5,
-//             wishJoin: true,
-//             address: "161 Sajik-ro, Jongno-gu, Seoul",
-//             arriveTime: "18:00",
-//             leaveTime: "19:00",
-//           },
-//         ],
-//       },
-//       {
-//         scheduledDate: "10월 21일",
-//         tripPlanDetails: [
-//           {
-//             tripPlanId: 3,
-//             destinationName: "경복궁3",
-//             overWish: false,
-//             joinCnt: 5,
-//             wishCnt: 6,
-//             wishJoin: true,
-//             address: "161 Sajik-ro, Jongno-gu, Seoul",
-//             arriveTime: "16:00",
-//             leaveTime: "18:00",
-//           },
-//         ],
-//       },
-//     ],
-//     scheduleDescription: "즐거운 우리의 여행",
-//     chatUrl: "https://open.kakao.com/o/s5E3AYof",
-//   },
-// };
 
 interface Props {
   setMarkers: React.Dispatch<React.SetStateAction<MarkerData[]>>;
@@ -91,17 +28,19 @@ export const DetailMappingInfo: React.FC<Props> = ({
     null
   );
 
-  // const [hostId, setHostId] = useState<number | null>(null);
 
   const { scheduleId } = useParams<{ scheduleId: string }>();
 
   const fetchScheduleDetail = async () => {
     try {
-      const res = await axios.get(`https://sosak.store/api/v1/schedule/detail/${scheduleId}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.get(
+        `https://sosak.store/api/v1/schedule/detail/${scheduleId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       console.log("response.data: ", res);
       const Markers = res.data.data.markers.map((marker: MarkerData[]) => ({
@@ -139,8 +78,38 @@ export const DetailMappingInfo: React.FC<Props> = ({
 
   const { tripPlans, scheduleName, scheduleDescription, chatUrl, hostId } =
     scheduleDetail;
-  // const { startDate, finishDate, tripPlans, scheduleName, chatUrl } =
-  //   SCHEDULE_DETAIL_MOCK.data;
+
+  const handleJoinRequest = async (tripPlanId: number, hostId: number) => {
+    console.log("Token: ", localStorage.getItem("access_token"));
+    try {
+      const response = await axios.post(
+        "https://sosak.store/api/v1/accompany/guest",
+        {
+          tripPlanId,
+          hostId,
+          joinStatus: "승인대기",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+
+      console.log("response.data : ", response.data);
+
+      if (response.status === 200) {
+        alert("동행신청이 완료되었습니다.");
+      } else {
+        alert("동행신청에 실패했습니다.");
+      }
+    } catch (error) {
+      console.log(error);
+      console.log();
+      alert("동행신청 중 오류가 발생했습니다.");
+    }
+  };
 
   return (
     <>
@@ -203,12 +172,13 @@ export const DetailMappingInfo: React.FC<Props> = ({
                     </InfoIcon>
                     <InfoText>{`동행 인원: ${detail.wishCnt}/4`}</InfoText>
                   </InfoItemContainer>
-                  <JoinRequestButton
-                    tripPlanId={detail.tripPlanId}
-                    overWish={detail.overWish}
+                  <JoinButton
                     isVisible={true}
-                    setHostId={hostId}
-                  />
+                    onClick={() => handleJoinRequest(detail.tripPlanId, hostId)}
+                    disabled={!detail.overWish}
+                  >
+                    {detail.overWish ? "신청불가" : "동행신청"}
+                  </JoinButton>
                 </ContentContainer>
               </SideInfoContainer>
             ))}
@@ -254,17 +224,6 @@ const ContentContainer = styled.div<{ isSideInfoVisible: boolean }>`
   max-height: ${(props) => (props.isSideInfoVisible ? "280px" : "0px")};
   overflow: hidden;
 `;
-
-// const SideInfoContainer = styled.div`
-//   background-color: #fff;
-//   border-radius: 10px;
-//   padding: 5px;
-//   margin-bottom: 20px;
-//   position: relative;
-//   border: 1px solid #e0e0e0;
-//   overflow: hidden;
-//   box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
-// `;
 
 const ToggleButton = styled.button`
   background: none;
@@ -369,4 +328,26 @@ const OpenChatBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const JoinButton = styled.button<{ isVisible: boolean }>`
+  display: ${(props) => (props.isVisible ? "block" : "none")};
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  background-color: var(--blue-200, #6fadff);
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  color: #fff;
+  font-family: Inter;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #fff;
+    color: var(--blue-200, #6fadff);
+    border: 1px solid #6fadff;
+  }
 `;
