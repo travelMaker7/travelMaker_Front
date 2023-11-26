@@ -11,6 +11,9 @@ import MyPage from "./pages/mypage/MyPage.tsx";
 import ProfileTestPage from "./components/profile/profilemodal/ProfileTestPage.tsx";
 // import MyPageProfileTest from "./components/profile/mypageprofile/MyPageProfileTest.tsx";
 import ProfileTestPage2 from "./components/profile/profilemodal/ProfileTestPage2.tsx";
+import LocalCategoryMappingPage from './pages/localcategorymapping/LocalCategoryMappingPage.tsx';
+import ChatRoomButton from '@/components/chat/chatRoomButton';
+import Chat from "./pages/chat/chat.tsx"
 import LocalCategoryMappingPage from "./pages/localcategorymapping/LocalCategoryMappingPage.tsx";
 import LoginHandeler from "./pages/login/LoginHandeler.tsx";
 
@@ -27,6 +30,10 @@ function App() {
           />
           <Route path="/registration" element={<ScheduleRegistrationPage />} />
           <Route path="/login" element={<Login />} />
+
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/chat" element={<ChatRoomButton />} />
+          <Route path="/chat/room/:redisRoomId" element={<Chat />} />
           <Route path="/auth/kakao/callback" element={<LoginHandeler />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/profiletest" element={<ProfileTestPage />} />
