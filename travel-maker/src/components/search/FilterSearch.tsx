@@ -221,24 +221,23 @@ const FilterSearch: React.FC = () => {
       region: selectedRegion,
     };
     try {
-      const response = await axios.get("/api/v1/trip/search", {
+      const response = await axios.get("https://sosak.store/api/v1/trip/search/?page=1&size=10&destinationX =&destinationY=", {
         params: searchData,
         headers: {
           "Content-Type": "application/json",
         },
       });
+      console.log("HTTP 상태 코드:", response.status);
       console.log(response.data);
     } catch (error) {
       console.error("Error making the request:", error);
     }
   };
-  // 'YYYY-MM-DD' 형식으로 날짜를 변환하는 함수
-
-// 시작 날짜가 설정되면, 종료 날짜의 최소값을 업데이트합니다.
+ 
 useEffect(() => {
-  setMinEndDate(targetStartDate); // 종료 날짜의 최소값을 시작 날짜로 설정
+  setMinEndDate(targetStartDate); 
   if (targetFinishDate && targetFinishDate < targetStartDate) {
-    setTargetFinishDate(''); // 종료 날짜가 시작 날짜보다 이전이면 리셋
+    setTargetFinishDate(''); 
   }
 }, [targetStartDate, targetFinishDate]);
 
@@ -349,7 +348,7 @@ useEffect(() => {
           )}
           {activeField === 'age' && (
             <Modal>
-              {['10~19', '20~29', '30~39', '40~49', '50~59'].map((ageRange) => (
+              {['10대', '20대', '30대', '40대', '50대'].map((ageRange) => (
                 <ModalOption key={ageRange} onClick={() => {
                   setSelectedAge(ageRange);
                   setActiveField(null)}}>

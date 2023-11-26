@@ -5,8 +5,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 // import SearchBar from "../../components/main/SearchBar";
 import TravelScheduleButton from "../../components/main/TravelScheduleButton";
 import ImageBox from "../../components/main/ImageBox";
-// import FilterSearch from "../../components/search/FilterSearch";
-
+// import FilterSearch from "../../components/search/FilterSearch"
 import ex1 from "../../assets/images/mainpageimages/ex1.png";
 import ex2 from "../../assets/images/mainpageimages/ex2.png";
 import ex3 from "../../assets/images/mainpageimages/ex3.png";
@@ -19,13 +18,13 @@ import { HeaderComponent } from "@/pages/detailmapping/HeaderComponent";
 
 const imagesAndTags = [
   { image: ex1, tag: "Seoul" },
-  { image: ex2, tag: "Busan" },
-  { image: ex3, tag: "Jeju" },
-  { image: ex4, tag: "Chuncheon" },
-  { image: ex5, tag: "Gapyeong" },
-  { image: ex6, tag: "Iksan" },
-  { image: ex7, tag: "Yeosu" },
-  { image: ex8, tag: "Haenam" }
+  { image: ex2, tag: "Gyeonggido" },
+  { image: ex3, tag: "Gangwondo" },
+  { image: ex4, tag: "Chungcheongdo" },
+  { image: ex5, tag: "Jeollado" },
+  { image: ex6, tag: "Gyeongsangdo" },
+  { image: ex7, tag: "Jeju" },
+  { image: ex8, tag: "Incheon" }
 ];
 
 const MainPageContainer = styled.div`

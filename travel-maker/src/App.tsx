@@ -33,7 +33,7 @@ function App() {
           {/* <Route path="/mypageprofiletest" element={<MyPageProfileTest />} /> */}
           <Route path="/profiletest2" element={<ProfileTestPage2 />} />
           <Route
-            path="localc/ategorymap"
+            path="/localcategorymap"
             element={<LocalCategoryMappingPage />}
           />
           {/* <Route path="/mypageprofile" element={<MyPageProfile />}

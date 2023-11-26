@@ -724,6 +724,8 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import styled from "styled-components";
 import MannerTemperatureBar from '../../profile/mypageprofile/MannerTemperatureBar';
+import { useNavigate } from 'react-router-dom';
+// import nullprofileimage from '../../../assets/images/profile/profileimg.png'
 
 interface ProfileData {
   nickname: string;
@@ -789,11 +791,17 @@ const ProfileComponent: React.FC = () => {
     setProfileData({ ...profileData, userDescription: event.target.value });
   };
  
+  const navigate = useNavigate();
+  const navigateToMyPage = () => {
+    navigate('/mypage?'); // 마이페이지 경로로 이동
+  };
+
   const handleProfileUpdate = async () => {
+  
     setLoading(true); // 업데이트 시작 전에 로딩 상태를 true로 설정
     setError(""); // 에러 메시지 초기화
     try {
-      const response = await axios.put('https://sosak.store/api/v1/mypage/profile', {
+      const response = await axios.put('https://sosak.store/api/v1/mypage/update/description', {
       nickname: profileData.nickname,
       imageUrl: profileData.imageUrl,
       userAgeRange: profileData.userAgeRange,
@@ -810,7 +818,8 @@ const ProfileComponent: React.FC = () => {
       // const response = await axios.get('https://sosak.store/api/v1/mypage/profile');
       setProfileData(response.data.data);
       alert('프로필이 업데이트 되었습니다.');
-    
+      // navigateToMyPage();
+      navigate(0);
   } catch (error) {
     console.error('프로필 업데이트 실패:', error);
     setError('프로필 업데이트에 실패했습니다.'); 
