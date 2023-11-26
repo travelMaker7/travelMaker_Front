@@ -65,6 +65,10 @@ export interface DataControlProps {
   handleTimeRangeChange: (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => void;
 }
 
+export interface XYDataProps {
+  xyData: [string, string][];
+  setXyData: React.Dispatch<React.SetStateAction<[string, string][]>>; 
+}
 
 
 const ScheduleRegistrationPage = () => {
@@ -80,6 +84,7 @@ const ScheduleRegistrationPage = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState<[Dayjs | null, Dayjs | null] | null>([null, null]);
   const [arriveTime, setArriveTime] = useState<string | null>(null);
   const [leaveTime, setLeaveTime] = useState<string | null>(null);
+  const [xyData, setXyData] = useState<[string, string][]>([]);
 
   const handleChatUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -134,18 +139,18 @@ const ScheduleRegistrationPage = () => {
   const handleEntireDataSubmit = () => {
     const entireData: EntireData = {
       scheduleName: scheduleName,
-      schedules: autoSchedules.map((schedule) => ({
-        scheduledDate: schedule.scheduleDate,
-        details: schedule.places.map((place) => ({
-          destinationName: place.destinationName,
-          wishCnt: place.wishCnt,
-          wishJoin: place.wishJoin,
-          address: place.address,
-          arriveTime: place.arriveTime,
-          leaveTime: place.leaveTime,
-          region: place.region,
-          destinationX: place.destinationX,
-          destinationY: place.destinationY,
+      schedules: autoSchedules.map((_, index) => ({
+        scheduledDate: autoSchedules[index].scheduleDate,
+        details: autoSchedules[index].places.map((_, placeIndex) => ({
+          destinationName: autoSchedules[index].places[placeIndex].destinationName,
+          wishCnt: autoSchedules[index].places[placeIndex].wishCnt,
+          wishJoin: autoSchedules[index].places[placeIndex].wishJoin,
+          address: autoSchedules[index].places[placeIndex].address,
+          arriveTime: autoSchedules[index].places[placeIndex].arriveTime,
+          leaveTime: autoSchedules[index].places[placeIndex].leaveTime,
+          region: autoSchedules[index].places[placeIndex].region,
+          destinationX: autoSchedules[index].places[placeIndex].destinationX,
+          destinationY: autoSchedules[index].places[placeIndex].destinationY,
         })),
       })),
       scheduleDescription: schduleDescription,
@@ -170,14 +175,13 @@ const ScheduleRegistrationPage = () => {
   };
 
   const handleTimeRangeChange = (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => {
-    console.log('Selected Time Range: ', dateString);
-    if(value !== null) {
-      console.log([value[0]?.format('HH:mm'), value[1]?.format('HH:mm')]);
-    }
-    setSelectedTimeRange(value);
-    if(value !== null && value[0] !== null && value[1] !== null) {
+    
+    if (value !== null && value[0] !== null && value[1] !== null) {
+      setSelectedTimeRange(value);
       setArriveTime(value[0].format('HH:mm'));
       setLeaveTime(value[1].format('HH:mm'));
+      console.log('arrive: ', arriveTime);
+      console.log('leave: ', leaveTime);
     }
   };
 
@@ -186,7 +190,7 @@ const ScheduleRegistrationPage = () => {
       <HeaderComponent/>
       <PageContainer>
         <MapContainerBox>
-          <MapContainer/>
+          <MapContainer xyData={xyData} setXyData={setXyData}/>
         </MapContainerBox>
         <InputContainer>
           <ScheduleDiv>
@@ -223,6 +227,8 @@ const ScheduleRegistrationPage = () => {
                 selectedTimeRange={selectedTimeRange}
                 setSelectedTimeRange={setSelectedTimeRange}
                 handleTimeRangeChange={handleTimeRangeChange}
+                xyData={xyData}
+                setXyData={setXyData}
               />
             </ScrollDiv>
           </ScheduleDiv>

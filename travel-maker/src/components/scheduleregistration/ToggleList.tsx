@@ -7,14 +7,17 @@ import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
 import TimeRange from './TimeRange';
+
 import { SchedulesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+import { XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+
 
 interface DatesProps {
   selectedRange: [Dayjs | null, Dayjs | null] | null;
   dayCnt: number | null;
 }
 
-const ToggleList: React.FC<DatesProps & DataControlProps> = ({ 
+const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({ 
   selectedRange, 
   dayCnt, 
   accompanyCnt, 
@@ -26,6 +29,8 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
   setSelectedTimeRange,
   selectedTimeRange,
   handleTimeRangeChange,
+  xyData,
+  setXyData,
 }) => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -204,7 +209,9 @@ const ToggleList: React.FC<DatesProps & DataControlProps> = ({
         closeSearchModal={closeSearchModal}  
         autoSchedules={autoSchedules}
         setAutoSchedules={setAutoSchedules}
-        selectedDayIndex={selectedDayIndex} 
+        selectedDayIndex={selectedDayIndex}
+        xyData={xyData}
+        setXyData={setXyData}
       />}
     </>
   );

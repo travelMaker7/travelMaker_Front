@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { Button } from "@mui/base/Button";
-import { useNavigate } from "react-router";
+import styled from 'styled-components';
+import axios from 'axios';
+interface ChatRoomControlProps {
+  handleCreateAndEnterRoom: () => void;
+}
 
-const ChatRoomButton = () => {
-  const [isRoomCreated, setIsRoomCreated] = useState(false);
-  const [redisRoomId, setRedisRoomId] = useState();
-  const [chatRoomId, setChatRoomId] = useState();
-  const navigate = useNavigate();
+const ChatRoomButton: React.FC<ChatRoomControlProps> = ({ handleCreateAndEnterRoom }) => {
   
   const handleCreateAndEnterRoom = () => {
     console.log('토큰정보 :', localStorage.getItem("access_token"))
@@ -48,21 +47,14 @@ const ChatRoomButton = () => {
   }
 
   return (
-    <div>
-      <Button
-      type='button'
-      style={{
-        borderRadius: '20px', 
-        backgroundColor: '#83d2ef', 
-        padding: '10px',
-        border: 'none'
-      }}
-      onClick={() => {handleCreateAndEnterRoom()}}
-      >
-        1:1 채팅하기
-      </Button>
-    </div>
+    <ChattingButton
+    onClick={handleCreateAndEnterRoom}
+    >
+      1:1 채팅하기
+    </ChattingButton>
   )
 }
 
 export default ChatRoomButton
+
+const ChattingButton = styled.div``
