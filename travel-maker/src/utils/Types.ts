@@ -7,6 +7,7 @@ export interface TripDetail {
   arriveTime: string;
   leaveTime: string;
   overWish: boolean;
+  joinCnt: number;
 }
 
 export interface TripPlan {
