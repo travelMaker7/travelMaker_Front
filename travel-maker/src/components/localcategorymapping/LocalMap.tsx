@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -41,13 +42,13 @@ const RES = {
 
 const region = "서울";
 
-const LocalMap = () => {
-    
-    const Res = [];
+const LocalMap: React.FC = () => {
+
+    const { tag } = useParams<{ tag: string }>();
 
     useEffect(() => {
       
-      axios.get(`https://sosak.store/api/${region}/map`, {
+      axios.get(`https://sosak.store/api/v1/map/${tag}`, {
           headers: {
           "Content-type": "application/json"
         }

@@ -29,21 +29,14 @@ function App() {
           />
           <Route path="/registration" element={<ScheduleRegistrationPage />} />
           <Route path="/login" element={<Login />} />
-
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/chat" element={<ChatRoomButton />} />
           <Route path="/chat/room/:redisRoomId" element={<Chat />} />
           <Route path="/auth/kakao/callback" element={<LoginHandeler />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/profiletest" element={<ProfileTestPage />} />
-          {/* <Route path="/mypageprofiletest" element={<MyPageProfileTest />} /> */}
           <Route path="/profiletest2" element={<ProfileTestPage2 />} />
-          <Route
-            path="/localcategorymap"
-            element={<LocalCategoryMappingPage />}
-          />
-          {/* <Route path="/mypageprofile" element={<MyPageProfile />}
-          /> */}
+          <Route path="/localcategorymap/:tag" element={<LocalCategoryMappingPage />}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

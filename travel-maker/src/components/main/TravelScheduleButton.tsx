@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Button = styled.button`
-  background-color: #3359DE;
+  background-color: #00bfff;
   color: white;
   border: none;
   border-radius: 5px;
@@ -14,9 +15,18 @@ const Button = styled.button`
   margin-bottom: 40px;
 `;
 
+
+
 const TravelScheduleButton: React.FC = () => {
+  
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/registration");
+  }
+
   return (
-    <Button>
+    <Button onClick={handleNavigate}>
       여행 일정 등록
     </Button>
   );
