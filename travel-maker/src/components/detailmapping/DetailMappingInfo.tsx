@@ -175,7 +175,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
                   <JoinButton
                     isVisible={true}
                     onClick={() => handleJoinRequest(detail.tripPlanId, hostId)}
-                    disabled={!detail.overWish}
+                    disabled={detail.overWish}
                   >
                     {detail.overWish ? "신청불가" : "동행신청"}
                   </JoinButton>
