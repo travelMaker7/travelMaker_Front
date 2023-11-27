@@ -1,10 +1,11 @@
 import React from "react";
 import styled from 'styled-components';
+import { Keyboard } from "swiper/modules";
 
 interface ImageBoxProps {
   image: string;
   tag: string;
-  onClick: (tag: string) => void; // 클릭 이벤트 처리 함수
+  onClick: () => void;
 }
 
 
@@ -22,32 +23,21 @@ const Tag = styled.div`
   font-size: 30px;
   font-weight: bold;
   box-sizing:content-box;
-  margin-top: -17px;
 
 
-  &.Seoul { color: #C89E85; }
-  &.Gyeonggido { color: #5196F1; }
-  &.Jeju { color: #84e45b; }
-  &.Chungcheongdo { color: #24924e; }
-  &.Gangwondo { color: #2fc4e6; }
-  &.Incheon { color: #eb879b; }
-  &.Gyeongsangdo { color: #65baa3; }
-  &.Jeollado { color: #4e41c6; }
+  &.서울 { color: #C89E85; }
+  &.경기 { color: #5196F1; }
+  &.인천 { color: #84e45b; }
+  &.강원도 { color: #24924e; }
+  &.충청도 { color: #2fc4e6; }
+  &.경상도 { color: #eb879b; }
+  &.전라도 { color: #65baa3; }
+  &.제주도 { color: #4e41c6; }
 `;
 
-// const ImageBox: React.FC<ImageBoxProps> = ({ image, tag }) => {
-//   return (
-//     <ImageBoxContainer>
-//       <Image src={image} alt={tag} />
-//       <Tag className={tag}>{tag}</Tag>
-//     </ImageBoxContainer>
-//   );
-// };
-
-
-const ImageBox: React.FC<ImageBoxProps> = ({ image, tag, onClick }) => {
+const ImageBox: React.FC<ImageBoxProps> = ({image, tag}) => {
   return (
-    <ImageBoxContainer onClick={() => onClick(tag)}>
+    <ImageBoxContainer>
       <Image src={image} alt={tag} />
       <Tag className={tag}>{tag}</Tag>
     </ImageBoxContainer>

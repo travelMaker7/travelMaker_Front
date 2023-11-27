@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
-  display: block;
-  margin: 20px auto;
-  padding: 2% 6%;
   background-color: #3359DE;
   color: white;
   border: none;
@@ -12,6 +9,9 @@ const Button = styled.button`
   font-size: 18px;
   cursor: pointer;
   font-weight: bold;
+  width: 200px;
+  height: 60px;
+  margin-bottom: 40px;
 `;
 
 const TravelScheduleButton: React.FC = () => {
