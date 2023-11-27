@@ -28,6 +28,8 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
   handleTimeRangeChange,
   xyData,
   setXyData,
+  handleRadioChange,
+  handleAccompanyCnt,
 }) => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -92,17 +94,6 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
   const closeSearchModal = () => {
     setIsModalOpen(false);
   }
-
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAccompanyOption(e.target.value);
-  };
-
-  
-
-  const handleAccompanyCnt = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const inputValue = e.target.value;
-    setAccompanyCnt(parseInt(inputValue, 10));
-  };
 
   return (
     <>

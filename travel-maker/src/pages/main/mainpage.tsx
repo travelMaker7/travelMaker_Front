@@ -80,7 +80,7 @@ const MainPage = () => {
     setOpenLocalTag(tag);
     console.log(tag);
     console.log('openLocalTag: ', openLocalTag);
-    navigate(`/localcategorymap/${tag}`);
+    navigate(`/localcategorymap?region=${tag}`);
   }
 
   return (
