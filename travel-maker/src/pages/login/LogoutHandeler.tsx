@@ -56,12 +56,12 @@
 
 
 import React from 'react';
-import { handleLogout } from './logoutFunction'; 
+// import { handleLogout } from './logoutFunction'; onclick없애놓음
 
 
  const LogoutHandler: React.FC = () => {
   return (
-    <button onClick={handleLogout}>로그아웃</button>
+    <button>로그아웃</button>
     );
      };
 

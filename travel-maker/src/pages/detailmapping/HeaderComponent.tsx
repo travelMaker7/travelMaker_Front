@@ -33,8 +33,7 @@ export const HeaderComponent: React.FC = () => {
 };
 
 const handleSearch = (makers: any) => {
-  // handleSearch 함수의 로직을 구현합니다.
-  // 필요한 동작을 수행하고 상태를 업데이트합니다.
+  console.log(makers);
 
 };
 

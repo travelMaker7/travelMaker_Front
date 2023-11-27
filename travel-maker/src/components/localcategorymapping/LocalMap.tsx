@@ -9,13 +9,6 @@ declare global {
   }
 }
 
-interface MakerData {
-  destinationName: string;
-  address: string;
-  destinationY: string;
-  destinationX: string;
-}
-
 const RES = {
   "status": 201,
   "message": "마커들 가져오기 성공",
@@ -47,16 +40,12 @@ const RES = {
   }
 }
 
-const region = "서울";
-
-
-
 const LocalMap = () => {
 
-  let [tag, setTag] = useSearchParams();
+  let [tag] = useSearchParams();
     
   const region = tag.get('region');
-
+  console.log(region);
     useEffect(() => {
       
       axios.get(`https://sosak.store/api/v1/map/${tag}`, {
@@ -69,7 +58,7 @@ const LocalMap = () => {
         console.log("조회 성공");
       })
       .catch((error) => {
-        console.error("조회 오류 발생");
+        console.error("조회 오류 발생 ", error);
       })
 
       let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

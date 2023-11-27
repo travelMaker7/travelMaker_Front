@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext} from '../../components/contexts/AuthContext';
 import TravelScheduleButton from "../../components/main/TravelScheduleButton";
 import ex1 from "../../assets/images/mainpageimages/ex1.png";

@@ -149,8 +149,8 @@ const OneToOneChattingBtn = styled.div`
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileData }) => {
   
   const [isRoomCreated, setIsRoomCreated] = useState(false);
-  const [redisRoomId, setRedisRoomId] = useState();
-  const [chatRoomId, setChatRoomId] = useState();
+  const [, setRedisRoomId] = useState();
+  const [, setChatRoomId] = useState();
 
   const navigate = useNavigate();
 
@@ -175,8 +175,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
         setChatRoomId(chatRoomId);
         setRedisRoomId(redisRoomId);
         setIsRoomCreated(true);
-        console.log('redis : ',redisRoomId)
-        console.log('chat : ',chatRoomId)
+        console.log('redis : ',redisRoomId);
+        console.log('chat : ',chatRoomId);
+        console.log(redisRoomId);
+        console.log(chatRoomId);
 
         const enterRoomUri = `https://sosak.store/api/v1/chat/room/${redisRoomId}?chatRoomId=${chatRoomId}`
 

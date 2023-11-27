@@ -18,9 +18,7 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
   selectedRange, 
   dayCnt, 
   accompanyCnt, 
-  setAccompanyCnt, 
-  accompanyOption, 
-  setAccompanyOption, 
+  accompanyOption,
   autoSchedules, 
   setAutoSchedules,
   setSelectedTimeRange,
@@ -336,12 +334,7 @@ const DestinationNameSpan = styled.span`
   border: none;
   line-height: 2rem;
 `
-        
-const PlaceNumberDiv = styled.div`
-  width: 2rem;
-  height: 2rem;
-  border-radius: 100%;
-`
+
 
 const PlaceAddressDiv = styled.div`
   width: 100%;
@@ -383,17 +376,6 @@ const AccompanyPeopleCntSpan = styled.div`
 const AccompanyChoiceSpan = styled(AccompanyPeopleCntSpan)``
 
 const TravelTimeThemeSpan = styled(AccompanyPeopleCntSpan)``
-
-const ArriveInput = styled.input`
-  width: 6rem;
-  height: 1.25rem;
-  background-color: #ebebeb;
-  border: none;
-  border-radius: 0.125rem;
-  margin-left: 1rem;
-`
-
-const LeaveInput = styled(ArriveInput)``
 
 const PlaceToggleButton = styled.button`
   border: none;

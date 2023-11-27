@@ -76,17 +76,17 @@ const FilterSearch: React.FC<FilterSearchProps> = ({ onSearch }) => {
     }
   };
 
-  const [searchParams, setSearchParams] = useState({
-    page: 1,
-    size: 10,
-    targetStartDate: formatDate(targetStartDate),
-    targetFinishDate: formatDate(targetFinishDate),
-    ageRange: selectedAge,
-    gender: selectedGender,
-    minPerson: minGuests ?? undefined,
-    maxPerson: maxGuests ?? undefined,
-    region: selectedRegion,
-  });
+  // const [searchParams, setSearchParams] = useState({
+  //   page: 1,
+  //   size: 10,
+  //   targetStartDate: formatDate(targetStartDate),
+  //   targetFinishDate: formatDate(targetFinishDate),
+  //   ageRange: selectedAge,
+  //   gender: selectedGender,
+  //   minPerson: minGuests ?? undefined,
+  //   maxPerson: maxGuests ?? undefined,
+  //   region: selectedRegion,
+  // });
 
   const handleSearch = async () => {
     const queryParams = new URLSearchParams({
@@ -112,7 +112,7 @@ const FilterSearch: React.FC<FilterSearchProps> = ({ onSearch }) => {
       console.log("전체 응답:", response); // 전체 응답 객체 로깅
       console.log("데이터:", response.data.makers)
       setFilteredMarkers(makers);
-      setFilteredMarkers(makers);
+      console.log(filteredMarkers);
       onSearch(makers); // 상위 컴포넌트로 검색 결과 전달
       navigate(`/localcategorymap?${queryParams.toString()}`);
     } catch (error) {

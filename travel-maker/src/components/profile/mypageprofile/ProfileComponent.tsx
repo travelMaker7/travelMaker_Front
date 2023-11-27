@@ -70,9 +70,6 @@ const ProfileComponent: React.FC = () => {
   };
 
   const navigate = useNavigate();
-  const navigateToMyPage = () => {
-    navigate("/mypage?");
-  };
 
   const handleProfileUpdate = async () => {
     setLoading(true); // 업데이트 시작 전에 로딩 상태를 true로 설정
@@ -245,14 +242,6 @@ const NameAndDetails = styled.div`
   flex-direction: column;
   flex: 1;
   margin-bottom: 35px;
-`;
-const Name = styled.span`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 15px;
-  font-weight: bold;
-  padding-top: 10px;
 `;
 
 const Details = styled.span`

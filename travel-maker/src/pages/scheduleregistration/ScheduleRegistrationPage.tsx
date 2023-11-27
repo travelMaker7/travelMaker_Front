@@ -185,7 +185,7 @@ const ScheduleRegistrationPage = () => {
   };
 
   const handleTimeRangeChange = (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => {
-    
+    console.log(dateString);
     if (value !== null && value[0] !== null && value[1] !== null) {
       setSelectedTimeRange(value);
       setArriveTime(value[0].format('HH:mm'));

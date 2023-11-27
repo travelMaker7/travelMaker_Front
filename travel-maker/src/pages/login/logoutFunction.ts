@@ -31,10 +31,6 @@ import axios from 'axios';
 export const handleLogout = async (navigate: (path: string) => void) => {
   const accessToken = localStorage.getItem('access_token');
   console.log("Access Token:", accessToken);
- 
-  const headers = {
-    Authorization: `Bearer ${accessToken}`
-  };
 
   if (accessToken) {
     try {

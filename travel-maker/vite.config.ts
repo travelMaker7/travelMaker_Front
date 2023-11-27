@@ -14,7 +14,7 @@ export default defineConfig({
   },
 
   define: {
-    global: {},
+    _global: ({}),
   },
   server: {
     proxy: {
