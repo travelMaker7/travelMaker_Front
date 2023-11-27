@@ -1,5 +1,5 @@
 // ModalTestPage.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import ProfileModal from './ProfileModal';
 import ProfileImage from '../../../assets/images/profile/profileimg.png'

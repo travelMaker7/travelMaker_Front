@@ -10,42 +10,59 @@ interface Props {
 
 export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
   useEffect(() => {
-    const container = document.getElementById("map");
-    if (!container || markers.length === 0) return;
+    kakao.maps.load(() => {
+      const container = document.getElementById("map");
 
-    const map = new kakao.maps.Map(container, {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3,
-    });
-
-    const bounds = new kakao.maps.LatLngBounds();
-
-    markers.forEach((marker) => {
-      const position = new kakao.maps.LatLng(
-        Number(marker.destinationY),
-        Number(marker.destinationX)
-      );
-      bounds.extend(position);
-
-      const createMarker = new kakao.maps.Marker({
-        position,
+      const map = new kakao.maps.Map(container, {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3,
       });
-      createMarker.setMap(map);
-    });
 
-    const polyline = new kakao.maps.Polyline({
-      path: markers.map(
-        (marker) =>
-          new kakao.maps.LatLng(marker.destinationY, marker.destinationX)
-      ),
-      strokeWeight: 3,
-      strokeColor: "#3b90ff",
-      strokeOpacity: 0.6,
-      strokeStyle: "solid",
-    });
-    polyline.setMap(map);
+      const bounds = new kakao.maps.LatLngBounds();
 
-    map.setBounds(bounds);
+      console.log("markers: ", markers);
+      console.log("bounds1: ", bounds);
+
+      markers.forEach((marker) => {
+        const position = new kakao.maps.LatLng(
+          Number(marker.destinationX),
+          Number(marker.destinationY)
+        );
+
+        console.log("position: ", position);
+
+        bounds.extend(position);
+
+        console.log("bounds2: ", bounds);
+
+        const createMarker = new kakao.maps.Marker({
+          position,
+        });
+        console.log("position: ", position);
+        createMarker.setMap(map);
+
+        console.log("createMarker: ", createMarker);
+      });
+
+      const polyline = new kakao.maps.Polyline({
+        path: markers.map(
+          (marker) =>
+            new kakao.maps.LatLng(marker.destinationY, marker.destinationX)
+        ),
+        strokeWeight: 3,
+        strokeColor: "#3b90ff",
+        strokeOpacity: 0.6,
+        strokeStyle: "solid",
+      });
+      polyline.setMap(map);
+
+      if (!bounds.isEmpty()) {
+        setTimeout(() => {
+          map.setBounds(bounds);
+          map.relayout();
+        }, 300); // Adjust delay as necessary
+      }
+    });
   }, [markers]);
 
   return <KakaoMapContainer id="map"></KakaoMapContainer>;

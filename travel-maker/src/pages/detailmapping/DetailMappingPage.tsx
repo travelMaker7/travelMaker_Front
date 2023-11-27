@@ -58,7 +58,6 @@ const MapContainer = styled.div`
   overflow: hidden;
   border-radius: 20px;
   box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
-  background: #d3d3d3;
 
   @media (max-width: 1024px) {
     height: 50%; // 세로 레이아웃에서 지도의 높이

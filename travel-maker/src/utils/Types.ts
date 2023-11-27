@@ -41,13 +41,9 @@ export interface MarkerData {
 export interface BaseSchedule {
   scheduleId: string;
   scheduleName: string;
-  nickname: string;
 }
 
-export interface RegisteredSchedule {
-  scheduleId: string;
-  scheduleName: string;
-  nickname: string;
+export interface RegisteredSchedule extends BaseSchedule {
   scheduleDescription: string;
   markers: MarkerData[];
 }

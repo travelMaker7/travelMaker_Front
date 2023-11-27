@@ -147,10 +147,10 @@ export interface ButtonProps {
 
 const MyPageSidebar: React.FC = () => {
   const [activeTab, setActiveTab] = useState("registered");
+
   const [registeredSchedules, setRegisteredSchedules] = useState<
     RegisteredSchedule[]
   >([]);
-
   const [participatingSchedules, setParticipatingSchedules] = useState<
     ParticipatingSchedule[]
   >([]);
@@ -172,12 +172,21 @@ const MyPageSidebar: React.FC = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
-      if (response.status === 201) {
+      console.log(
+        "response.data.data.schedules : ",
+        response.data.data.schedules
+      );
+      if (response.status === 200) {
         setRegisteredSchedules(response.data.data.schedules);
+        console.log(
+          "response.data.data.schedules : ",
+          response.data.data.schedules
+        );
+        console.log("등록한 일정 조회 성공");
       } else {
         console.log("등록한 일정 조회 실패");
       }
@@ -193,12 +202,17 @@ const MyPageSidebar: React.FC = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         setParticipatingSchedules(response.data.data.schedules);
+        console.log("참여 일정 조회 성공");
+        console.log(
+          "response.data.data.schedules : ",
+          response.data.data.schedules
+        );
       } else {
         console.log("참여 일정 조회 실패");
       }
@@ -214,7 +228,7 @@ const MyPageSidebar: React.FC = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
@@ -231,8 +245,9 @@ const MyPageSidebar: React.FC = () => {
 
   useEffect(() => {
     if (activeTab === "registered") {
+      console.log("등록한 일정 조회")
       getRegisteredSchedules();
-    } else {
+    } else if (activeTab !== "notifications") {
       getParticipatingSchedules(activeTab);
     }
   }, [activeTab]);
@@ -289,11 +304,13 @@ const MyPageSidebar: React.FC = () => {
             <ScheduleCard key={schedule.scheduleId}>
               <ImageContainer>
                 <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                  <KakaoStaticMap
-                    markers={schedule.markers}
-                    width="100%"
-                    height="300px"
-                  />
+                  {schedule.markers && schedule.markers.length > 0 && (
+                    <KakaoStaticMap
+                      markers={schedule.markers}
+                      width="100%"
+                      height="300px"
+                    />
+                  )}
                 </LinkItem>
               </ImageContainer>
 
@@ -304,100 +321,94 @@ const MyPageSidebar: React.FC = () => {
             </ScheduleCard>
           ))}
         {activeTab === "승인대기" &&
-          participatingSchedules
-            .filter((schedule) => schedule.status === "승인대기")
-            .map((schedule) => (
-              <ScheduleCard key={schedule.scheduleId}>
-                <ImageContainer>
-                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                    <KakaoStaticMap
-                      markers={[
-                        {
-                          destinationY: schedule.destinationY,
-                          destinationX: schedule.destinationX,
-                        },
-                      ]}
-                      width="100%"
-                      height="300px"
-                    />
-                  </LinkItem>
-                </ImageContainer>
+          participatingSchedules.map((schedule) => (
+            <ScheduleCard key={schedule.scheduleId}>
+              <ImageContainer>
+                <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                  <KakaoStaticMap
+                    markers={[
+                      {
+                        destinationY: schedule.destinationY,
+                        destinationX: schedule.destinationX,
+                      },
+                    ]}
+                    width="100%"
+                    height="300px"
+                  />
+                </LinkItem>
+              </ImageContainer>
 
-                <TextContent>
-                  <StyledH3>{schedule.scheduleName}</StyledH3>
-                  <StyledP>여행지: {schedule.destinationName}</StyledP>
-                  <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
-                </TextContent>
-              </ScheduleCard>
-            ))}
+              <TextContent>
+                <StyledH3>{schedule.scheduleName}</StyledH3>
+                <StyledP>여행지: {schedule.destinationName}</StyledP>
+                <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
+              </TextContent>
+            </ScheduleCard>
+          ))}
 
         {activeTab === "신청수락" &&
-          participatingSchedules
-            .filter((schedule) => schedule.status === "신청수락")
-            .map((schedule) => (
-              <ScheduleCard
-                key={schedule.scheduleId}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <ImageContainer>
-                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                    <KakaoStaticMap
-                      markers={[
-                        {
-                          destinationY: schedule.destinationY,
-                          destinationX: schedule.destinationX,
-                        },
-                      ]}
-                      width="100%"
-                      height="300px"
-                    />
-                  </LinkItem>
-                </ImageContainer>
+          participatingSchedules.map((schedule) => (
+            <ScheduleCard
+              key={schedule.scheduleId}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <ImageContainer>
+                <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                  <KakaoStaticMap
+                    markers={[
+                      {
+                        destinationY: schedule.destinationY,
+                        destinationX: schedule.destinationX,
+                      },
+                    ]}
+                    width="100%"
+                    height="300px"
+                  />
+                </LinkItem>
+              </ImageContainer>
 
-                <TextContent>
-                  <StyledH3>{schedule.scheduleName}</StyledH3>
-                  <StyledP>여행지: {schedule.destinationName}</StyledP>
-                  <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
-                </TextContent>
-                {showDeleteButton && (
-                  <DeleteButton
-                    onClick={() => handleDeleteClick(schedule.tripPlanId)}
-                  >
-                    X
-                  </DeleteButton>
-                )}
-              </ScheduleCard>
-            ))}
+              <TextContent>
+                <StyledH3>{schedule.scheduleName}</StyledH3>
+                <StyledP>여행지: {schedule.destinationName}</StyledP>
+                <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
+              </TextContent>
+              {showDeleteButton && (
+                <DeleteButton
+                  onClick={() => handleDeleteClick(schedule.tripPlanId)}
+                >
+                  X
+                </DeleteButton>
+              )}
+            </ScheduleCard>
+          ))}
 
         {activeTab === "동행완료" &&
-          participatingSchedules
-            .filter((schedule) => schedule.status === "동행완료")
-            .map((schedule) => (
-              <ScheduleCard key={schedule.scheduleId}>
-                <ImageContainer>
-                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                    <KakaoStaticMap
-                      markers={[
-                        {
-                          destinationY: schedule.destinationY,
-                          destinationX: schedule.destinationX,
-                        },
-                      ]}
-                      width="100%"
-                      height="300px"
-                    />
-                  </LinkItem>
-                </ImageContainer>
-                <TextContent>
-                  <StyledH3>{schedule.scheduleName}</StyledH3>
-                  <StyledP>
-                    {schedule.scheduleDate} : {schedule.destinationName}
-                  </StyledP>
-                </TextContent>
-                <ReviewButton>리뷰하기</ReviewButton>
-              </ScheduleCard>
-            ))}
+          participatingSchedules.map((schedule) => (
+            <ScheduleCard key={schedule.scheduleId}>
+              <ImageContainer>
+                <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                  <KakaoStaticMap
+                    markers={[
+                      {
+                        destinationY: schedule.destinationY,
+                        destinationX: schedule.destinationX,
+                      },
+                    ]}
+                    width="100%"
+                    height="300px"
+                  />
+                </LinkItem>
+              </ImageContainer>
+              <TextContent>
+                <StyledH3>{schedule.scheduleName}</StyledH3>
+                <StyledP>
+                  {schedule.scheduleDate} : {schedule.destinationName}
+                </StyledP>
+              </TextContent>
+              <ReviewButton>리뷰하기</ReviewButton>
+            </ScheduleCard>
+          ))}
         {activeTab === "notifications" && <NotificationsList />}
         {showDeleteModal && (
           <MyPageScheduleDelete
