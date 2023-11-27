@@ -15,6 +15,7 @@ import ex6 from "../../assets/images/mainpageimages/ex5.png";
 import ex7 from "../../assets/images/mainpageimages/ex6.png";
 import ex8 from "../../assets/images/mainpageimages/ex7.png";
 import { HeaderComponent } from "@/pages/detailmapping/HeaderComponent";
+import { useNavigate } from 'react-router-dom';
 
 const imagesAndTags = [
   { image: ex1, tag: "Seoul" },
@@ -79,10 +80,16 @@ const GlobalStyle = createGlobalStyle`
 
 const MainPage: React.FC = () => {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
   if (!auth) {
     throw new Error('MainPage is rendered outside the AuthProvider.');
   }
 
+  const handleImageClick = (tag: string) => {
+    // 클릭된 태그에 따라 라우팅
+    navigate(`/localcategorymap/${tag}`);
+  };
 
 
   return (
@@ -104,7 +111,7 @@ const MainPage: React.FC = () => {
               <MainMessage>여행자들이 당신을 기다리고 있어요!</MainMessage>
               <ImageContainer>
                 {imagesAndTags.map((item, i) => (
-                  <ImageBox key={i} image={item.image} tag={item.tag} />
+                  <ImageBox key={i} image={item.image} tag={item.tag} onClick={() => handleImageClick(item.tag)} />
                 ))}
               </ImageContainer>
             </div>

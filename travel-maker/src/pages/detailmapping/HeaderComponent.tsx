@@ -150,8 +150,8 @@
 // `;
 
 "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useContext } from 'react';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from 'react';
 import styled from "styled-components";
 import FilterSearch from "@/components/search/\bFilterSearch";
 import { useNavigate } from 'react-router-dom';
@@ -184,14 +184,18 @@ export const HeaderComponent: React.FC = () => {
   navigate('/mypage'); // 마이페이지 경로로 이동
 };
 
-
+const handleSearch = (makers: any) => {
+  // handleSearch 함수의 로직을 구현합니다.
+  // 필요한 동작을 수행하고 상태를 업데이트합니다.
+  console.log("헤더컴포넌트에서 보내는 것:",makers); // 예시로 makers를 콘솔에 출력해보았습니다.
+};
 
   return (
     <Header>
   
       <Logo onClick={() => navigate('/')}>travelMaker</Logo>
       <SearchBoxContainer>
-        <FilterSearch/>
+      <FilterSearch onSearch={handleSearch} />
       </SearchBoxContainer>
       <UserIconContainer>
       <UserIcon onClick={toggleMenu} />
@@ -234,25 +238,25 @@ const SearchBoxContainer = styled.div`
   margin-right: 116px; // 오른쪽으로 조금 이동시키기 위해 마진 추가
 `;
 
-const SearchBox = styled.input`
-  width: 300px;
-  height: 50px;
-  padding: 0 20px;
-  border-radius: 50px;
-  border: 2px solid var(--searchBlue, #8cc4f8);
-  /* border: none; */
-  box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
-  font-family: Inter;
-`;
+// const SearchBox = styled.input`
+//   width: 300px;
+//   height: 50px;
+//   padding: 0 20px;
+//   border-radius: 50px;
+//   border: 2px solid var(--searchBlue, #8cc4f8);
+//   /* border: none; */
+//   box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
+//   font-family: Inter;
+// `;
 
-const SearchIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  /* transform: translateY(-50%); */
-  color: #8cc4f8;
-  cursor: pointer;
-`;
+// const SearchIcon = styled(FontAwesomeIcon)`
+//   position: absolute;
+//   right: 10px;
+//   top: 50%;
+//   /* transform: translateY(-50%); */
+//   color: #8cc4f8;
+//   cursor: pointer;
+// `;
 
 const UserIcon = styled.div`
   width: 40px;

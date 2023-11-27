@@ -8,7 +8,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
-import Header from '../../components/search/Header'; // FilterSearch 컴포넌트 임포트
+// import Header from '../../components/search/Header'; // FilterSearch 컴포넌트 임포트
 
 const RES = {
 	"status": 201,
@@ -226,3 +226,5 @@ const ScheduleDateDiv = styled.div`
   font-size: 0.9rem;
   line-height: 1.7rem;
 `
+
+
