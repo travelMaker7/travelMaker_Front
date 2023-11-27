@@ -51,7 +51,7 @@ const region = "서울";
 
 
 
-const LocalMap: React.FC<LocalMapProps> = ({ onMarkerClick }) => {
+const LocalMap = () => {
 
   let [tag, setTag] = useSearchParams();
     
@@ -126,7 +126,6 @@ const LocalMap: React.FC<LocalMapProps> = ({ onMarkerClick }) => {
 
          // 마커 클릭 이벤트 핸들러 추가
          window.kakao.maps.event.addListener(marker, 'click', () => {
-          onMarkerClick(makers[i]);
       });
       
         marker.setMap(map);
