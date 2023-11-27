@@ -7,6 +7,7 @@ export interface TripDetail {
   arriveTime: string;
   leaveTime: string;
   overWish: boolean;
+  joinCnt: number;
 }
 
 export interface TripPlan {
@@ -40,13 +41,9 @@ export interface MarkerData {
 export interface BaseSchedule {
   scheduleId: string;
   scheduleName: string;
-  nickname: string;
 }
 
-export interface RegisteredSchedule {
-  scheduleId: string;
-  scheduleName: string;
-  nickname: string;
+export interface RegisteredSchedule extends BaseSchedule {
   scheduleDescription: string;
   markers: MarkerData[];
 }

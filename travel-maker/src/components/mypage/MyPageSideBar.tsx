@@ -13,147 +13,147 @@ export interface ButtonProps {
   isActive: boolean;
 }
 
-const mockRegisteredSchedules = {
-  schedules: [
-    {
-      scheduleId: "1",
-      scheduleName: "서울 여행",
-      scheduleDescription: "서울의 숨은 명소 탐방",
-      nickname: "홍길동",
-      markers: [
-        {
-          destinationY: "37.5797",
-          destinationX: "126.977",
-        },
-        {
-          destinationY: "37.582441",
-          destinationX: "126.977060",
-        },
-        {
-          destinationY: "37.579772",
-          destinationX: "126.975890",
-        },
-      ],
-    },
-    {
-      scheduleId: "3",
-      scheduleName: "광주 여행",
-      scheduleDescription: "광주의 숨은 명소 탐방",
-      nickname: "홍길동",
-      markers: [
-        {
-          destinationY: "36.5897",
-          destinationX: "126.977",
-        },
-        {
-          destinationY: "37.582441",
-          destinationX: "126.977060",
-        },
-        {
-          destinationY: "37.579772",
-          destinationX: "126.975890",
-        },
-      ],
-    },
-    {
-      scheduleId: "5",
-      scheduleName: "인천 여행",
-      scheduleDescription: "인천의 숨은 명소 탐방",
-      nickname: "홍길동",
-      markers: [
-        {
-          destinationY: "37.5797",
-          destinationX: "126.977",
-        },
-        {
-          destinationY: "37.582441",
-          destinationX: "126.977060",
-        },
-        {
-          destinationY: "37.579772",
-          destinationX: "126.07590",
-        },
-      ],
-    },
-    {
-      scheduleId: "6",
-      scheduleName: "남양주 여행",
-      scheduleDescription: "남양주의 숨은 명소 탐방",
-      nickname: "홍길동",
-      markers: [
-        {
-          destinationY: "37.5797",
-          destinationX: "126.917",
-        },
-        {
-          destinationY: "37.582441",
-          destinationX: "126.97060",
-        },
-        {
-          destinationY: "37.579772",
-          destinationX: "126.975890",
-        },
-      ],
-    },
-  ],
-};
+// const mockRegisteredSchedules = {
+//   schedules: [
+//     {
+//       scheduleId: "1",
+//       scheduleName: "서울 여행",
+//       scheduleDescription: "서울의 숨은 명소 탐방",
+//       nickname: "홍길동",
+//       markers: [
+//         {
+//           destinationY: "37.5797",
+//           destinationX: "126.977",
+//         },
+//         {
+//           destinationY: "37.582441",
+//           destinationX: "126.977060",
+//         },
+//         {
+//           destinationY: "37.579772",
+//           destinationX: "126.975890",
+//         },
+//       ],
+//     },
+//     {
+//       scheduleId: "3",
+//       scheduleName: "광주 여행",
+//       scheduleDescription: "광주의 숨은 명소 탐방",
+//       nickname: "홍길동",
+//       markers: [
+//         {
+//           destinationY: "36.5897",
+//           destinationX: "126.977",
+//         },
+//         {
+//           destinationY: "37.582441",
+//           destinationX: "126.977060",
+//         },
+//         {
+//           destinationY: "37.579772",
+//           destinationX: "126.975890",
+//         },
+//       ],
+//     },
+//     {
+//       scheduleId: "5",
+//       scheduleName: "인천 여행",
+//       scheduleDescription: "인천의 숨은 명소 탐방",
+//       nickname: "홍길동",
+//       markers: [
+//         {
+//           destinationY: "37.5797",
+//           destinationX: "126.977",
+//         },
+//         {
+//           destinationY: "37.582441",
+//           destinationX: "126.977060",
+//         },
+//         {
+//           destinationY: "37.579772",
+//           destinationX: "126.07590",
+//         },
+//       ],
+//     },
+//     {
+//       scheduleId: "6",
+//       scheduleName: "남양주 여행",
+//       scheduleDescription: "남양주의 숨은 명소 탐방",
+//       nickname: "홍길동",
+//       markers: [
+//         {
+//           destinationY: "37.5797",
+//           destinationX: "126.917",
+//         },
+//         {
+//           destinationY: "37.582441",
+//           destinationX: "126.97060",
+//         },
+//         {
+//           destinationY: "37.579772",
+//           destinationX: "126.975890",
+//         },
+//       ],
+//     },
+//   ],
+// };
 
-const mockParticipatingSchedules = {
-  schedules: [
-    {
-      status: "승인대기",
-      scheduleId: "2",
-      scheduleName: "부산 여행",
-      nickname: "user456",
-      tripPlanId: "11",
-      scheduleDate: "2023-08-10",
-      arriveTime: "14:00",
-      leaveTime: "18:00",
-      region: "부산",
-      destinationName: "해운대",
-      destinationY: "37.5797",
-      destinationX: "126.977",
-    },
-    {
-      status: "신청수락",
-      scheduleId: "4",
-      scheduleName: "서울 여행",
-      nickname: "user111",
-      tripPlanId: "21",
-      scheduleDate: "2023-08-14",
-      arriveTime: "00:00",
-      leaveTime: "02:00",
-      region: "서울",
-      destinationName: "남산타워",
-      destinationY: "37.582441",
-      destinationX: "126.977060",
-    },
-    {
-      status: "동행완료",
-      scheduleId: "5",
-      scheduleName: "서울 여행",
-      nickname: "user441",
-      tripPlanId: "23",
-      scheduleDate: "2023-08-14",
-      arriveTime: "00:00",
-      leaveTime: "02:00",
-      region: "서울",
-      destinationName: "남산타워",
-      destinationY: "37.579772",
-      destinationX: "126.975890",
-    },
-  ],
-};
+// const mockParticipatingSchedules = {
+//   schedules: [
+//     {
+//       status: "승인대기",
+//       scheduleId: "2",
+//       scheduleName: "부산 여행",
+//       nickname: "user456",
+//       tripPlanId: "11",
+//       scheduleDate: "2023-08-10",
+//       arriveTime: "14:00",
+//       leaveTime: "18:00",
+//       region: "부산",
+//       destinationName: "해운대",
+//       destinationY: "37.5797",
+//       destinationX: "126.977",
+//     },
+//     {
+//       status: "신청수락",
+//       scheduleId: "4",
+//       scheduleName: "서울 여행",
+//       nickname: "user111",
+//       tripPlanId: "21",
+//       scheduleDate: "2023-08-14",
+//       arriveTime: "00:00",
+//       leaveTime: "02:00",
+//       region: "서울",
+//       destinationName: "남산타워",
+//       destinationY: "37.582441",
+//       destinationX: "126.977060",
+//     },
+//     {
+//       status: "동행완료",
+//       scheduleId: "5",
+//       scheduleName: "서울 여행",
+//       nickname: "user441",
+//       tripPlanId: "23",
+//       scheduleDate: "2023-08-14",
+//       arriveTime: "00:00",
+//       leaveTime: "02:00",
+//       region: "서울",
+//       destinationName: "남산타워",
+//       destinationY: "37.579772",
+//       destinationX: "126.975890",
+//     },
+//   ],
+// };
 
 const MyPageSidebar: React.FC = () => {
   const [activeTab, setActiveTab] = useState("registered");
+
   const [registeredSchedules, setRegisteredSchedules] = useState<
     RegisteredSchedule[]
-  >(mockRegisteredSchedules.schedules);
-
+  >([]);
   const [participatingSchedules, setParticipatingSchedules] = useState<
     ParticipatingSchedule[]
-  >(mockParticipatingSchedules.schedules);
+  >([]);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
@@ -167,14 +167,26 @@ const MyPageSidebar: React.FC = () => {
 
   const getRegisteredSchedules = async () => {
     try {
-      const response = await axios.get("/api/v1/mypage/schedules/registered", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      if (response.status === 201) {
+      const response = await axios.get(
+        "https://sosak.store/api/v1/mypage/schedules/registered",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      );
+      console.log(
+        "response.data.data.schedules : ",
+        response.data.data.schedules
+      );
+      if (response.status === 200) {
         setRegisteredSchedules(response.data.data.schedules);
+        console.log(
+          "response.data.data.schedules : ",
+          response.data.data.schedules
+        );
+        console.log("등록한 일정 조회 성공");
       } else {
         console.log("등록한 일정 조회 실패");
       }
@@ -186,16 +198,21 @@ const MyPageSidebar: React.FC = () => {
   const getParticipatingSchedules = async (status: string) => {
     try {
       const response = await axios.get(
-        `/api/v1/mypage/schedules/participating?status=${status}`,
+        `https://sosak.store/api/v1/mypage/schedules/participating?status=${status}`,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         setParticipatingSchedules(response.data.data.schedules);
+        console.log("참여 일정 조회 성공");
+        console.log(
+          "response.data.data.schedules : ",
+          response.data.data.schedules
+        );
       } else {
         console.log("참여 일정 조회 실패");
       }
@@ -207,11 +224,11 @@ const MyPageSidebar: React.FC = () => {
   const deleteSchedule = async (tripPlanId: string) => {
     try {
       const response = await axios.delete(
-        `/api/v1/accompany/guest/${tripPlanId}`,
+        `https://sosak.store/api/v1/accompany/guest/${tripPlanId}`,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
           },
         }
       );
@@ -228,8 +245,9 @@ const MyPageSidebar: React.FC = () => {
 
   useEffect(() => {
     if (activeTab === "registered") {
+      console.log("등록한 일정 조회")
       getRegisteredSchedules();
-    } else {
+    } else if (activeTab !== "notifications") {
       getParticipatingSchedules(activeTab);
     }
   }, [activeTab]);
@@ -286,11 +304,13 @@ const MyPageSidebar: React.FC = () => {
             <ScheduleCard key={schedule.scheduleId}>
               <ImageContainer>
                 <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                  <KakaoStaticMap
-                    markers={schedule.markers}
-                    width="100%"
-                    height="300px"
-                  />
+                  {schedule.markers && schedule.markers.length > 0 && (
+                    <KakaoStaticMap
+                      markers={schedule.markers}
+                      width="100%"
+                      height="300px"
+                    />
+                  )}
                 </LinkItem>
               </ImageContainer>
 
@@ -301,100 +321,94 @@ const MyPageSidebar: React.FC = () => {
             </ScheduleCard>
           ))}
         {activeTab === "승인대기" &&
-          participatingSchedules
-            .filter((schedule) => schedule.status === "승인대기")
-            .map((schedule) => (
-              <ScheduleCard key={schedule.scheduleId}>
-                <ImageContainer>
-                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                    <KakaoStaticMap
-                      markers={[
-                        {
-                          destinationY: schedule.destinationY,
-                          destinationX: schedule.destinationX,
-                        },
-                      ]}
-                      width="100%"
-                      height="300px"
-                    />
-                  </LinkItem>
-                </ImageContainer>
+          participatingSchedules.map((schedule) => (
+            <ScheduleCard key={schedule.scheduleId}>
+              <ImageContainer>
+                <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                  <KakaoStaticMap
+                    markers={[
+                      {
+                        destinationY: schedule.destinationY,
+                        destinationX: schedule.destinationX,
+                      },
+                    ]}
+                    width="100%"
+                    height="300px"
+                  />
+                </LinkItem>
+              </ImageContainer>
 
-                <TextContent>
-                  <StyledH3>{schedule.scheduleName}</StyledH3>
-                  <StyledP>여행지: {schedule.destinationName}</StyledP>
-                  <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
-                </TextContent>
-              </ScheduleCard>
-            ))}
+              <TextContent>
+                <StyledH3>{schedule.scheduleName}</StyledH3>
+                <StyledP>여행지: {schedule.destinationName}</StyledP>
+                <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
+              </TextContent>
+            </ScheduleCard>
+          ))}
 
         {activeTab === "신청수락" &&
-          participatingSchedules
-            .filter((schedule) => schedule.status === "신청수락")
-            .map((schedule) => (
-              <ScheduleCard
-                key={schedule.scheduleId}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                <ImageContainer>
-                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                    <KakaoStaticMap
-                      markers={[
-                        {
-                          destinationY: schedule.destinationY,
-                          destinationX: schedule.destinationX,
-                        },
-                      ]}
-                      width="100%"
-                      height="300px"
-                    />
-                  </LinkItem>
-                </ImageContainer>
+          participatingSchedules.map((schedule) => (
+            <ScheduleCard
+              key={schedule.scheduleId}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <ImageContainer>
+                <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                  <KakaoStaticMap
+                    markers={[
+                      {
+                        destinationY: schedule.destinationY,
+                        destinationX: schedule.destinationX,
+                      },
+                    ]}
+                    width="100%"
+                    height="300px"
+                  />
+                </LinkItem>
+              </ImageContainer>
 
-                <TextContent>
-                  <StyledH3>{schedule.scheduleName}</StyledH3>
-                  <StyledP>여행지: {schedule.destinationName}</StyledP>
-                  <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
-                </TextContent>
-                {showDeleteButton && (
-                  <DeleteButton
-                    onClick={() => handleDeleteClick(schedule.tripPlanId)}
-                  >
-                    X
-                  </DeleteButton>
-                )}
-              </ScheduleCard>
-            ))}
+              <TextContent>
+                <StyledH3>{schedule.scheduleName}</StyledH3>
+                <StyledP>여행지: {schedule.destinationName}</StyledP>
+                <StyledP>일정 날짜: {schedule.scheduleDate}</StyledP>
+              </TextContent>
+              {showDeleteButton && (
+                <DeleteButton
+                  onClick={() => handleDeleteClick(schedule.tripPlanId)}
+                >
+                  X
+                </DeleteButton>
+              )}
+            </ScheduleCard>
+          ))}
 
         {activeTab === "동행완료" &&
-          participatingSchedules
-            .filter((schedule) => schedule.status === "동행완료")
-            .map((schedule) => (
-              <ScheduleCard key={schedule.scheduleId}>
-                <ImageContainer>
-                  <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
-                    <KakaoStaticMap
-                      markers={[
-                        {
-                          destinationY: schedule.destinationY,
-                          destinationX: schedule.destinationX,
-                        },
-                      ]}
-                      width="100%"
-                      height="300px"
-                    />
-                  </LinkItem>
-                </ImageContainer>
-                <TextContent>
-                  <StyledH3>{schedule.scheduleName}</StyledH3>
-                  <StyledP>
-                    {schedule.scheduleDate} : {schedule.destinationName}
-                  </StyledP>
-                </TextContent>
-                <ReviewButton>리뷰하기</ReviewButton>
-              </ScheduleCard>
-            ))}
+          participatingSchedules.map((schedule) => (
+            <ScheduleCard key={schedule.scheduleId}>
+              <ImageContainer>
+                <LinkItem to={`/detailmap/${schedule.scheduleId}`}>
+                  <KakaoStaticMap
+                    markers={[
+                      {
+                        destinationY: schedule.destinationY,
+                        destinationX: schedule.destinationX,
+                      },
+                    ]}
+                    width="100%"
+                    height="300px"
+                  />
+                </LinkItem>
+              </ImageContainer>
+              <TextContent>
+                <StyledH3>{schedule.scheduleName}</StyledH3>
+                <StyledP>
+                  {schedule.scheduleDate} : {schedule.destinationName}
+                </StyledP>
+              </TextContent>
+              <ReviewButton>리뷰하기</ReviewButton>
+            </ScheduleCard>
+          ))}
         {activeTab === "notifications" && <NotificationsList />}
         {showDeleteModal && (
           <MyPageScheduleDelete

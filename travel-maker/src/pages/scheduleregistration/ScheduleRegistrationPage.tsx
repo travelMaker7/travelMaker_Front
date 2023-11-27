@@ -8,6 +8,7 @@ import ToggleList from '../../components/scheduleregistration/ToggleList'
 import { HeaderComponent } from "../detailmapping/HeaderComponent";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 interface EntireData {
   scheduleName: string;
@@ -56,16 +57,23 @@ export interface SchedulesProps {
 export interface DataControlProps {
   accompanyOption: string;
   setAccompanyOption: React.Dispatch<SetStateAction<string>>;
-  arriveTimeValue: string | null;
-  setArriveTimeValue: React.Dispatch<SetStateAction<string | null>>;
-  leaveTimeValue: string | null;
-  setLeaveTimeValue: React.Dispatch<SetStateAction<string | null>>;
   accompanyCnt: number;
   setAccompanyCnt: React.Dispatch<SetStateAction<number>>;
   autoSchedules: SchedulesProps[];
   setAutoSchedules: React.Dispatch<SetStateAction<SchedulesProps[]>>;
+  selectedTimeRange: [Dayjs | null, Dayjs | null] | null;
+  setSelectedTimeRange: React.Dispatch<React.SetStateAction<[Dayjs | null, Dayjs | null] | null>>;
+  handleTimeRangeChange: (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => void;
+  handleRadioChange: (e:React.ChangeEvent<HTMLInputElement>) => void;
+  handleAccompanyCnt: (e:React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
+export interface XYDataProps {
+  xData: string;
+  setXData: React.Dispatch<React.SetStateAction<string>>;
+  yData: string;
+  setYData: React.Dispatch<React.SetStateAction<string>>; 
+}
 
 
 const ScheduleRegistrationPage = () => {
@@ -76,10 +84,15 @@ const ScheduleRegistrationPage = () => {
   const [schduleDescription, setScheduleDescription] = useState<string>("");
   const [chatUrl, setChatUrl] = useState<string>("");
   const [autoSchedules, setAutoSchedules] = useState<SchedulesProps[]>([]);
-  const [accompanyOption, setAccompanyOption] = useState<string>("true");
-  const [arriveTimeValue, setArriveTimeValue] = useState<string | null>(null);
-  const [leaveTimeValue, setLeaveTimeValue] = useState<string | null>(null);
+  const [accompanyOption, setAccompanyOption] = useState<string>("");
   const [accompanyCnt, setAccompanyCnt] = useState<number>(0);
+  const [selectedTimeRange, setSelectedTimeRange] = useState<[Dayjs | null, Dayjs | null] | null>([null, null]);
+  const [arriveTime, setArriveTime] = useState<string | null>(null);
+  const [leaveTime, setLeaveTime] = useState<string | null>(null);
+  const [xData, setXData] = useState<string>("");
+  const [yData, setYData] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const handleChatUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -130,22 +143,22 @@ const ScheduleRegistrationPage = () => {
     console.log(selectedRange);
     console.log(dayCnt);
   }, [selectedRange, dayCnt]);
-
+  
   const handleEntireDataSubmit = () => {
     const entireData: EntireData = {
       scheduleName: scheduleName,
-      schedules: autoSchedules.map((schedule) => ({
-        scheduledDate: schedule.scheduleDate,
-        details: schedule.places.map((place) => ({
-          destinationName: place.destinationName,
-          wishCnt: place.wishCnt,
-          wishJoin: place.wishJoin,
-          address: place.address,
-          arriveTime: place.arriveTime,
-          leaveTime: place.leaveTime,
-          region: place.region,
-          destinationX: place.destinationX,
-          destinationY: place.destinationY,
+      schedules: autoSchedules.map((_, index) => ({
+        scheduledDate: autoSchedules[index].scheduleDate,
+        details: autoSchedules[index].places.map((_, placeIndex) => ({
+          destinationName: autoSchedules[index].places[placeIndex].destinationName,
+          wishCnt: autoSchedules[index].places[placeIndex].wishCnt,
+          wishJoin: autoSchedules[index].places[placeIndex].wishJoin,
+          address: autoSchedules[index].places[placeIndex].address,
+          arriveTime: autoSchedules[index].places[placeIndex].arriveTime,
+          leaveTime: autoSchedules[index].places[placeIndex].leaveTime,
+          region: autoSchedules[index].places[placeIndex].region,
+          destinationX: autoSchedules[index].places[placeIndex].destinationX,
+          destinationY: autoSchedules[index].places[placeIndex].destinationY,
         })),
       })),
       scheduleDescription: schduleDescription,
@@ -163,18 +176,57 @@ const ScheduleRegistrationPage = () => {
       .then((response) => {
         console.log(response.data);
         console.log("전송 성공");
+        alert("일정이 등록되었습니다.");
+        navigate("/");
       })
       .catch((error) => {
         console.error('Error submitting data:', error);
       });
   };
 
+  const handleTimeRangeChange = (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => {
+    
+    if (value !== null && value[0] !== null && value[1] !== null) {
+      setSelectedTimeRange(value);
+      setArriveTime(value[0].format('HH:mm'));
+      setLeaveTime(value[1].format('HH:mm'));
+      console.log('arrive: ', arriveTime);
+      console.log('leave: ', leaveTime);
+    }
+  };
+  
+  useEffect(() => {
+    console.log('arriveTime이 변경되었습니다.', arriveTime);
+  }, [arriveTime]);
+
+  useEffect(() => {
+    console.log('leaveTime이 변경되었습니다.', leaveTime);
+  }, [leaveTime]);
+
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedValue = e.target.value;
+    setAccompanyOption(selectedValue);
+  };
+
+  const handleAccompanyCnt = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const inputValue = e.target.value;
+    setAccompanyCnt(parseInt(inputValue, 10));
+  };
+
+  useEffect(() => {
+    console.log('accompanyOption이 변경되었습니다.', accompanyOption);
+  }, [accompanyOption]);
+
+  useEffect(() => {
+    console.log('accompanyCnt가 변경되었습니다.', accompanyCnt);
+  }, [accompanyCnt]);
+
   return (
     <>
       <HeaderComponent/>
       <PageContainer>
         <MapContainerBox>
-          <MapContainer/>
+          <MapContainer xData={xData} setXData={setXData} yData={yData} setYData={setYData} />
         </MapContainerBox>
         <InputContainer>
           <ScheduleDiv>
@@ -202,16 +254,21 @@ const ScheduleRegistrationPage = () => {
               <ToggleList 
                 selectedRange={selectedRange} 
                 dayCnt={dayCnt}
-                arriveTimeValue={arriveTimeValue}
-                setArriveTimeValue={setArriveTimeValue}
-                setLeaveTimeValue={setLeaveTimeValue}
-                leaveTimeValue={leaveTimeValue}
                 accompanyCnt={accompanyCnt}
                 accompanyOption={accompanyOption}
                 setAccompanyCnt={setAccompanyCnt}
                 setAccompanyOption={setAccompanyOption}
                 autoSchedules={autoSchedules}
-                setAutoSchedules={setAutoSchedules} 
+                setAutoSchedules={setAutoSchedules}
+                selectedTimeRange={selectedTimeRange}
+                setSelectedTimeRange={setSelectedTimeRange}
+                handleTimeRangeChange={handleTimeRangeChange}
+                xData={xData}
+                setXData={setXData}
+                yData={yData}
+                setYData={setYData}
+                handleRadioChange={handleRadioChange}
+                handleAccompanyCnt={handleAccompanyCnt}
               />
             </ScrollDiv>
           </ScheduleDiv>
@@ -236,16 +293,17 @@ const ScheduleRegistrationPage = () => {
 export default ScheduleRegistrationPage;
 
 const PageContainer = styled.div`
-  width: 62.5rem;
+  width: 65rem;
   height:43.75rem;
   display: flex;
-  margin: auto;
-  border-radius: 0.125rem;
+  margin: 2.5rem auto;
+  justify-content: space-between;
 `
 
 const MapContainerBox = styled.div`
   width: 31.25rem;
   height: 43.75rem;
+  border-radius: 1.25rem;
 `
 
 const InputContainer = styled.div`
@@ -253,6 +311,7 @@ const InputContainer = styled.div`
   height: 43.75rem;
   display: flex;
   flex-direction: column;
+  border-radius: 1.25rem;
 `
 
 const InputHeaderDiv = styled.div`
@@ -260,7 +319,7 @@ const InputHeaderDiv = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  background-color: #74b9ff;
+  background-color: #00bfff;
 `
 const ScheduleTheme = styled.div`
   width: 6rem;
@@ -285,14 +344,20 @@ const ScheduleThemeInput = styled.input`
 const ScheduleSubmitBtn = styled.button`
   width:5.2rem;
   height: 2.5rem;
-  background-color: #8CC4F8;
-  color: white;
+  background-color: #ffffff;
+  color: #00bff5;
   border-radius: 0.875rem;
   cursor: pointer;
   font-weight: bolder;
   border: none;
   font-size: 1rem;
   margin-left: 1rem;
+
+  &:hover {
+    background-color: #00bff5;
+    color: white;
+    border: 1px white solid;
+  }
 `
 
 const DatePickerDiv = styled.div`
@@ -300,7 +365,7 @@ const DatePickerDiv = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  background-color: #74b9ff ;
+  background-color: #00bfff ;
 `
 const ScheduleDiv = styled.div`
   width: 100%;
@@ -337,7 +402,7 @@ const DescriptionTheme = styled.div`
   color: white;
   line-height: 2rem;
   font-size: 1rem;
-  background-color: #8CC4F8;
+  background-color: #00bfff;
 `
 
 const DescriptionTextera = styled.textarea`
@@ -364,11 +429,16 @@ const ChatUrlDiv = styled.div`
   align-items: center;
 `
 const ChatUrlThemDiv = styled.div`
-  width: 9.5rem;
+  width: 9rem;
   height: 1.5rem;
   font-weight: bolder;
   line-height: 1.5rem;
   margin: 0.75rem;
+  background-color: #00bfff;
+  color: white;
+  padding: 0.125rem;
+  font-size: 0.9rem;
+  border-radius: 1rem;
 `
 
 const ChatUrlInput = styled.input`
@@ -378,4 +448,5 @@ const ChatUrlInput = styled.input`
   outline: none;
   background-color: transparent;
   text-indent: 0.75rem;
+  border-radius: 0.5rem;
 `

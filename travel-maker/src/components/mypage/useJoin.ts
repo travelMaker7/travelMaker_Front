@@ -4,6 +4,7 @@ import axios from "axios";
 interface UpdateStatusRequest {
   joinId: number;
   joinStatus: string;
+  overWish: boolean;
 }
 
 export const useJoin = () => {
@@ -11,15 +12,23 @@ export const useJoin = () => {
 
   return useMutation(
     (updateStatusRequest: UpdateStatusRequest) =>
-      axios.post("/api/v1/notification", updateStatusRequest, {
-        headers: {
-          "Content-Type": "application/json",
-          token: localStorage.getItem("token"),
-        },
-      }),
+      axios.post(
+        "https://sosak.store/api/v1/accompany/host",
+        updateStatusRequest,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      ),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        console.log("response", response);
         queryClient.invalidateQueries("notifications");
+      },
+      onError: (error) => {
+        console.log("error", error);
       },
     }
   );

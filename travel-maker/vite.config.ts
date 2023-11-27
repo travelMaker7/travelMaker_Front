@@ -12,5 +12,14 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  define: { _global: ({}), }
+
+  define: {
+    global: {},
+  },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080'
+    }
+  }
+
 });
