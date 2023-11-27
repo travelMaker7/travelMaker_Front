@@ -36,7 +36,6 @@ const NotificationsList: React.FC = () => {
     );
   }
 
-  // Render notifications if the array is not empty
   return (
     <ListContainer>
       {notifications.map((notification: NotificationData) => (
