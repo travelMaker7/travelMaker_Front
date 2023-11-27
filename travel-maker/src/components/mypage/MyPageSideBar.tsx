@@ -245,6 +245,7 @@ const MyPageSidebar: React.FC = () => {
 
   useEffect(() => {
     if (activeTab === "registered") {
+      console.log("등록한 일정 조회")
       getRegisteredSchedules();
     } else if (activeTab !== "notifications") {
       getParticipatingSchedules(activeTab);

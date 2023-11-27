@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components"
+import styled from 'styled-components';
 import React, { SetStateAction } from 'react';
 import MapContainer from '../../components/scheduleregistration/MapContainer'
 import DateRange from "../../components/scheduleregistration/DateRange";
@@ -8,7 +8,6 @@ import ToggleList from '../../components/scheduleregistration/ToggleList'
 import { HeaderComponent } from "../detailmapping/HeaderComponent";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import axios from "axios";
-import { clearScreenDown } from "readline";
 
 interface EntireData {
   scheduleName: string;
@@ -33,30 +32,6 @@ interface PlaceDetailData {
   destinationX: string;
   destinationY: string;
 }
-
-const initialData: EntireData = {
-  scheduleName: "",
-  schedules: [
-    {
-      scheduledDate: "",
-      details: [
-        {
-          destinationName: "",
-          wishCnt: null,
-          wishJoin: false,
-          address: "",
-          arriveTime: null,
-          leaveTime: null,
-          region: "",
-          destinationX: "",
-          destinationY: "",
-        },
-      ],
-    },
-  ],
-  scheduleDescription: "",
-  chatUrl: "",
-};
 
 export interface PlacesProps {
   destinationName: string;
@@ -102,7 +77,6 @@ const ScheduleRegistrationPage = () => {
   const [dayCnt, setDayCnt] = useState<number | null>(null);
   const [scheduleName, setScheduleName] = useState<string>("");
   const [schduleDescription, setScheduleDescription] = useState<string>("");
-  const [entireData, setEntireData] = useState<EntireData>(initialData);
   const [chatUrl, setChatUrl] = useState<string>("");
   const [autoSchedules, setAutoSchedules] = useState<SchedulesProps[]>([]);
   const [accompanyOption, setAccompanyOption] = useState<string>("true");

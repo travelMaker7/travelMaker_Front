@@ -1,5 +1,4 @@
 import  { useState } from 'react';
-import { HeaderComponent } from '../detailmapping/HeaderComponent';
 import styled from 'styled-components';
 import LocalMap from '../../components/localcategorymapping/LocalMap';
 import InfoIcon from '@mui/icons-material/Info';
@@ -86,6 +85,7 @@ const LocalCategoryMappingPage = () => {
   
   const handleSearchResults = (data: SearchData) => {
     setSearchResults(data.schedules);
+    console.log(searchResults);
   };
   
   return (

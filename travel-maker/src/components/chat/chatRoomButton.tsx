@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { Button } from "@mui/base/Button";
 import styled from 'styled-components';
 
 interface ChatRoomControlProps {
   handleCreateAndEnterRoom: () => void;
 }
 
-const ChatRoomButton: React.FC<ChatRoomControlProps> = ({ handleCreateAndEnterRoom }) => {
+const ChatRoomButton: React.FC<ChatRoomControlProps> = ({handleCreateAndEnterRoom }) => {
   
   return (
     <ChattingButton

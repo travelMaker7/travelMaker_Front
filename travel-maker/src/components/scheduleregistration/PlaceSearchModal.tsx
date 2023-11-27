@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -475,28 +475,6 @@ const DestinationInput = styled.input`
   border: none;
 `
 
-const ErrorDiv = styled.div`
-  width: 28.75rem;
-  height: 24rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`
-
-const ErrorMessageDiv = styled.div`
-  width: 20rem;
-  height: 4rem;
-  font-size: 2rem;
-  font-weight: bolder;
-`
-
-const ErrorMessage2Div = styled.div`
-  width: 20rem;
-  height: 4rem;
-  font-weight: bolder;
-`
 
 
 

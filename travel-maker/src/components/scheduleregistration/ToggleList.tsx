@@ -6,9 +6,10 @@ import dayjs, { Dayjs } from 'dayjs';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
-import { SchedulesProps, PlacesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 import TimeRange from './TimeRange';
+import { SchedulesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 import { XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+
 
 interface DatesProps {
   selectedRange: [Dayjs | null, Dayjs | null] | null;
@@ -287,12 +288,6 @@ const CountDayDiv = styled.div`
   font-weight: bolder;
 `
 
-const PlaceSearchDiv = styled.div`
-  width: 100%;
-  height: 3rem;
-  border: none;
-`
-
 const DateDiv = styled.div`
   width: 9rem;
   color: #d5d1d1;
@@ -344,11 +339,6 @@ const DestinationNameSpan = styled.span`
   height: 2rem;
   border: none;
   line-height: 2rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  font-weight: bolder;
-  color: white;
-  background-color: #74B9FF;
 `
         
 const PlaceNumberDiv = styled.div`
@@ -409,32 +399,6 @@ const ArriveInput = styled.input`
 
 const LeaveInput = styled(ArriveInput)``
 
-const PlaceAddDiv = styled(PlaceSearchDiv)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const PlaceAddButton = styled.button`
-  width: 6rem;
-  height: 3rem;
-  background-color: #8CC4F8;
-  color: white;
-  border-radius: 0.875rem;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-const DeleteIconDiv = styled.div`
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 15rem;
-`
-
 const PlaceToggleButton = styled.button`
   border: none;
   width: 2.5rem;
@@ -443,8 +407,6 @@ const PlaceToggleButton = styled.button`
   position: absolute;
   right: 1rem;
 `
-
-const EditIconDiv = styled(DeleteIconDiv)``;
 
 const RadioDiv = styled.div`
   width: 12rem;

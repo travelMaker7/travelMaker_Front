@@ -150,13 +150,12 @@
 // `;
 
 "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import FilterSearch from "@/components/search/\bFilterSearch";
 import { useNavigate } from 'react-router-dom';
-import {handleLogout}  from '../login/logoutFunction'
 
+import {handleLogout}  from '../login/logoutFunction'
 
 export const HeaderComponent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -232,26 +231,6 @@ const Logo = styled.h1`
 const SearchBoxContainer = styled.div`
   position: relative;
   margin-right: 116px; // 오른쪽으로 조금 이동시키기 위해 마진 추가
-`;
-
-const SearchBox = styled.input`
-  width: 300px;
-  height: 50px;
-  padding: 0 20px;
-  border-radius: 50px;
-  border: 2px solid var(--searchBlue, #8cc4f8);
-  /* border: none; */
-  box-shadow: 0px 4px 4px 0px rgba(122, 122, 130, 0.25);
-  font-family: Inter;
-`;
-
-const SearchIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  /* transform: translateY(-50%); */
-  color: #8cc4f8;
-  cursor: pointer;
 `;
 
 const UserIcon = styled.div`
