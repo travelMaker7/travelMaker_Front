@@ -30,6 +30,8 @@ export const DetailMappingInfo: React.FC<Props> = ({
 
   const { scheduleId } = useParams<{ scheduleId: string }>();
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   const fetchScheduleDetail = async () => {
     try {
       const res = await axios.get(
@@ -79,7 +81,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
     scheduleDetail;
 
   const handleJoinRequest = async (tripPlanId: number, hostId: number) => {
-    console.log("Token: ", localStorage.getItem("access_token"));
+    setIsButtonDisabled(true);
     try {
       const response = await axios.post(
         "https://sosak.store/api/v1/accompany/guest",
@@ -174,9 +176,11 @@ export const DetailMappingInfo: React.FC<Props> = ({
                   <JoinButton
                     isVisible={true}
                     onClick={() => handleJoinRequest(detail.tripPlanId, hostId)}
-                    disabled={detail.overWish}
+                    disabled={isButtonDisabled || detail.overWish}
                   >
-                    {detail.overWish ? "신청불가" : "동행신청"}
+                    {isButtonDisabled || detail.overWish
+                      ? "신청불가"
+                      : "동행신청"}
                   </JoinButton>
                 </ContentContainer>
               </SideInfoContainer>
@@ -329,7 +333,7 @@ const OpenChatBox = styled.div`
   align-items: center;
 `;
 
-const JoinButton = styled.button<{ isVisible: boolean }>`
+const JoinButton = styled.button<{ isVisible: boolean; disabled?: boolean }>`
   display: ${(props) => (props.isVisible ? "block" : "none")};
   position: absolute;
   right: 15px;
@@ -341,12 +345,15 @@ const JoinButton = styled.button<{ isVisible: boolean }>`
   color: #fff;
   font-family: Inter;
   font-size: 14px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #fff;
-    color: var(--blue-200, #6fadff);
-    border: 1px solid #6fadff;
+    background-color: ${(props) => (props.disabled ? "#6fadff" : "#fff")};
+    color: ${(props) => (props.disabled ? "#fff" : "var(--blue-200, #6fadff)")};
+    border: ${(props) => (props.disabled ? "none" : "1px solid #6fadff")};
   }
+
+  /* additional styles for disabled state if needed */
+  opacity: ${(props) => (props.disabled ? "0.5" : "1")};
 `;

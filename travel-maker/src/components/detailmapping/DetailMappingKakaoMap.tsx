@@ -30,6 +30,7 @@ export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
           position,
         });
         createMarker.setMap(map);
+        bounds.extend(position);
       });
 
       const polyline = new kakao.maps.Polyline({
