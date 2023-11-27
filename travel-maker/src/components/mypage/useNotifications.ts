@@ -19,8 +19,8 @@ export const useNotifications = () => {
           Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
       });
-      console.log(data);
-      return data.notifications;
+      console.log("data11", data.data.notifications);
+      return data.data.notifications;
     },
     {
       refetchInterval: 5000,

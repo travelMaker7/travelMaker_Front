@@ -7,9 +7,7 @@ import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
 import TimeRange from './TimeRange';
-import { SchedulesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
-import { XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
-
+import { SchedulesProps, DataControlProps,XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 
 interface DatesProps {
   selectedRange: [Dayjs | null, Dayjs | null] | null;

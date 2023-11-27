@@ -24,6 +24,7 @@ const NotificationsList: React.FC = () => {
   }
 
   if (!notifications || notifications.length === 0) {
+    console.log("notifications: ", notifications);
     return (
       <NoNotificationsContainer>
         <NoNotificationsIcon icon={faBellSlash} size="3x" />{" "}
@@ -36,7 +37,6 @@ const NotificationsList: React.FC = () => {
     );
   }
 
-  // Render notifications if the array is not empty
   return (
     <ListContainer>
       {notifications.map((notification: NotificationData) => (
