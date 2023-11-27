@@ -20,28 +20,16 @@ export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
 
       const bounds = new kakao.maps.LatLngBounds();
 
-      console.log("markers: ", markers);
-      console.log("bounds1: ", bounds);
-
       markers.forEach((marker) => {
         const position = new kakao.maps.LatLng(
           Number(marker.destinationX),
           Number(marker.destinationY)
         );
 
-        console.log("position: ", position);
-
-        bounds.extend(position);
-
-        console.log("bounds2: ", bounds);
-
         const createMarker = new kakao.maps.Marker({
           position,
         });
-        console.log("position: ", position);
         createMarker.setMap(map);
-
-        console.log("createMarker: ", createMarker);
       });
 
       const polyline = new kakao.maps.Polyline({
@@ -60,7 +48,7 @@ export const DetailMappingKakaoMap: React.FC<Props> = ({ markers }) => {
         setTimeout(() => {
           map.setBounds(bounds);
           map.relayout();
-        }, 300); // Adjust delay as necessary
+        }, 300);
       }
     });
   }, [markers]);

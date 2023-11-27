@@ -17,11 +17,14 @@ const NotificationItem: React.FC<Props> = ({ notification }) => {
     setIsModalOpen(true);
   };
 
-  const handleResponse = async (status: string) => {
+  const handleResponse = async () => {
     updateJoinStatus.mutate({
       joinId: notification.joinId,
-      joinStatus: status,
+      joinStatus: actionType,
+      overWish: false,
     });
+    console.log("notification.joinId: ", notification.joinId);
+    console.log("status: ", actionType);
     setIsModalOpen(false);
     setActionType("");
   };
@@ -44,7 +47,7 @@ const NotificationItem: React.FC<Props> = ({ notification }) => {
               {actionType === "신청수락" ? "수락" : "거절"} 하시겠습니까?
             </ModalText>
             <ButtonGroup>
-              <Button onClick={() => handleResponse("승인")}>확인</Button>
+              <Button onClick={handleResponse}>확인</Button>
               <Button onClick={() => setIsModalOpen(false)}>취소</Button>
             </ButtonGroup>
           </ModalContent>

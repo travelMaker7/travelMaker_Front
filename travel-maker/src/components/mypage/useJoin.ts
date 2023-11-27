@@ -4,6 +4,7 @@ import axios from "axios";
 interface UpdateStatusRequest {
   joinId: number;
   joinStatus: string;
+  overWish: boolean;
 }
 
 export const useJoin = () => {
@@ -12,7 +13,7 @@ export const useJoin = () => {
   return useMutation(
     (updateStatusRequest: UpdateStatusRequest) =>
       axios.post(
-        "https://sosak.store/api/v1/notification",
+        "https://sosak.store/api/v1/accompany/host",
         updateStatusRequest,
         {
           headers: {
@@ -22,8 +23,12 @@ export const useJoin = () => {
         }
       ),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        console.log("response", response);
         queryClient.invalidateQueries("notifications");
+      },
+      onError: (error) => {
+        console.log("error", error);
       },
     }
   );
