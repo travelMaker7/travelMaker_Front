@@ -24,6 +24,7 @@ const NotificationsList: React.FC = () => {
   }
 
   if (!notifications || notifications.length === 0) {
+    console.log("notifications: ", notifications);
     return (
       <NoNotificationsContainer>
         <NoNotificationsIcon icon={faBellSlash} size="3x" />{" "}
