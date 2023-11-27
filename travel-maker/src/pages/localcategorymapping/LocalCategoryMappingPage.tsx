@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
-import { HeaderComponent } from '../detailmapping/HeaderComponent'; // FilterSearch 컴포넌트 임포트
+import { HeaderComponent } from '../detailmapping/HeaderComponent'; 
 
 const RES = {
 	"status": 201,

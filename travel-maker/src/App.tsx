@@ -36,7 +36,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/profiletest" element={<ProfileTestPage />} />
           <Route path="/profiletest2" element={<ProfileTestPage2 />} />
-          <Route path="/localcategorymap/:tag" element={<LocalCategoryMappingPage />}/>
+          <Route path="/localcategorymap/?:tag" element={<LocalCategoryMappingPage />}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>
