@@ -41,7 +41,9 @@ const handleSearch = (makers: any) => {
   return (
     <Header>
   
-      <Logo onClick={() => navigate('/')}>travelMaker</Logo>
+      <LogoDiv onClick={() => navigate('/')}>
+        <img src='/mainpageLogo.svg' alt='travelMakerLogo' width={160} height={100}/>
+      </LogoDiv>
       <SearchBoxContainer>
       <FilterSearch onSearch={handleSearch} />
       </SearchBoxContainer>
@@ -70,20 +72,21 @@ const Header = styled.div`
   background-color: #00BFFF;
   justify-content: space-around;
 `;
-const Logo = styled.h1`
-  color: #fff;
-  text-align: center;
-  font-family: "YourFontName", sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  width: 10rem;
-  cursor: pointer; // 클릭 가능하도록 커서 변경
+const LogoDiv = styled.div`
+  width: 24rem;
+  height: 6rem;
+  position: absolute;
+  top: 0.2rem;
+  left: 2rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
 `;
 
 const SearchBoxContainer = styled.div`
   position: relative;
-  margin-right: 116px; // 오른쪽으로 조금 이동시키기 위해 마진 추가
+  left: 11rem;
+  margin-right: 116px;
 `;
 
 const UserIcon = styled.div`
