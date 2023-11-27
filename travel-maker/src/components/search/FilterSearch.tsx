@@ -404,6 +404,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 
 interface FilterSearchProps {
   onSearch: (makers: any[]) => void; // 상위 컴포넌트에서 전달된 onSearch 함수의 타입 정의
@@ -423,6 +424,7 @@ const FilterSearch: React.FC<FilterSearchProps> = ({ onSearch }) => {
   const [targetFinishDate, setTargetFinishDate] = useState("");
   const [minEndDate, setMinEndDate] = useState("");
   const [filteredMarkers, setFilteredMarkers] = useState<any[]>([]);
+  const navigate = useNavigate();
 
   const formatDate = (date: string | undefined): string | undefined => {
     if (!date) return undefined;
@@ -504,20 +506,24 @@ const FilterSearch: React.FC<FilterSearchProps> = ({ onSearch }) => {
       const url = `https://sosak.store/api/v1/map?${queryParams.toString()}`;
       const response = await axios.get(url, {
         headers: {
+          "Authorization" : `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });
-      console.log("전체 응답:", response); // 전체 응답 객체 로깅
       const makers = response.data.makers;
+      console.log("params:", url);
+      console.log("전체 응답:", response); // 전체 응답 객체 로깅
       console.log("데이터:", response.data.makers)
       setFilteredMarkers(makers);
       setFilteredMarkers(makers);
       onSearch(makers); // 상위 컴포넌트로 검색 결과 전달
+      navigate(`/localcategorymap?${queryParams.toString()}`);
     } catch (error) {
       console.error("Error making the request:", error);
     }
+    
   };
-
+  
   useEffect(() => {
     setMinEndDate(targetStartDate);
     if (targetFinishDate && targetFinishDate < targetStartDate) {

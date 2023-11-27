@@ -9,6 +9,13 @@ declare global {
   }
 }
 
+interface MakerData {
+  destinationName: string;
+  address: string;
+  destinationY: string;
+  destinationX: string;
+}
+
 const RES = {
   "status": 201,
   "message": "마커들 가져오기 성공",
@@ -44,7 +51,7 @@ const region = "서울";
 
 
 
-const LocalMap: React.FC = () => {
+const LocalMap: React.FC<LocalMapProps> = ({ onMarkerClick }) => {
 
   let [tag, setTag] = useSearchParams();
     
@@ -116,6 +123,12 @@ const LocalMap: React.FC = () => {
             title: data[i].title,
             image: markerImage
         });
+
+         // 마커 클릭 이벤트 핸들러 추가
+         window.kakao.maps.event.addListener(marker, 'click', () => {
+          onMarkerClick(makers[i]);
+      });
+      
         marker.setMap(map);
         bounds.extend(data[i].LatLng);
     

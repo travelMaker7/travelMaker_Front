@@ -101,6 +101,7 @@ const Button = styled.button`
   }
 `;
 
+
 const Modal = styled.div`
   position: fixed;
   z-index: 10;
