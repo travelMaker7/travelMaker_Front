@@ -9,7 +9,7 @@ interface TimeRangeProps {
   handleTimeRangeChange: (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => void;
 }
 
-const TimeRange: React.FC<TimeRangeProps> = ({ selectedTimeRange, handleTimeRangeChange }) => {
+const TimeRange: React.FC<TimeRangeProps> = ({ selectedTimeRange, setSelectedTimeRange, handleTimeRangeChange }) => {
   
   const format = 'HH:mm';
   

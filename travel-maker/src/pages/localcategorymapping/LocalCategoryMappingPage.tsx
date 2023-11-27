@@ -119,7 +119,7 @@ const LocalCategoryMappingPage = () => {
                         <DetailIconDiv>
                           <InfoIcon/>
                         </DetailIconDiv>
-                        <DetailDescriptrionDiv>상세보기</DetailDescriptrionDiv>
+                        <DetailDescriptionDiv>상세보기</DetailDescriptionDiv>
                       </DetailViewBtn>
                     </DetailListDiv>
                   )
@@ -176,16 +176,23 @@ const DetailListDiv = styled.div`
 const DetailViewBtn = styled.button`
   width: 7.5rem;
   height: 2.5rem;
-  background-color: #FFECF3;
+  background-color: #ffffff;
   border: none;
-  color: #ffc3d9;
+  color: #00bfff;
   border-radius: 1.25rem;
   font-weight: bolder;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0.0625rem 0.0625rem 0 #ffc3d9;
+  box-shadow: 0 0.0625rem 0.0625rem 0 #d3d3d3;
   cursor: pointer;
+
+  transition: all 0.3s;
+  &:hover {
+    color: #ffffff;
+    background-color: #00bfff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
 `
 
 const DetailIconDiv = styled.div`
@@ -194,7 +201,7 @@ const DetailIconDiv = styled.div`
   margin-right: 0.5rem;
 `
 
-const DetailDescriptrionDiv = styled.div`
+const DetailDescriptionDiv = styled.div`
   height: 1.25rem;
   line-height: 1.25rem;
 `
@@ -208,8 +215,8 @@ const ListThemeDiv = styled.div`
 
 const TravelTimeDiv = styled.div`
   width: 100%;
-  font-weight: bolder;
-  color: #35c982;
+  font-weight: 600;
+  color: #222;
 `
 
 const NicknameDiv = styled.div`
@@ -217,14 +224,15 @@ const NicknameDiv = styled.div`
 `
 
 const ScheduleDateDiv = styled.div`
-  color: #35c982;
-  background-color: #f0f0e6;
+  color: #00bfff;
+  background-color: #ffffff;
   width: 6.25rem;
   border-radius: 1rem;
   height: 1.5rem;
   line-height: 1.5rem;
   font-size: 0.9rem;
   line-height: 1.7rem;
+  border: 1px #00bfff solid;
 `
 
 

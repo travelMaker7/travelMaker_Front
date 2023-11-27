@@ -26,10 +26,12 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
   setSelectedTimeRange,
   selectedTimeRange,
   handleTimeRangeChange,
-  xyData,
-  setXyData,
+  xData,
+  setXData,
+  yData,
+  setYData,
   handleRadioChange,
-  handleAccompanyCnt,
+  handleAccompanyCnt
 }) => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -95,6 +97,9 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
     setIsModalOpen(false);
   }
 
+  
+  
+
   return (
     <>
       {autoSchedules.map((schedule, index) => (
@@ -110,17 +115,17 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
             </DateDiv>
             <AddLocationButton onClick={() => openSearchModal(schedule.day)}>
               <AddLocationAltIcon 
-                style={{ color: '#8cc3f8', marginBottom: '0.25rem', cursor: 'pointer' }}
+                style={{ color: '#00bfff', marginBottom: '0.25rem', cursor: 'pointer' }}
               />            
             </AddLocationButton>
             <DayDeleteButton>
               <DeleteForeverIcon
-                style={{ color: '#8cc3f8', marginBottom: '0.25rem', cursor: 'pointer' }}
+                style={{ color: '#00bfff', marginBottom: '0.25rem', cursor: 'pointer' }}
               />
             </DayDeleteButton>
             <DayTogglebutton onClick={() => dayToggleHandler(index)}>
               <ArrowForwardIosIcon
-                style={{ color: '#8cc3f8', marginBottom: '0.125rem', transform: schedule.dayStates ? 'rotate(90deg)' : 'rotate(0)', cursor: 'pointer' }}
+                style={{ color: '#00bfff', marginBottom: '0.125rem', transform: schedule.dayStates ? 'rotate(90deg)' : 'rotate(0)', cursor: 'pointer' }}
               />
             </DayTogglebutton>
           </DayToggleList>
@@ -131,7 +136,7 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
                   <DestinationNameSpan>{place.destinationName}</DestinationNameSpan>
                   <PlaceToggleButton onClick={() => placeToggleHandler(index, placeIndex)}>
                     <ArrowForwardIosIcon
-                      style={{ color: '#8cc3f8', marginBottom: '0.125rem', transform: place.placeStates ? 'rotate(90deg)' : 'rotate(0)', cursor: 'pointer' }}
+                      style={{ color: '#00bfff', marginBottom: '0.125rem', transform: place.placeStates ? 'rotate(90deg)' : 'rotate(0)', cursor: 'pointer' }}
                     />
                   </PlaceToggleButton>
                 </PlaceToggleList>
@@ -198,8 +203,10 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
         autoSchedules={autoSchedules}
         setAutoSchedules={setAutoSchedules}
         selectedDayIndex={selectedDayIndex}
-        xyData={xyData}
-        setXyData={setXyData}
+        xData={xData}
+        setXData={setXData}
+        yData={yData}
+        setYData={setYData}
       />}
     </>
   );
@@ -256,7 +263,7 @@ const DayThemeDiv = styled.div`
   border-radius: 1.25rem;
   display: flex;
   align-items: center;
-  background-color: #74B9FF;
+  background-color: #00bfff;
   margin-left: 1rem;
   font-size: 0.95rem;
 `

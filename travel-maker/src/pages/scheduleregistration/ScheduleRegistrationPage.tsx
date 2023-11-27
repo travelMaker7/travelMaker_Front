@@ -8,6 +8,7 @@ import ToggleList from '../../components/scheduleregistration/ToggleList'
 import { HeaderComponent } from "../detailmapping/HeaderComponent";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 interface EntireData {
   scheduleName: string;
@@ -68,8 +69,10 @@ export interface DataControlProps {
 }
 
 export interface XYDataProps {
-  xyData: [string, string][];
-  setXyData: React.Dispatch<React.SetStateAction<[string, string][]>>; 
+  xData: string;
+  setXData: React.Dispatch<React.SetStateAction<string>>;
+  yData: string;
+  setYData: React.Dispatch<React.SetStateAction<string>>; 
 }
 
 
@@ -86,7 +89,10 @@ const ScheduleRegistrationPage = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState<[Dayjs | null, Dayjs | null] | null>([null, null]);
   const [arriveTime, setArriveTime] = useState<string | null>(null);
   const [leaveTime, setLeaveTime] = useState<string | null>(null);
-  const [xyData, setXyData] = useState<[string, string][]>([]);
+  const [xData, setXData] = useState<string>("");
+  const [yData, setYData] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const handleChatUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -137,7 +143,7 @@ const ScheduleRegistrationPage = () => {
     console.log(selectedRange);
     console.log(dayCnt);
   }, [selectedRange, dayCnt]);
-
+  
   const handleEntireDataSubmit = () => {
     const entireData: EntireData = {
       scheduleName: scheduleName,
@@ -170,6 +176,8 @@ const ScheduleRegistrationPage = () => {
       .then((response) => {
         console.log(response.data);
         console.log("전송 성공");
+        alert("일정이 등록되었습니다.");
+        navigate("/");
       })
       .catch((error) => {
         console.error('Error submitting data:', error);
@@ -218,7 +226,7 @@ const ScheduleRegistrationPage = () => {
       <HeaderComponent/>
       <PageContainer>
         <MapContainerBox>
-          <MapContainer xyData={xyData} setXyData={setXyData}/>
+          <MapContainer xData={xData} setXData={setXData} yData={yData} setYData={setYData} />
         </MapContainerBox>
         <InputContainer>
           <ScheduleDiv>
@@ -255,8 +263,10 @@ const ScheduleRegistrationPage = () => {
                 selectedTimeRange={selectedTimeRange}
                 setSelectedTimeRange={setSelectedTimeRange}
                 handleTimeRangeChange={handleTimeRangeChange}
-                xyData={xyData}
-                setXyData={setXyData}
+                xData={xData}
+                setXData={setXData}
+                yData={yData}
+                setYData={setYData}
                 handleRadioChange={handleRadioChange}
                 handleAccompanyCnt={handleAccompanyCnt}
               />
@@ -283,16 +293,17 @@ const ScheduleRegistrationPage = () => {
 export default ScheduleRegistrationPage;
 
 const PageContainer = styled.div`
-  width: 62.5rem;
+  width: 65rem;
   height:43.75rem;
   display: flex;
-  margin: auto;
-  border-radius: 0.125rem;
+  margin: 2.5rem auto;
+  justify-content: space-between;
 `
 
 const MapContainerBox = styled.div`
   width: 31.25rem;
   height: 43.75rem;
+  border-radius: 1.25rem;
 `
 
 const InputContainer = styled.div`
@@ -300,6 +311,7 @@ const InputContainer = styled.div`
   height: 43.75rem;
   display: flex;
   flex-direction: column;
+  border-radius: 1.25rem;
 `
 
 const InputHeaderDiv = styled.div`
@@ -307,7 +319,7 @@ const InputHeaderDiv = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  background-color: #74b9ff;
+  background-color: #00bfff;
 `
 const ScheduleTheme = styled.div`
   width: 6rem;
@@ -332,14 +344,20 @@ const ScheduleThemeInput = styled.input`
 const ScheduleSubmitBtn = styled.button`
   width:5.2rem;
   height: 2.5rem;
-  background-color: #8CC4F8;
-  color: white;
+  background-color: #ffffff;
+  color: #00bff5;
   border-radius: 0.875rem;
   cursor: pointer;
   font-weight: bolder;
   border: none;
   font-size: 1rem;
   margin-left: 1rem;
+
+  &:hover {
+    background-color: #00bff5;
+    color: white;
+    border: 1px white solid;
+  }
 `
 
 const DatePickerDiv = styled.div`
@@ -347,7 +365,7 @@ const DatePickerDiv = styled.div`
   height: 4rem;
   display: flex;
   align-items: center;
-  background-color: #74b9ff ;
+  background-color: #00bfff ;
 `
 const ScheduleDiv = styled.div`
   width: 100%;
@@ -384,7 +402,7 @@ const DescriptionTheme = styled.div`
   color: white;
   line-height: 2rem;
   font-size: 1rem;
-  background-color: #8CC4F8;
+  background-color: #00bfff;
 `
 
 const DescriptionTextera = styled.textarea`
@@ -416,6 +434,11 @@ const ChatUrlThemDiv = styled.div`
   font-weight: bolder;
   line-height: 1.5rem;
   margin: 0.75rem;
+  background-color: #00bfff;
+  color: white;
+  padding: 0.125rem;
+  font-size: 0.9rem;
+  border-radius: 1rem;
 `
 
 const ChatUrlInput = styled.input`
@@ -425,4 +448,5 @@ const ChatUrlInput = styled.input`
   outline: none;
   background-color: transparent;
   text-indent: 0.75rem;
+  border-radius: 0.5rem;
 `

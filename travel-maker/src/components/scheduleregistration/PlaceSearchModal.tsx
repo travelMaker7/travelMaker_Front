@@ -33,7 +33,7 @@ interface AddressInfo {
   region_3depth_name: string;
 }
 
-const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearchModal, autoSchedules, setAutoSchedules, selectedDayIndex, xyData, setXyData}) => {
+const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearchModal, autoSchedules, setAutoSchedules, selectedDayIndex, xData, setXData, yData, setYData}) => {
 
   const [keywordAddressInfos, setKeywordAddressInfos] = useState<KeywordAddressInfo[]>([]);
   const [addressInfos, setAddressInfos] = useState<AddressInfo[]>([]); 
@@ -173,8 +173,10 @@ const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearc
 
     handleRegionSector(newPlace);
     console.log('newPlace: ', newPlace);
-    setXyData((prev) => [...prev, [selectedKeywordAddress.x, selectedKeywordAddress.y]]);
-    console.log(xyData);
+    setXData(newPlace.destinationX);
+    console.log("xData: ", xData);
+    setYData(newPlace.destinationY);
+    console.log("yData: ", yData);
     setAutoSchedules((prev) => {
       const updatedAutoSchedules = prev.map((schedule) => {
         if (schedule.day === scheduleKey) {
@@ -215,8 +217,10 @@ const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearc
 
     handleRegionSector(newPlace);
     console.log('newPlace: ', newPlace);
-    setXyData((prev) => [...prev, [selectedAddress.x, selectedAddress.y]]);
-    console.log(xyData);
+    setXData(newPlace.destinationX);
+    console.log("xData: ", xData);
+    setYData(newPlace.destinationY);
+    console.log("yData: ", yData);
     setAutoSchedules((prev) => {
       const updatedAutoSchedules = prev.map((schedule) => {
         if (schedule.day === scheduleKey) {
@@ -326,7 +330,7 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  background-color: #FAE202;
+  background-color: #99ccff;
   padding: 20px;
   border-radius: 5px;
   width: 31.25rem; /* 모달의 가로 크기 */
@@ -383,7 +387,7 @@ const SearchButton = styled.button`
   box-sizing: border-box;
   background-color: #381D1D;
   border-radius: 0 0.625rem 0.625rem 0;
-  color: #FAE202;
+  color: #ffffff;
   font-size: 1.25rem;
   cursor: pointer;
 `
@@ -431,7 +435,6 @@ const ChoiceLabel = styled.label``
 const AddressListContainer = styled.div`
   width: 28.75rem;
   height: 24rem;
-  border: 2px #381D1D solid;
   position: absolute;
   top: 19rem;
   left: 2.5rem;
@@ -448,10 +451,11 @@ const AddressListDiv = styled.div`
   width: 100%;
   height: 6rem;
   box-sizing: border-box;
-  border-bottom: 1px #381D1D solid;
+  border-bottom: 1px #D3D3D3 solid;
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #444;
 `
 
 const AddressDiv = styled.div`
@@ -464,6 +468,7 @@ const AddressDiv = styled.div`
 `
 
 const DestinationDiv = styled(AddressDiv)`
+  color: #333;
   font-weight: bolder;
 `
 
