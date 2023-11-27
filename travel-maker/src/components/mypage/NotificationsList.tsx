@@ -27,7 +27,6 @@ const NotificationsList: React.FC = () => {
     return (
       <NoNotificationsContainer>
         <NoNotificationsIcon icon={faBellSlash} size="3x" />{" "}
-        {/* Example icon */}
         <NoNotificationsText>알림이 없습니다</NoNotificationsText>
         <NoNotificationsSubText>
           모든 업데이트를 확인하셨습니다! 나중에 새로운 업데이트를 확인해
@@ -37,7 +36,6 @@ const NotificationsList: React.FC = () => {
     );
   }
 
-  // Render notifications if the array is not empty
   return (
     <ListContainer>
       {notifications.map((notification: NotificationData) => (

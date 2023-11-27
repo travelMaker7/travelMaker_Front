@@ -7,8 +7,13 @@ import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
 import TimeRange from './TimeRange';
+<<<<<<< HEAD
 import { SchedulesProps, DataControlProps,XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 
+=======
+import { SchedulesProps, DataControlProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+import { XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+>>>>>>> aff952cd75b7fe30398fb4913a7614b1301a8da4
 
 
 interface DatesProps {
