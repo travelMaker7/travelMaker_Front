@@ -75,7 +75,6 @@ const MainPage = () => {
 
   const [openLocalTag, setOpenLocalTag] = useState<string>("");
 
-  const navigate = useNavigate();
 
   const handleOpenLocalCategoryMap = (tag: string) => {
     setOpenLocalTag(tag);
