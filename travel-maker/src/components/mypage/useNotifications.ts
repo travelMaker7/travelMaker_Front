@@ -10,14 +10,20 @@ export interface NotificationData {
 }
 
 export const useNotifications = () => {
-  return useQuery<NotificationData[], Error>("notifications", async () => {
-    const { data } = await axios.get("https://sosak.store/api/v1/accompany", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("access_token"),
-      },
-    });
-    console.log(data);
-    return data.notifications;
-  });
+  return useQuery<NotificationData[], Error>(
+    "notifications",
+    async () => {
+      const { data } = await axios.get("https://sosak.store/api/v1/accompany", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      });
+      console.log(data);
+      return data.notifications;
+    },
+    {
+      refetchInterval: 5000,
+    }
+  );
 };
