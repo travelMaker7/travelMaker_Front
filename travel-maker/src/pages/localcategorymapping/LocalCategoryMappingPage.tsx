@@ -226,3 +226,5 @@ const ScheduleDateDiv = styled.div`
   font-size: 0.9rem;
   line-height: 1.7rem;
 `
+
+

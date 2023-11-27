@@ -67,13 +67,14 @@ const Tag = styled.div`
 
 const MainPage = () => {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
   if (!auth) {
     throw new Error('MainPage is rendered outside the AuthProvider.');
   }
 
   const [openLocalTag, setOpenLocalTag] = useState<string>("");
 
-  const navigate = useNavigate();
 
   const handleOpenLocalCategoryMap = (tag: string) => {
     setOpenLocalTag(tag);

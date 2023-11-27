@@ -32,14 +32,18 @@ export const HeaderComponent: React.FC = () => {
   navigate('/mypage'); // 마이페이지 경로로 이동
 };
 
-
+const handleSearch = (makers: any) => {
+  // handleSearch 함수의 로직을 구현합니다.
+  // 필요한 동작을 수행하고 상태를 업데이트합니다.
+  console.log("헤더컴포넌트에서 보내는 것:",makers); // 예시로 makers를 콘솔에 출력해보았습니다.
+};
 
   return (
     <Header>
   
       <Logo onClick={() => navigate('/')}>travelMaker</Logo>
       <SearchBoxContainer>
-        <FilterSearch/>
+      <FilterSearch onSearch={handleSearch} />
       </SearchBoxContainer>
       <UserIconContainer>
       <UserIcon onClick={toggleMenu} />
