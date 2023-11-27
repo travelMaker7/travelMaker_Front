@@ -63,6 +63,8 @@ export interface DataControlProps {
   selectedTimeRange: [Dayjs | null, Dayjs | null] | null;
   setSelectedTimeRange: React.Dispatch<React.SetStateAction<[Dayjs | null, Dayjs | null] | null>>;
   handleTimeRangeChange: (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => void;
+  handleRadioChange: (e:React.ChangeEvent<HTMLInputElement>) => void;
+  handleAccompanyCnt: (e:React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export interface XYDataProps {
@@ -79,7 +81,7 @@ const ScheduleRegistrationPage = () => {
   const [schduleDescription, setScheduleDescription] = useState<string>("");
   const [chatUrl, setChatUrl] = useState<string>("");
   const [autoSchedules, setAutoSchedules] = useState<SchedulesProps[]>([]);
-  const [accompanyOption, setAccompanyOption] = useState<string>("true");
+  const [accompanyOption, setAccompanyOption] = useState<string>("");
   const [accompanyCnt, setAccompanyCnt] = useState<number>(0);
   const [selectedTimeRange, setSelectedTimeRange] = useState<[Dayjs | null, Dayjs | null] | null>([null, null]);
   const [arriveTime, setArriveTime] = useState<string | null>(null);
@@ -184,6 +186,32 @@ const ScheduleRegistrationPage = () => {
       console.log('leave: ', leaveTime);
     }
   };
+  
+  useEffect(() => {
+    console.log('arriveTime이 변경되었습니다.', arriveTime);
+  }, [arriveTime]);
+
+  useEffect(() => {
+    console.log('leaveTime이 변경되었습니다.', leaveTime);
+  }, [leaveTime]);
+
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedValue = e.target.value;
+    setAccompanyOption(selectedValue);
+  };
+
+  const handleAccompanyCnt = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const inputValue = e.target.value;
+    setAccompanyCnt(parseInt(inputValue, 10));
+  };
+
+  useEffect(() => {
+    console.log('accompanyOption이 변경되었습니다.', accompanyOption);
+  }, [accompanyOption]);
+
+  useEffect(() => {
+    console.log('accompanyCnt가 변경되었습니다.', accompanyCnt);
+  }, [accompanyCnt]);
 
   return (
     <>
@@ -229,6 +257,8 @@ const ScheduleRegistrationPage = () => {
                 handleTimeRangeChange={handleTimeRangeChange}
                 xyData={xyData}
                 setXyData={setXyData}
+                handleRadioChange={handleRadioChange}
+                handleAccompanyCnt={handleAccompanyCnt}
               />
             </ScrollDiv>
           </ScheduleDiv>

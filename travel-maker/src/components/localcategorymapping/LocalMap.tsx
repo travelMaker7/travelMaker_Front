@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 declare global {
   interface Window {
@@ -42,13 +42,17 @@ const RES = {
 
 const region = "서울";
 
+
+
 const LocalMap: React.FC = () => {
 
-    const { tag } = useParams<{ tag: string }>();
+  let [tag, setTag] = useSearchParams();
+    
+  const region = tag.get('region');
 
     useEffect(() => {
       
-      axios.get(`https://sosak.store/api/v1/map/${tag}`, {
+      axios.get(`https://sosak.store/api/v1/map/${region}`, {
           headers: {
           "Content-type": "application/json"
         }

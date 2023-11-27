@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React from 'react';
 import { TimePicker } from 'antd';
 import 'dayjs/locale/ko';
 import dayjs, {Dayjs} from 'dayjs';
@@ -9,7 +9,7 @@ interface TimeRangeProps {
   handleTimeRangeChange: (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => void;
 }
 
-const TimeRange: React.FC<TimeRangeProps> = ({ selectedTimeRange, setSelectedTimeRange, handleTimeRangeChange }) => {
+const TimeRange: React.FC<TimeRangeProps> = ({ selectedTimeRange, handleTimeRangeChange }) => {
   
   const format = 'HH:mm';
   
