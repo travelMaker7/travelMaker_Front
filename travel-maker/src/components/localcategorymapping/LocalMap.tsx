@@ -198,6 +198,9 @@ interface MakerData {
   destinationY: string;
   destinationX: string;
 }
+interface LocalMapProps {
+  onMarkerClick: (markerData: MakerData) => void;
+}
 
 const RES = {
   "status": 201,
@@ -233,7 +236,7 @@ const RES = {
 
 
 
-const LocalMap: React.FC = () => {
+const LocalMap: React.FC<LocalMapProps> = ({ onMarkerClick }) => {
 
   let [tag, setTag] = useSearchParams();
     
@@ -305,6 +308,12 @@ const LocalMap: React.FC = () => {
             title: data[i].title,
             image: markerImage
         });
+
+         // 마커 클릭 이벤트 핸들러 추가
+         window.kakao.maps.event.addListener(marker, 'click', () => {
+          onMarkerClick(makers[i]);
+      });
+      
         marker.setMap(map);
         bounds.extend(data[i].LatLng);
     
