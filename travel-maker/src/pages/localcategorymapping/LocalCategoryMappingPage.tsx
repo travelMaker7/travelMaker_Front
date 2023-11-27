@@ -1,5 +1,3 @@
-import  { useState } from 'react';
-// import { HeaderComponent } from '../detailmapping/HeaderComponent';
 import styled from 'styled-components';
 import LocalMap from '../../components/localcategorymapping/LocalMap';
 import InfoIcon from '@mui/icons-material/Info';
@@ -8,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
-import Header from '../../components/search/Header'; // FilterSearch 컴포넌트 임포트
+import { HeaderComponent } from '../detailmapping/HeaderComponent';
 
 const RES = {
 	"status": 201,
@@ -69,31 +67,11 @@ const LocalCategoryMappingPage = () => {
   // const {data: {destinationName}} = RES;
   const {data: {schedules}} = RES
   const pages = Math.ceil(schedules.length / 4);
-  const [searchResults, setSearchResults] = useState<Schedule[]>([]);
 
-
-  interface Schedule {
-    scheduleId: number;
-    nickname: string;
-    scheduleDate: string;
-    arriveTime: string;
-    leaveTime: string;
-  }
-  
-  interface SearchData {
-    schedules: Schedule[];
-  }
-  
-  const handleSearchResults = (data: SearchData) => {
-    setSearchResults(data.schedules);
-    console.log(searchResults);
-  };
-  
   return (
     
     <>
-      <Header onSearch={handleSearchResults} />
-      {/* <HeaderComponent/> */}
+      <HeaderComponent/>
       <MainContainer>
         <MapContainer>
           <LocalMap/>
