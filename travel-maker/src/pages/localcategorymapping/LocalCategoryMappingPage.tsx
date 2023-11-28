@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { HeaderComponent } from "../detailmapping/HeaderComponent";
+import { Link } from "react-router-dom";
 
 const RES = {
   status: 201,
@@ -90,7 +91,13 @@ const LocalCategoryMappingPage = () => {
                 .slice(pageIndex * 4, (pageIndex + 1) * 4)
                 .map(
                   (
-                    { nickname, scheduleDate, arriveTime, leaveTime },
+                    {
+                      nickname,
+                      scheduleDate,
+                      arriveTime,
+                      leaveTime,
+                      scheduleId,
+                    },
                     index
                   ) => (
                     <DetailListDiv key={index}>
@@ -101,12 +108,14 @@ const LocalCategoryMappingPage = () => {
                       <TravelTimeDiv>
                         여행 시간 : {arriveTime} ~ {leaveTime}
                       </TravelTimeDiv>
-                      <DetailViewBtn>
-                        <DetailIconDiv>
-                          <InfoIcon />
-                        </DetailIconDiv>
-                        <DetailDescriptionDiv>상세보기</DetailDescriptionDiv>
-                      </DetailViewBtn>
+                      <LinkItem to={`/detailmap/${scheduleId}`}>
+                        <DetailViewBtn>
+                          <DetailIconDiv>
+                            <InfoIcon />
+                          </DetailIconDiv>
+                          <DetailDescriptionDiv>상세보기</DetailDescriptionDiv>
+                        </DetailViewBtn>
+                      </LinkItem>
                     </DetailListDiv>
                   )
                 )}
@@ -219,4 +228,9 @@ const ScheduleDateDiv = styled.div`
   font-size: 0.9rem;
   line-height: 1.7rem;
   border: 1px #00bfff solid;
+`;
+const LinkItem = styled(Link)`
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
 `;

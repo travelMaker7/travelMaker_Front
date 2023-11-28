@@ -83,6 +83,7 @@ const UserIcon = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin: 0 60px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
