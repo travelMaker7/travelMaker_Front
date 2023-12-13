@@ -27,9 +27,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: ./travel-maker/package-lock.json
-    - run: npm i
-    - run: npm run build --if-present
-    - run: npm test
+    - name: install
+      run: npm install
+    - name: build
+      run: npm run build
     
     - uses: awact/s3-action@master
       with:
