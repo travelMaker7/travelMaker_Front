@@ -1,7 +1,7 @@
 interface ImportMeta {
     env: {
-        VITE_REST_API_KEY: string;
-        VITE_REDIRECT_URI: string;
+        KAKAO_REST_API_KEY: string;
+        KAKAO_REDIRECT_URI: string;
     };
 }
 

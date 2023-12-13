@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-const VITE_API_URL = "https://sosak.store";
+const TRAVELMAKER_API_URL = "https://sosak.store";
 
 interface KakaoResponse {
   data: any;
@@ -40,7 +40,7 @@ const LoginHandeler: React.FC = () => {
     // };
 
     try {
-      const response = await axios.get<KakaoResponse>(`${VITE_API_URL}/api/v1/auth/kakao?code=${code}`, {
+      const response = await axios.get<KakaoResponse>(`${TRAVELMAKER_API_URL}/api/v1/auth/kakao?code=${code}`, {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },

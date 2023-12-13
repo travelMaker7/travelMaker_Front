@@ -41,13 +41,13 @@ const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearc
   const [searchOption, setSearchOption] = useState<string>('address');
   
 
-  const { VITE_REST_API_KEY } = import.meta.env;
+  const { KAKAO_REST_API_KEY } = import.meta.env;
 
   const submitSearch = () => {
     if(searchOption === 'keyword') {
       axios.get(`https://dapi.kakao.com/v2/local/search/keyword.json?page=1&size=15&sort=accuracy&query=${searchValue}`, {
       headers: {
-        'Authorization': `KakaoAK ${VITE_REST_API_KEY}`
+        'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}`
       }
       })
       .then((res) => {
@@ -73,7 +73,7 @@ const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearc
     } else {
       axios.get(`https://dapi.kakao.com/v2/local/search/address.json?page=1&size=15&sort=accuracy&query=${searchValue}`, {
       headers: {
-        'Authorization': `KakaoAK ${VITE_REST_API_KEY}`
+        'Authorization': `KakaoAK ${KAKAO_REST_API_KEY}`
       }
       })
       .then((res) => {
