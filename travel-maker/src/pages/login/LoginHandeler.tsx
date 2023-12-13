@@ -48,7 +48,7 @@ const LoginHandeler: React.FC = () => {
 
       
       console.log("HTTP 상태 코드:", response.status);
-      console.log(response.data);
+      console.log(response.data.data);
 
       localStorage.setItem('access_token', response.data.data.accessToken);
       navigate('/');

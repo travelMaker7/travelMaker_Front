@@ -29,7 +29,7 @@ const ProfileTestPage: React.FC = () => {
         프로필 모달 열기
       </OpenModalButton>
       <UserProfileModal
-        userId="123"
+        targetUserId="123"
         isOpen={isModalOpen}
         onClose={handleCloseModal}
       />

@@ -135,23 +135,22 @@ const IntroductionHeader = styled.h3`
   margin: 0;
 `;
 
-const OneToOneChattingBtn = styled.div`
-  width: 8rem;
-  height: 3rem;
-  border: none;
-  font-weight: bolder;
-  background-color: #74B9FF;
-  color: white;
-  margin: auto;
-  border-radius: 1rem;
-`
+// const OneToOneChattingBtn = styled.div`
+//   width: 8rem;
+//   height: 3rem;
+//   border: none;
+//   font-weight: bolder;
+//   background-color: #74B9FF;
+//   color: white;
+//   margin: auto;
+//   border-radius: 1rem;
+// `
 
 
-const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileData }) => {
+const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileData}) => {
   
   const [isRoomCreated, setIsRoomCreated] = useState(false);
   // 상대 프로필 조회시 사용해야함 
-  const [targetUserId, setTargetUserId] = useState(9);
   const navigate = useNavigate();
 
   const handleCreateAndEnterRoom = () => {
@@ -164,7 +163,8 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
       .post(`https://sosak.store/api/v1/chat/room`,
       // .post(`http://localhost:8080/api/v1/chat/room`,
       {
-        "targetUserId" : targetUserId,
+        // "targetUserId" : targetUserId,
+        "targetUserId" : 9, //임시
         "roomName" : "채팅방"
       },
       {

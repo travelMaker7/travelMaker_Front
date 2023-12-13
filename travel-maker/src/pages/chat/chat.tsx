@@ -4,7 +4,7 @@ import {Client} from '@stomp/stompjs'
 import styled from 'styled-components';
 import axios from 'axios';
 import { Icon } from '@iconify/react';
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router"; // 임시
 import { useParams, useLocation } from 'react-router-dom';
 import MessageContainer from '@/components/chat/messageContainer';
 import MessageInput from '../../components/chat/MessageInput';
@@ -20,18 +20,17 @@ const Chat:React.FC = () => {
   const useQuery = () => {
     return new URLSearchParams(location.search);
   }
-  const navigate = useNavigate();
-  const chatRoomIdQuery = useQuery().get('chatRoomId');
-  const [chatRoomId, setChatRoomId] = useState(chatRoomIdQuery);
+  // const navigate = useNavigate(); // 임시
+  // const chatRoomIdQuery = useQuery().get('chatRoomId'); 
+  // const [chatRoomId, setChatRoomId] = useState(chatRoomIdQuery);
+  const chatRoomId = useQuery().get('chatRoomId'); // 임시
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [connected, setConnected] = useState(false);
-  const [user, setUser] = useState();
   const client = useRef<Client|undefined>()
   const [nickname, setNickname] = useState();
   const [senderId, setSenderId] = useState('');
-  const [inputValue, setInputValue] = useState('');
-  console.log("sender id : ", senderId)
+  console.log("sender id : ", senderId) // 임시
+  console.log("nickname : ", nickname) // 임시
   useEffect(() => {
     console.log("채팅창 입장")
     initChat();
@@ -67,6 +66,7 @@ const Chat:React.FC = () => {
   // 연결
   const connect = () => {
     client.current!.onConnect = (frame) => {
+      console.log('연결! ', frame)
       client.current?.subscribe(
         `/sub/chat/room/${redisRoomId}`,
         (res) => {

@@ -21,7 +21,6 @@ const OpenModalButton = styled.button`
 
 const ModalTestPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-
   // 모달 데이터를 상태로 관리합니다. 실제 데이터로 대체해야 합니다.
   const profileData = {
     // image: 'profile-image-url.jpg', // 실제 이미지 URL로 변경

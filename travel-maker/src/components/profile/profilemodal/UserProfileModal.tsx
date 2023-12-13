@@ -4,13 +4,13 @@ import ProfileModal, { ProfileData } from "./ProfileModal";
 
 
 interface UserProfileModalProps {
-  userId: string;
+  targetUserId: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
 const UserProfileModal: React.FC<UserProfileModalProps> = ({
-  userId,
+  targetUserId,
   isOpen,
   onClose,
 }) => {
@@ -20,13 +20,15 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
   useEffect(() => {
     const fetchProfileData = async () => {
-      if (!userId) return;
+      if (!targetUserId) return;
 
       try {
         setLoading(true);
         const response = await axios.get<ProfileData>(
-          `/api/v1/mypage/profile/${userId}`
+          `/api/v1/mypage/profile/${targetUserId}`
         );
+        console.log('타인 프로필 조회 : ', response.data);
+        
         setProfileData(response.data);
       } catch (err) {
         setError(err as Error);
@@ -38,7 +40,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({
     if (isOpen) {
       fetchProfileData();
     }
-  }, [userId, isOpen]);
+  }, [targetUserId, isOpen]);
 
   if (!isOpen) return null;
   if (loading) return <div>Loading...</div>;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { Icon } from '@iconify/react';
 interface MessageInputProps {
@@ -10,14 +10,13 @@ interface MessageInputProps {
 const MessageInput : React.FC<MessageInputProps> = ({onSendMessage, message, setMessage}) => {
 
 
-  const handleSend = (event) => {
+  const handleSend = (event:any) => {
     console.log("클릭")
     event.preventDefault();
     if(message.trim() !== ''){
       console.log('입력값 : ',message)
       onSendMessage(message);
       setMessage('');
-      
     }
   }
 
@@ -84,4 +83,3 @@ const RowContainer = styled.div`
   &:hover {
   }
 `;
-

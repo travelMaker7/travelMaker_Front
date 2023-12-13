@@ -1,4 +1,4 @@
-import React, { useState, useRef , useEffect} from "react";
+import React, { useRef , useEffect} from "react";
 import styled from 'styled-components';
 import {ChatMessage} from './ChatMessage';
 import MyChat from "./MyChat";
@@ -15,6 +15,7 @@ const MessageContainer: React.FC<MessageDisplayProps> = ({ messages, currentUser
 // 시간 데이터 가공 '오후 10:30' 이런식
 const convertToReadableTime = (isoString:string): string => {
   const date = new Date(isoString);
+  console.log("시간 ? : ", date)
   return date.toLocaleTimeString('ko-KR', {hour:'numeric', minute:'numeric', hour12:true});
 }
 useEffect(() => {
