@@ -61,9 +61,9 @@ const SignupLink = styled.a`
 `;
 
 const Login: React.FC = () => {
-  const REST_API_KEY = import.meta.env.KAKAO_REST_API_KEY;
-  const REDIRECT_URI = import.meta.env.KAKAO_REDIRECT_URI;
-  const link = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+  const KAKAO_REST_API_KEY = import.meta.env.KAKAO_REST_API_KEY;
+  const KAKAO_REDIRECT_URI = import.meta.env.KAKAO_REDIRECT_URI;
+  const link = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}`;
 
 
   const loginWithKakao = () => {
