@@ -43,7 +43,7 @@ jobs:
         KAKAO_REDIRECT_URI: ${{secrets.KAKAO_REDIRECT_URI}}
         TRAVELMAKER_API_URL: ${{secrets.TRAVELMAKER_API_URL}}
     - run: |
-        echo "KAKAO_MAP_JS_KEY = ${secrets.KAKAO_MAP_JS_KEY}" >> .env
-        echo "KAKAO_REST_API_KEY = ${secrets.KAKAO_REST_API_KEY}" >> .env
-        echo "KAKAO_REDIRECT_URI = ${secrets.KAKAO_REDIRECT_URI}" >> .env
-        echo "TRAVELMAKER_API_URL = ${secrets.TRAVELMAKER_API_URL}" >> .env
+        echo "KAKAO_MAP_JS_KEY=${secrets.KAKAO_MAP_JS_KEY}" >> $GITHUB_ENV
+        echo "KAKAO_REST_API_KEY=${secrets.KAKAO_REST_API_KEY}" >> $GITHUB_ENV
+        echo "KAKAO_REDIRECT_URI=${secrets.KAKAO_REDIRECT_URI}" >> $GITHUB_ENV
+        echo "TRAVELMAKER_API_URL=${secrets.TRAVELMAKER_API_URL}" >> $GITHUB_ENV
