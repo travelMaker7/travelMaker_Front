@@ -12,6 +12,7 @@ const ChatRoomButton: React.FC<ChatRoomControlProps> = ({handleCreateAndEnterRoo
     onClick={handleCreateAndEnterRoom}
     >
       1:1 채팅하기
+      
     </ChattingButton>
   )
 }

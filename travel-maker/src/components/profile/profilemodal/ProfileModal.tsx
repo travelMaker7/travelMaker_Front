@@ -115,12 +115,13 @@ const IntroductionContentBox = styled.div`
   padding: 16px;
   margin-top: 8px; 
   border-radius: 8px;
-  height:296px;
+  height:286px;
+  // height:296px;
 `;
 
 
 const IntroductionContainer = styled.div`
-   font-size: 0.9rem; 
+  font-size: 0.9rem; 
   padding-left: 20px; 
   padding-right: 20px; 
 `;
@@ -149,9 +150,8 @@ const OneToOneChattingBtn = styled.div`
 const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileData }) => {
   
   const [isRoomCreated, setIsRoomCreated] = useState(false);
-  const [, setRedisRoomId] = useState();
-  const [, setChatRoomId] = useState();
-
+  // 상대 프로필 조회시 사용해야함 
+  const [targetUserId, setTargetUserId] = useState(9);
   const navigate = useNavigate();
 
   const handleCreateAndEnterRoom = () => {
@@ -161,8 +161,12 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
     }
     // 1:1 채팅방 생성 api 요청 & 입장
     axios
-
-      .post(`https://sosak.store/api/v1/chat/room`,{},
+      .post(`https://sosak.store/api/v1/chat/room`,
+      // .post(`http://localhost:8080/api/v1/chat/room`,
+      {
+        "targetUserId" : targetUserId,
+        "roomName" : "채팅방"
+      },
       {
         headers: {
           "Authorization" : `Bearer ${localStorage.getItem("access_token")}`,
@@ -172,14 +176,11 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
       .then((response) => {
 
         const {chatRoomId, redisRoomId} = response.data.data;
-        setChatRoomId(chatRoomId);
-        setRedisRoomId(redisRoomId);
         setIsRoomCreated(true);
-        console.log('redis : ',redisRoomId);
-        console.log('chat : ',chatRoomId);
-        console.log(redisRoomId);
-        console.log(chatRoomId);
+        console.log('redis : ',redisRoomId)
+        console.log('chat : ',chatRoomId)
 
+        // const enterRoomUri = `http://localhost:8080/api/v1/chat/room/${redisRoomId}?chatRoomId=${chatRoomId}`
         const enterRoomUri = `https://sosak.store/api/v1/chat/room/${redisRoomId}?chatRoomId=${chatRoomId}`
 
         return axios.get(enterRoomUri, {
@@ -190,6 +191,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
         }).then(response => {
           console.log("Entered the chat room success", JSON.stringify(response.data.data))
           navigate(`/chat/room/${redisRoomId}?chatRoomId=${chatRoomId}`)
+          console.log("화면이동 함?")
         });
       })
       .catch(error => {
@@ -217,9 +219,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose, profileDat
           <IntroductionHeader>{profileData.nickname}님 소개</IntroductionHeader>
           <IntroductionContentBox>{profileData.userDescription}</IntroductionContentBox>
         </IntroductionContainer>
-        <OneToOneChattingBtn>
-          <ChatRoomButton handleCreateAndEnterRoom={handleCreateAndEnterRoom}/>
-        </OneToOneChattingBtn>
+        <ChatRoomButton handleCreateAndEnterRoom={handleCreateAndEnterRoom}/>
       </ModalContainer>
     </ModalOverlay>,
     document.body
