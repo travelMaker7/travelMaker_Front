@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import FilterSearch from "@/components/search/\bFilterSearch";
+import FilterSearch from "@/components/search/FilterSearch";
 import { useNavigate } from "react-router-dom";
 
-import { handleLogout } from "../login/logoutFunction";
+import { handleLogout } from "../login/LogoutFunction";
 
 export const HeaderComponent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
