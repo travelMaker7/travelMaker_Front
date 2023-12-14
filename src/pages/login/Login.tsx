@@ -62,7 +62,11 @@ const SignupLink = styled.a`
 
 const Login: React.FC = () => {
   const KAKAO_REST_API_KEY = import.meta.env.KAKAO_REST_API_KEY;
+  const KAKAO_REST_API_KEY2 = process.env.KAKAO_REST_API_KEY;
   const KAKAO_REDIRECT_URI = import.meta.env.KAKAO_REDIRECT_URI;
+  console.log("KAKAO_REST_API_KEY", KAKAO_REST_API_KEY)
+  console.log("KAKAO_REST_API_KEY2", KAKAO_REST_API_KEY2)
+  console.log("KAKAO_REDIRECT_URI", KAKAO_REDIRECT_URI)
   const link = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}`;
 
 

@@ -29,6 +29,7 @@ jobs:
         cache-dependency-path: '**/package-lock.json'
     - run: npm i
     - run: npm run build --if-present
+
     - uses: awact/s3-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
@@ -42,8 +43,3 @@ jobs:
         KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
         KAKAO_REDIRECT_URI: ${{secrets.KAKAO_REDIRECT_URI}}
         TRAVELMAKER_API_URL: ${{secrets.TRAVELMAKER_API_URL}}
-      run: 
-        echo "$KAKAO_MAP_JS_KEY"
-        echo "$KAKAO_REST_API_KEY"
-        echo "$KAKAO_REDIRECT_URI"
-        echo "$TRAVELMAKER_API_URL"
