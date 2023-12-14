@@ -27,18 +27,17 @@ jobs:
       uses: skiddph/actions-env@v1.0.3
       with:
         file: .env
-        # prefix: 'VITE_'
+        prefix: 'VITE_'
       env:
-        VITE_KAKAO_MAP_JS_KEY: ${{secrets.KAKAO_MAP_JS_KEY}}
-        VITE_KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
-        VITE_KAKAO_REDIRECT_URI: ${{secrets.KAKAO_REDIRECT_URI}}
-        VITE_TRAVELMAKER_API_URL: ${{secrets.TRAVELMAKER_API_URL}}
+        KAKAO_MAP_JS_KEY: ${{secrets.KAKAO_MAP_JS_KEY}}
+        KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
+        KAKAO_REDIRECT_URI: ${{secrets.KAKAO_REDIRECT_URI}}
+        TRAVELMAKER_API_URL: ${{secrets.TRAVELMAKER_API_URL}}
         run: |
-        echo "VITE_KAKAO_MAP_JS_KEY" : $VITE_KAKAO_MAP_JS_KEY  
-        echo "VITE_KAKAO_MAP_JS_KEY : $VITE_KAKAO_MAP_JS_KEY"  
-        echo "VITE_KAKAO_REST_API_KEY" : $VITE_KAKAO_REST_API_KEY 
-        echo "VITE_KAKAO_REDIRECT_URI" : $VITE_KAKAO_REDIRECT_URI 
-        echo "VITE_TRAVELMAKER_API_URL" : $VITE_TRAVELMAKER_API_URL 
+          echo $KAKAO_MAP_JS_KEY
+          echo $KAKAO_REST_API_KEY
+          echo $KAKAO_REDIRECT_URI
+          echo $TRAVELMAKER_API_URL
     
     - uses: actions/checkout@v3
     # 해당 프로젝트에서 사용할 라이브러리 설치
