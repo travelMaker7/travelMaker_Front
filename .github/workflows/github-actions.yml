@@ -34,10 +34,14 @@ jobs:
         KAKAO_REDIRECT_URI: ${{secrets.KAKAO_REDIRECT_URI}}
         TRAVELMAKER_API_URL: ${{secrets.TRAVELMAKER_API_URL}}
         run: |
-          echo $KAKAO_MAP_JS_KEY
-          echo $KAKAO_REST_API_KEY
-          echo $KAKAO_REDIRECT_URI
-          echo $TRAVELMAKER_API_URL
+          echo "KAKAO_MAP_JS_KEY : $KAKAO_MAP_JS_KEY"
+          echo "KAKAO_REST_API_KEY : $KAKAO_REST_API_KEY"
+          echo "KAKAO_REDIRECT_URI : $KAKAO_REDIRECT_URI"
+          echo "TRAVELMAKER_API_URL : $TRAVELMAKER_API_URL"
+          echo "KAKAO_MAP_JS_KEY : ${{secrets.KAKAO_MAP_JS_KEY}}"
+          echo "KAKAO_REST_API_KEY : ${{secrets.KAKAO_REST_API_KEY}}"
+          echo "KAKAO_REDIRECT_URI : ${{secrets.KAKAO_REDIRECT_URI}}"
+          echo "TRAVELMAKER_API_URL : ${{secrets.TRAVELMAKER_API_URL}}"
     
     - uses: actions/checkout@v3
     # 해당 프로젝트에서 사용할 라이브러리 설치
