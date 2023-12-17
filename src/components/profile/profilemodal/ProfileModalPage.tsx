@@ -1,19 +1,23 @@
-// ModalTestPage.tsx
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UserProfileModal from './UserProfileModal';
 import axios from "axios";
 import {ProfileData} from "./ProfileInfo";
+
+interface ProfileResponse{
+  data:ProfileData;
+}
 const ProfileModalPage:React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [targetUserId, setTargetUserId] = useState(3); // 임시로 박아놓음
   const [profileData, setProfileData] = useState<ProfileData>();
 
-
+  useEffect(() => {
+    getTargetUserProfileData();
+  }, []) ;
   // 모달을 여는 함수
   const handleOpenModal = () => {
-    getTargetUserProfileData();
-    setTargetUserId(3); // 임시로 박아놓음
+    setTargetUserId(targetUserId); // 임시로 박아놓음
     setModalOpen(true);
   };
 
@@ -22,9 +26,9 @@ const ProfileModalPage:React.FC = () => {
     setModalOpen(false);
   };
   const getTargetUserProfileData = async () => {
-    console.log("타인 프로필 가져오기 시작!", targetUserId)
+    console.log("타인 프로필 targetUserId : ", targetUserId)
     try{
-      const response = await axios.get<ProfileData>(
+      const response = await axios.get<ProfileResponse>(
         `https://sosak.store/api/v1/mypage/profile/${targetUserId}`,
         {
           headers: {
@@ -32,7 +36,7 @@ const ProfileModalPage:React.FC = () => {
           }
         },
       );
-      console.log("타인 프로필 가져오기 성공 : ", response.data.data);
+      console.log("타인 프로필 조회 성공 : ", response.data);
       setProfileData(response.data.data);
     }catch(error){
       console.log("프로필 조회 실패", error);
