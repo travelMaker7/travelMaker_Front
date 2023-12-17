@@ -1,5 +1,4 @@
 import React, {useState, useRef, useEffect} from 'react'
-
 import {Client} from '@stomp/stompjs'
 import styled from 'styled-components';
 import axios from 'axios';
@@ -9,28 +8,24 @@ import { useParams, useLocation } from 'react-router-dom';
 import MessageContainer from '@/components/chat/messageContainer';
 import MessageInput from '../../components/chat/MessageInput';
 import { ChatMessage } from '@/components/chat/ChatMessage';
+
 // 채팅방에 들어왔을 떄!
 // 채팅내역 api전송
 
 const Chat:React.FC = () => {
   const token = localStorage.getItem('access_token');
-
   const {redisRoomId} = useParams();
   const location = useLocation();
   const useQuery = () => {
     return new URLSearchParams(location.search);
   }
-  // const navigate = useNavigate(); // 임시
-  // const chatRoomIdQuery = useQuery().get('chatRoomId'); 
-  // const [chatRoomId, setChatRoomId] = useState(chatRoomIdQuery);
-  const chatRoomId = useQuery().get('chatRoomId'); // 임시
+    // const navigate = useNavigate(); // 임시
+  const chatRoomId = useQuery().get('chatRoomId'); 
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const client = useRef<Client|undefined>()
-  const [nickname, setNickname] = useState();
-  const [senderId, setSenderId] = useState('');
-  console.log("sender id : ", senderId) // 임시
-  console.log("nickname : ", nickname) // 임시
+  const senderId = localStorage.getItem('user_id'); // 로컬스토리지에서 가져다 사용
+
   useEffect(() => {
     console.log("채팅창 입장")
     initChat();
@@ -72,8 +67,6 @@ const Chat:React.FC = () => {
         (res) => {
           console.log('구독 후 응답 : ',res.body)
           const recv = JSON.parse(res.body);
-          setNickname(recv.nickname)
-          setSenderId(recv.senderId)
           displayMessage(recv);
         },
         {"Authorization" : `Bearer ${token}`}
@@ -87,7 +80,6 @@ const Chat:React.FC = () => {
         connect();
         setTimeout(()=>{
           console.log("재전송");
-
         }, 200);
       }
     }
