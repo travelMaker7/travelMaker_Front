@@ -171,7 +171,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
                         style={{ color: "#6FADFF" }}
                       />
                     </InfoIcon>
-                    <InfoText>{`동행 인원: ${detail.wishCnt}/4`}</InfoText>
+                    <InfoText>{`동행 인원: ${detail.joinCnt}/${detail.wishCnt}`}</InfoText>
                   </InfoItemContainer>
                   <JoinButton
                     isVisible={true}
