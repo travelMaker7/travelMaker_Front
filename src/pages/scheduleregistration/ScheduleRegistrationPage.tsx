@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import React, { SetStateAction } from 'react';
 import MapContainer from '../../components/scheduleregistration/MapContainer'
 import DateRange from "../../components/scheduleregistration/DateRange";
 import dayjs, { Dayjs } from 'dayjs';
@@ -25,7 +24,7 @@ interface ScheduledData {
 interface PlaceDetailData {
   destinationName: string;
   wishCnt: number | null;
-  wishJoin: boolean;
+  wishJoin: string;
   address: string;
   arriveTime: string | null;
   leaveTime: string | null;
@@ -40,7 +39,7 @@ export interface PlacesProps {
   region: string;
   arriveTime: string | null;
   leaveTime: string | null;
-  wishJoin: boolean;
+  wishJoin: string;
   wishCnt: number | null;
   destinationX: string;
   destinationY: string;
@@ -54,20 +53,6 @@ export interface SchedulesProps {
   dayStates: boolean;
 }
 
-export interface DataControlProps {
-  accompanyOption: string;
-  setAccompanyOption: React.Dispatch<SetStateAction<string>>;
-  accompanyCnt: number;
-  setAccompanyCnt: React.Dispatch<SetStateAction<number>>;
-  autoSchedules: SchedulesProps[];
-  setAutoSchedules: React.Dispatch<SetStateAction<SchedulesProps[]>>;
-  selectedTimeRange: [Dayjs | null, Dayjs | null] | null;
-  setSelectedTimeRange: React.Dispatch<React.SetStateAction<[Dayjs | null, Dayjs | null] | null>>;
-  handleTimeRangeChange: (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => void;
-  handleRadioChange: (e:React.ChangeEvent<HTMLInputElement>) => void;
-  handleAccompanyCnt: (e:React.ChangeEvent<HTMLSelectElement>) => void;
-}
-
 export interface XYDataProps {
   xData: string;
   setXData: React.Dispatch<React.SetStateAction<string>>;
@@ -78,17 +63,12 @@ export interface XYDataProps {
 
 const ScheduleRegistrationPage = () => {
   
+  const [autoSchedules, setAutoSchedules] = useState<SchedulesProps[]>([]);
   const [selectedRange, setSelectedRange] = useState<[Dayjs | null, Dayjs | null] | null>(null);
   const [dayCnt, setDayCnt] = useState<number | null>(null);
   const [scheduleName, setScheduleName] = useState<string>("");
   const [schduleDescription, setScheduleDescription] = useState<string>("");
   const [chatUrl, setChatUrl] = useState<string>("");
-  const [autoSchedules, setAutoSchedules] = useState<SchedulesProps[]>([]);
-  const [accompanyOption, setAccompanyOption] = useState<string>("");
-  const [accompanyCnt, setAccompanyCnt] = useState<number>(0);
-  const [selectedTimeRange, setSelectedTimeRange] = useState<[Dayjs | null, Dayjs | null] | null>([null, null]);
-  const [arriveTime, setArriveTime] = useState<string | null>(null);
-  const [leaveTime, setLeaveTime] = useState<string | null>(null);
   const [xData, setXData] = useState<string>("");
   const [yData, setYData] = useState<string>("");
 
@@ -145,6 +125,12 @@ const ScheduleRegistrationPage = () => {
   }, [selectedRange, dayCnt]);
   
   const handleEntireDataSubmit = () => {
+    
+    if (!autoSchedules) {
+      console.error("autoSchedules is undefined");
+      return;
+    }
+    
     const entireData: EntireData = {
       scheduleName: scheduleName,
       schedules: autoSchedules.map((_, index) => ({
@@ -184,43 +170,6 @@ const ScheduleRegistrationPage = () => {
       });
   };
 
-  const handleTimeRangeChange = (value: [Dayjs | null, Dayjs | null] | null, dateString: string[]) => {
-    console.log(dateString);
-    if (value !== null && value[0] !== null && value[1] !== null) {
-      setSelectedTimeRange(value);
-      setArriveTime(value[0].format('HH:mm'));
-      setLeaveTime(value[1].format('HH:mm'));
-      console.log('arrive: ', arriveTime);
-      console.log('leave: ', leaveTime);
-    }
-  };
-  
-  useEffect(() => {
-    console.log('arriveTime이 변경되었습니다.', arriveTime);
-  }, [arriveTime]);
-
-  useEffect(() => {
-    console.log('leaveTime이 변경되었습니다.', leaveTime);
-  }, [leaveTime]);
-
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedValue = e.target.value;
-    setAccompanyOption(selectedValue);
-  };
-
-  const handleAccompanyCnt = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const inputValue = e.target.value;
-    setAccompanyCnt(parseInt(inputValue, 10));
-  };
-
-  useEffect(() => {
-    console.log('accompanyOption이 변경되었습니다.', accompanyOption);
-  }, [accompanyOption]);
-
-  useEffect(() => {
-    console.log('accompanyCnt가 변경되었습니다.', accompanyCnt);
-  }, [accompanyCnt]);
-
   return (
     <>
       <HeaderComponent/>
@@ -254,21 +203,12 @@ const ScheduleRegistrationPage = () => {
               <ToggleList 
                 selectedRange={selectedRange} 
                 dayCnt={dayCnt}
-                accompanyCnt={accompanyCnt}
-                accompanyOption={accompanyOption}
-                setAccompanyCnt={setAccompanyCnt}
-                setAccompanyOption={setAccompanyOption}
-                autoSchedules={autoSchedules}
-                setAutoSchedules={setAutoSchedules}
-                selectedTimeRange={selectedTimeRange}
-                setSelectedTimeRange={setSelectedTimeRange}
-                handleTimeRangeChange={handleTimeRangeChange}
                 xData={xData}
                 setXData={setXData}
                 yData={yData}
                 setYData={setYData}
-                handleRadioChange={handleRadioChange}
-                handleAccompanyCnt={handleAccompanyCnt}
+                autoSchedules={autoSchedules}
+                setAutoSchedules={setAutoSchedules}
               />
             </ScrollDiv>
           </ScheduleDiv>

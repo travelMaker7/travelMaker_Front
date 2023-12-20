@@ -166,7 +166,7 @@ const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearc
       region: selectedKeywordAddress.region_1depth_name,
       placeStates: false,
       wishCnt: null,
-      wishJoin: false,
+      wishJoin: '',
       arriveTime: null,
       leaveTime: null,
     };
@@ -198,6 +198,7 @@ const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearc
       return updatedAutoSchedules;
     });
     console.log('autoSchedules :', autoSchedules);
+    console.log('Selected Keyword Address:', selectedKeywordAddress);
     closeSearchModal();
   };
 
@@ -210,7 +211,7 @@ const PlaceSearchModal: React.FC<ModalControlProps & XYDataProps> = ({closeSearc
       region: selectedAddress.region_1depth_name,
       placeStates: false,
       wishCnt: null,
-      wishJoin: false,
+      wishJoin: '',
       arriveTime: null,
       leaveTime: null,
     };
