@@ -10,12 +10,11 @@ interface MessageDisplayProps{
 
 const MessageContainer: React.FC<MessageDisplayProps> = ({ messages, currentUserId }) => {
   const messageEndRef = useRef<HTMLDivElement | null>(null);
-  console.log('userId : ',currentUserId)
+  console.log('currentUserId : ',currentUserId)
 
 // 시간 데이터 가공 '오후 10:30' 이런식
 const convertToReadableTime = (isoString:string): string => {
   const date = new Date(isoString);
-  console.log("시간 ? : ", date)
   return date.toLocaleTimeString('ko-KR', {hour:'numeric', minute:'numeric', hour12:true});
 }
 useEffect(() => {
@@ -33,8 +32,8 @@ useEffect(() => {
             </SystemMessage>
           )
         }else if(msg.messageType === 'TALK'){
-            const myChat = currentUserId === msg.senderId;
-            if(myChat) {
+            const isMyChat = currentUserId === msg.senderId;
+            if(isMyChat) {
               return (
                 <MyChat
                 nickname={msg.nickname}

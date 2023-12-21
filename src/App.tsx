@@ -8,9 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/login/Login.tsx";
 import { AuthProvider } from "../src/components/contexts/AuthContext.tsx";
 import MyPage from "./pages/mypage/MyPage.tsx";
-import ProfileTestPage from "./components/profile/profilemodal/ProfileTestPage.tsx";
-// import MyPageProfileTest from "./components/profile/mypageprofile/MyPageProfileTest.tsx";
-import ProfileTestPage2 from "./components/profile/profilemodal/ProfileTestPage2.tsx";
+import ProfileModalPage from "./components/profile/profilemodal/ProfileModalPage.tsx";
 import LocalCategoryMappingPage from "./pages/localcategorymapping/LocalCategoryMappingPage.tsx";
 import ChatRoomButton from "@/components/chat/chatRoomButton";
 import Chat from "./pages/chat/chat.tsx";
@@ -38,8 +36,7 @@ function App() {
           <Route path="/chat/room/:redisRoomId" element={<Chat />} />
           <Route path="/auth/kakao" element={<LoginHandeler />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/profiletest" element={<ProfileTestPage />} />
-          <Route path="/profiletest2" element={<ProfileTestPage2 />} />
+          <Route path="/profileModal" element={<ProfileModalPage />} />
           <Route path="/localcategorymap" element={<LocalCategoryMappingPage/>}/>
         </Routes>
       </BrowserRouter>
