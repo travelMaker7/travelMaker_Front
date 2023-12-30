@@ -108,6 +108,8 @@ const MenuItem = styled.div`
     font-size: 15px;
     font-weight: bold;
     color: black;
+    transition: background-color 0.3s;
+    border-radius: 10px;
 
     &:hover {
         background-color: lightgray;
@@ -115,5 +117,5 @@ const MenuItem = styled.div`
 `;
 
 const UserIconContainer = styled.div`
-    position: relative; /* 부모 컨테이너에 relative 설정 */
+    position: relative;
 `;

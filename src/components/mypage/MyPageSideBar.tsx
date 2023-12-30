@@ -158,10 +158,10 @@ const MyPageSidebar: React.FC = () => {
                 console.log('참여자 조회 성공', response.data.data.joinUsers);
                 setIsReviewModalOpen(true);
             } else {
-                console.error('Fetching failed with status: ', response.status);
+                console.log('참여자 조회 실패'), response.data.data.joinUsers;
             }
         } catch (error) {
-            console.log('Error fetching data: ', error);
+            console.error(error);
         }
     };
     return (
@@ -346,6 +346,7 @@ const MyPageSidebar: React.FC = () => {
                             </ReviewButton>
                             {isReviewModalOpen && (
                                 <Review
+                                    tripPlanId={schedule.tripPlanId}
                                     users={joinUsers}
                                     onClose={() => setIsReviewModalOpen(false)}
                                 />
