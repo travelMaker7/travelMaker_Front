@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
@@ -7,33 +7,43 @@ import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import PlaceSearchModal from './PlaceSearchModal';
 import TimeRange from './TimeRange';
-import { SchedulesProps, DataControlProps,XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
+import { SchedulesProps, XYDataProps } from '@/pages/scheduleregistration/ScheduleRegistrationPage';
 
 interface DatesProps {
   selectedRange: [Dayjs | null, Dayjs | null] | null;
   dayCnt: number | null;
 }
 
-const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({ 
+export interface PlaceDataControlProps {
+  accompanyOption: string;
+  setAccompanyOption: React.Dispatch<SetStateAction<string>>;
+  accompanyCnt: number;
+  setAccompanyCnt: React.Dispatch<SetStateAction<number>>;
+}
+
+export interface DataControlProps {
+  autoSchedules: SchedulesProps[];
+  setAutoSchedules: React.Dispatch<SetStateAction<SchedulesProps[]>>;
+}
+
+const ToggleList: React.FC<DatesProps & XYDataProps & DataControlProps> = ({ 
   selectedRange, 
-  dayCnt, 
-  accompanyCnt, 
-  accompanyOption,
-  autoSchedules, 
-  setAutoSchedules,
-  setSelectedTimeRange,
-  selectedTimeRange,
-  handleTimeRangeChange,
+  dayCnt,
   xData,
   setXData,
   yData,
   setYData,
-  handleRadioChange,
-  handleAccompanyCnt
+  autoSchedules,
+  setAutoSchedules
 }) => {
   
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
+  // const [wishJoin, setWishJoin] = useState<string>("");
+  // const [accompanyCnt, setAccompanyCnt] = useState<number>(0);
+  // const [selectedTimeRange, setSelectedTimeRange] = useState<[Dayjs | null, Dayjs | null] | null>([null, null]);
+  // const [arriveTime, setArriveTime] = useState<string | null>(null);
+  // const [leaveTime, setLeaveTime] = useState<string | null>(null);
   
 
   useEffect(() => {
@@ -45,14 +55,12 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
           const schedule = {
             day: i + 1,
             scheduleDate: currentDate.format('YYYY-MM-DD'),
-            places: [],
+            places: [], // 여기에서 places 배열을 비워둡니다.
             dayStates: false,
           };
-          console.log('schedule: ', schedule);
           newAutoSchedules.push(schedule);
         }
       }
-      console.log('newAutoSchedules: ', newAutoSchedules);
       setAutoSchedules(newAutoSchedules);
     }
   }, [dayCnt, selectedRange]);
@@ -71,17 +79,26 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
   };
 
   const placeToggleHandler = (index: number, placeIndex: number) => {
-    console.log('index: ', index);
-    console.log('placeIndex', placeIndex)
-    setAutoSchedules((prev) => {
+    setAutoSchedules(prev => {
+      // 일정(schedule) 배열을 복사합니다.
       const newAutoSchedules = [...prev];
-      const newPlaces = [...newAutoSchedules[index].places];  // 배열 복사
-      newPlaces[placeIndex] = {
-        ...newPlaces[placeIndex],
-        placeStates: !newPlaces[placeIndex].placeStates
-      };
-      newAutoSchedules[index] = { ...newAutoSchedules[index], places: newPlaces };
   
+      // 특정 일정의 장소(place) 배열을 복사합니다.
+      const places = [...newAutoSchedules[index].places];
+  
+      // 선택된 장소의 placeStates 값을 토글합니다.
+      places[placeIndex] = {
+        ...places[placeIndex],
+        placeStates: !places[placeIndex].placeStates
+      };
+  
+      // 업데이트된 장소 배열로 특정 일정을 업데이트합니다.
+      newAutoSchedules[index] = {
+        ...newAutoSchedules[index],
+        places
+      };
+  
+      // 변경된 전체 일정 배열을 반환합니다.
       return newAutoSchedules;
     });
   };
@@ -95,8 +112,29 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
     setIsModalOpen(false);
   }
 
-  
-  
+  const handleWishJoin = (index: number, placeIndex: number, value: string) => {
+    const inputValue = value;
+    setAutoSchedules(prev => {
+      const newSchedules = [...prev];
+      if (index in newSchedules && placeIndex in newSchedules[index].places) {
+        newSchedules[index].places[placeIndex].wishJoin = inputValue;
+      }
+      return newSchedules;
+    });
+    console.log(`${index} - ${placeIndex}wishJoin`, autoSchedules[index].places[placeIndex].wishJoin);
+  };
+
+  const handleWishCnt = (index: number, placeIndex: number, e: React.ChangeEvent<HTMLSelectElement>) => {
+    const inputValue = e.target.value;
+    setAutoSchedules(prev => {
+      const newSchedules = [...prev];
+      if (index in newSchedules && placeIndex in newSchedules[index].places) {
+        newSchedules[index].places[placeIndex].wishCnt = parseInt(inputValue, 10);
+      }
+      return newSchedules;
+    });
+    console.log(`${index} - ${placeIndex} wishCnt`, autoSchedules[index].places[placeIndex].wishCnt);
+  };
 
   return (
     <>
@@ -129,7 +167,7 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
           </DayToggleList>
           <DayDetailDiv isopen={schedule.dayStates} key={schedule.day}>
             {autoSchedules[index].places.map((place, placeIndex) => (
-              <PlaceToggleContainer isopen={place.placeStates} key={`${place.destinationX}-${place.destinationY}`}>
+              <PlaceToggleContainer isopen={place.placeStates} key={placeIndex}>
                 <PlaceToggleList>
                   <DestinationNameSpan>{place.destinationName}</DestinationNameSpan>
                   <PlaceToggleButton onClick={() => placeToggleHandler(index, placeIndex)}>
@@ -147,20 +185,20 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
                         <ChoiceLabel>
                           <AddressInput 
                             type='radio' 
-                            name='accompany' 
-                            value='true' 
-                            checked={accompanyOption === 'true'}
-                            onChange={handleRadioChange}
+                            name={`accompany-${index}-${placeIndex}`} 
+                            value='true'
+                            checked={autoSchedules[index].places[placeIndex].wishJoin === 'true'} 
+                            onChange={(e) => handleWishJoin(index, placeIndex, e.target.value)}
                           />
                           <TrueSpan>동행 가능</TrueSpan>
                         </ChoiceLabel>
                         <ChoiceLabel>
                           <KeywordInput 
                             type='radio' 
-                            name='accompany' 
+                            name={`accompany-${index}-${placeIndex}`}
                             value='false'
-                            checked={accompanyOption === 'false'}
-                            onChange={handleRadioChange}
+                            checked={autoSchedules[index].places[placeIndex].wishJoin === 'false'}
+                            onChange={(e) => handleWishJoin(index, placeIndex, e.target.value)}
                           />
                           <FalseSpan>동행 불가</FalseSpan>
                         </ChoiceLabel>
@@ -171,7 +209,10 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
                     <AccompanyPeopleCntSpan>
                       동행 인원
                     </AccompanyPeopleCntSpan>
-                    <AccompanyPeopleSelect value={accompanyCnt} onChange={handleAccompanyCnt}>
+                    <AccompanyPeopleSelect 
+                      onChange={(e) => handleWishCnt(index, placeIndex, e)}
+                      value={place.wishCnt !== null ? place.wishCnt.toString() : ''}
+                    >
                       <option>0</option>
                       <option>1</option>
                       <option>2</option>
@@ -187,7 +228,7 @@ const ToggleList: React.FC<DatesProps & DataControlProps & XYDataProps> = ({
                   </WishCntDiv>
                   <TravelTimeDiv>
                     <TravelTimeThemeSpan>여행 시간</TravelTimeThemeSpan>
-                    <TimeRange selectedTimeRange={selectedTimeRange} setSelectedTimeRange={setSelectedTimeRange} handleTimeRangeChange={handleTimeRangeChange}/>
+                    <TimeRange index={index} placeIndex={placeIndex} setAutoSchedules={setAutoSchedules} autoschedules={autoSchedules}/>
                   </TravelTimeDiv>
                 </PlaceDetailDiv>}
               </PlaceToggleContainer>
