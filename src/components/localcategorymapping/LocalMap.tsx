@@ -22,7 +22,7 @@ const LocalMap = () => {
       } else {
         const script = document.createElement('script');
         script.onload = () => createMap();
-        script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_APP_KEY&autoload=false';
+        script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=5331b33365ad574b5821063aa314b864&autoload=false';
         document.head.appendChild(script);
       }
     };
