@@ -29,7 +29,6 @@ export const DetailMappingInfo: React.FC<Props> = ({
   );
 
   const { scheduleId } = useParams<{ scheduleId: string }>();
-
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const fetchScheduleDetail = async () => {
@@ -57,15 +56,6 @@ export const DetailMappingInfo: React.FC<Props> = ({
   useEffect(() => {
     fetchScheduleDetail();
   }, [scheduleId]);
-
-  // useEffect(() => {
-  //   const Markers = SCHEDULE_DETAIL_MOCK.data.markers.map((marker) => ({
-  //     ...marker,
-  //   }));
-
-  //   setMarkers(Markers);
-  //   setScheduleDetail(SCHEDULE_DETAIL_MOCK.data);
-  // }, []);
 
   const toggleSideInfo = (scheduledDate: string) => {
     setActiveScheduledDate((prevDate) =>
@@ -171,7 +161,7 @@ export const DetailMappingInfo: React.FC<Props> = ({
                         style={{ color: "#6FADFF" }}
                       />
                     </InfoIcon>
-                    <InfoText>{`동행 인원: ${detail.wishCnt}/4`}</InfoText>
+                    <InfoText>{`동행 인원: ${detail.joinCnt}/${detail.wishCnt}`}</InfoText>
                   </InfoItemContainer>
                   <JoinButton
                     isVisible={true}

@@ -51,6 +51,8 @@ const LoginHandeler: React.FC = () => {
       console.log(response.data.data);
 
       localStorage.setItem('access_token', response.data.data.accessToken);
+      localStorage.setItem('user_id', response.data.data.userId); // 채팅위해 로컬스토리지에 저장
+      console.log('유저 id : ', response.data.data.userId)
       navigate('/');
     } catch (error) {
       console.error('로그인 에러', error);

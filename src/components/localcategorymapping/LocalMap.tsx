@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
@@ -9,166 +9,94 @@ declare global {
   }
 }
 
-const RES = {
-  "status": 201,
-  "message": "마커들 가져오기 성공",
-  "data":{
-		"makers" : [{
-			"destinationName": "경복궁",
-			"address" : "서울 종로구 사직로 161",
-			"destinationY": "37.5797", // 위도
-	    "destinationX": "126.977", // 경도
-		},
-		{
-			"destinationName": "경복궁",
-			"address" : "서울 종로구 사직로 161",
-			"destinationY": "37.5797", // 위도
-	    "destinationX": "126.977", // 경도
-		},
-    {
-			"destinationName": "창덕궁",
-			"address" : "서울 종로구 사직로 163",
-			"destinationY": "37.5796", // 위도
-	    "destinationX": "126.976", // 경도
-		},
-    {
-			"destinationName": "광화문",
-			"address" : "서울 종로구 사직로 163",
-			"destinationY": "37.5795", // 위도
-	    "destinationX": "126.975", // 경도
-		}]
-  }
-}
-
 const LocalMap = () => {
-
+  const [hasMakers, setHasMakers] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   let [tag] = useSearchParams();
-    
   const region = tag.get('region');
-  console.log(region);
-    useEffect(() => {
-      
-      axios.get(`https://sosak.store/api/v1/map/${tag}`, {
-          headers: {
+
+  useEffect(() => {
+    const loadKakaoMapScript = () => {
+      if (window.kakao && window.kakao.maps) {
+        createMap();
+      } else {
+        const script = document.createElement('script');
+        script.onload = () => createMap();
+        script.src = 'https://dapi.kakao.com/v2/maps/sdk.js?appkey=5331b33365ad574b5821063aa314b864&autoload=false';
+        document.head.appendChild(script);
+      }
+    };
+
+    const createMap = () => {
+      axios.get(`https://sosak.store/api/v1/map/${region}`, {
+        headers: {
           "Content-type": "application/json"
         }
       })
       .then((res) => {
-        console.log('res: ',res);
-        console.log("조회 성공");
+        const makers = res.data.data.makers;
+        if (makers && makers.length > 0) {
+          setHasMakers(true);
+          const container = document.getElementById('map');
+          if (container) {
+            window.kakao.maps.load(() => {
+              const options = {
+                center: new window.kakao.maps.LatLng(37.5797, 126.977),
+                level: 3
+              };
+              const map = new window.kakao.maps.Map(container, options);
+              let bounds = new window.kakao.maps.LatLngBounds(); // bounds 초기화
+
+              let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+              let imageSize = new window.kakao.maps.Size(24, 35);  
+              let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize); 
+
+              makers.forEach((maker: { destinationY: string; destinationX: string; destinationName: string; address: string; }) => {
+                let position = new window.kakao.maps.LatLng(maker.destinationY, maker.destinationX);
+                let marker = new window.kakao.maps.Marker({
+                  map: map,
+                  position: position,
+                  title: maker.destinationName,
+                  image: markerImage
+                });
+
+                let infowindow = new window.kakao.maps.InfoWindow({
+                  content: `<div style="padding:5px;">${maker.destinationName}<br>${maker.address}</div>`
+                });
+
+                window.kakao.maps.event.addListener(marker, 'mouseover', () => infowindow.open(map, marker));
+                window.kakao.maps.event.addListener(marker, 'mouseout', () => infowindow.close());
+
+                bounds.extend(position);
+              });
+              map.setBounds(bounds);
+            });
+          }
+        } else {
+          setHasMakers(false);
+        }
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("조회 오류 발생 ", error);
-      })
-
-      let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-      let options = { //지도를 생성할 때 필요한 기본 옵션
-        center: new window.kakao.maps.LatLng(37.5797, 126.977), //지도의 중심좌표.
-        level: 3 //지도의 레벨(확대, 축소 정도)
-      };
-  
-      let map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-      const {data: {makers}} = RES;
-      console.log("makers", makers);
-      const setMakers = new Set(makers);
-      console.log("setMakers", setMakers);
-      const arrSetMakers = [...setMakers];
-      console.log("arrSetMakers", arrSetMakers);
-      const data: { content: any, LatLng: any, title: any, image: any }[] = [];
-
-      let bounds = new window.kakao.maps.LatLngBounds();
-
-      let imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-
-      // 마커 이미지의 이미지 크기 입니다
-      let imageSize = new window.kakao.maps.Size(24, 35); 
-        
-      // 마커 이미지를 생성합니다    
-      let markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize); 
-
-      for(let i=0; i<arrSetMakers.length; i++) {
-        data.push({
-          content:`
-            <InfoWindowDiv>
-              <div>${arrSetMakers[i].destinationName}</div>
-              <div>${arrSetMakers[i].address}</div>
-            <InfoWindowDiv>
-            `,
-          LatLng: new window.kakao.maps.LatLng(arrSetMakers[i].destinationY, arrSetMakers[i].destinationX),
-          title: arrSetMakers[i].destinationName,
-          image: markerImage
-        })
-      };
-      
-      console.log("data", data);
-
-      for (let i = 0; i < arrSetMakers.length; i ++) {
-        
-        // 마커를 생성합니다
-        let marker = new window.kakao.maps.Marker({
-            map: map, // 마커를 표시할 지도
-            position: data[i].LatLng, // 마커의 위치
-            title: data[i].title,
-            image: markerImage
-        });
-
-         // 마커 클릭 이벤트 핸들러 추가
-         window.kakao.maps.event.addListener(marker, 'click', () => {
+        setHasMakers(false);
+        setIsLoading(false);
       });
-      
-        marker.setMap(map);
-        bounds.extend(data[i].LatLng);
-    
-        // 마커에 표시할 인포윈도우를 생성합니다 
-        let infowindow = new window.kakao.maps.InfoWindow({
-            content: data[i].content // 인포윈도우에 표시할 내용
-        });
-    
-        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-        // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-        // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-        window.kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-        window.kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-    }
+    };
 
-    function setBounds() {
-      map.setBounds(bounds);
-    };   
+    loadKakaoMapScript();
+  }, [region]);
 
-    
-    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-    function makeOverListener(map: any, marker: any, infowindow: { open: (arg0: any, arg1: any) => void; }) {
-        return function() {
-            infowindow.open(map, marker);
-        };
-    }
-    
-    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-    function makeOutListener(infowindow: { close: () => void; }) {
-        return function() {
-            infowindow.close();
-        };
-    }
-
-    const button = document.getElementById('setBoundsButton');
-  if (button) {
-    button.addEventListener('click', setBounds);
+  if (isLoading) {
+    return <LoadingDiv>Loading...</LoadingDiv>; 
   }
 
-  // 컴포넌트 언마운트 시 이벤트 리스너 제거
-  return () => {
-    if (button) {
-      button.removeEventListener('click', setBounds);
-    }
-  };
-  
-  }, [])
-
   return (
-      <Map id="map" style={{ width: "59.375rem", height: "45rem", overflow: "hidden" }}>
-        <ResetSearchBtn id='setBoundsButton'>범위 재설정</ResetSearchBtn>
-      </Map>
+    hasMakers ? (
+      <Map id="map" style={{ width: "59.375rem", height: "45rem", overflow: "hidden" }}/>
+    ) : (
+      <NoDataDiv>등록된 여행지가 존재하지 않습니다.</NoDataDiv>
+    )
   );
 }
 
@@ -178,24 +106,22 @@ const Map = styled.div`
   position: relative;
 `
 
-
-const ResetSearchBtn = styled.button`
-  position: absolute;
-  width: 7.5rem;
-  height: 2.5rem;
-  z-index: 99;
-  left: 1rem;
-  bottom: 2rem;
-  background-color: #8cc3f8;
-  border: none;
-  font-weight: bolder;
-  border-radius: 1rem;
-  cursor: pointer;
-  box-shadow: 0 0.25rem 0.25rem 0 #b6b3b3;
-  color: white;
-  font-size: 1.125rem;
-
+const NoDataDiv = styled.div`
+  width: 59.375rem;
+  height: 45rem;
+  font-weight: border;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
-
-
+const LoadingDiv = styled.div`
+  width: 59.375rem;
+  height: 45rem;
+  font-weight: border;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
